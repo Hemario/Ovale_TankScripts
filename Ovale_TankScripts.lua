@@ -13,7 +13,7 @@ OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
         or (className == "PALADIN" and specialization == "protection")
         or (className == "WARRIOR" and specialization == "protection")
     then
-        scriptName = format("icyveins_%s_%s", lower(className), specialization)
+        scriptName = format("icyveins_%s_%s", string.lower(className), specialization)
     else
         return baseGetDefaultScriptName(self, className, specialization)
     end
