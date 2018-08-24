@@ -6,6 +6,7 @@ local baseGetDefaultScriptName = OvaleScripts.GetDefaultScriptName
 OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
     local scriptName
     if false
+        or (className == "DEATHKNIGHT" and specialization == "blood") 
         or (className == "DEMONHUNTER" and specialization == "vengeance") 
         or (className == "DRUID" and specialization == "guardian")
         or (className == "MONK" and specialization == "brewmaster") 
