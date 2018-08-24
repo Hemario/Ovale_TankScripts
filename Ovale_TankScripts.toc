@@ -1,0 +1,10 @@
+## Interface: 80000
+## Version: 801.1
+## Title: Ovale Tank Scripts
+## Notes: Custom Ovale scripts based on Icy-Veins guide
+## Author: Hemario
+## RequiredDeps: Ovale
+
+libs\libs.xml
+scripts\files.xml
+Ovale_TankScripts.lua
