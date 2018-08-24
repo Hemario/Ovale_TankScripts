@@ -91,7 +91,7 @@ AddFunction GuardianDefaultAoEActions
 	}
     
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0))) Spell(maul)
-    if (DebuffCountOnAny(moonfire_debuff) < 2) Spell(moonfire)
+    if (DebuffCountOnAny(moonfire_debuff) < 2 and target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
     Spell(thrash_bear)
     if (Enemies() <= 2 and BuffRefreshable(pulverize_buff)) Spell(pulverize)
     if (Enemies() <= 4) Spell(mangle)
