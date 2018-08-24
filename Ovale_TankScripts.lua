@@ -5,8 +5,10 @@ local OvaleScripts = __Scripts.OvaleScripts
 local baseGetDefaultScriptName = OvaleScripts.GetDefaultScriptName
 OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
     local scriptName
-    if (className == "MONK" and specialization == "brewmaster") then
-        scriptName = "icyveins_monk_brewmaster"
+    if (className == "DRUID" and specialization == "guardian")
+        or (className == "MONK" and specialization == "brewmaster") 
+    then
+        scriptName = format("icyveins_%s_%s", lower(className), specialization)
     else
         return baseGetDefaultScriptName(self, className, specialization)
     end
