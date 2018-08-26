@@ -13,21 +13,11 @@ AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=protection)
 
-AddFunction ProtectionSelfHealCondition
-{
-	(HealthPercent() < 40)
-		or (IncomingDamage(10) < MaxHealth() * 1.25 and HealthPercent() < 55 and Talent(righteous_protector_talent))
-		or (IncomingDamage(13) < MaxHealth() * 1.6 and HealthPercent() < 55)
-		or (IncomingDamage(6) < MaxHealth() * 0.7 and HealthPercent() < 65 and Talent(righteous_protector_talent))
-		or (IncomingDamage(9) < MaxHealth() * 1.2 and HealthPercent() < 55)
-		or (HealthPercent() < 60 and HasEquippedItem(saruans_resolve) and (SpellCharges(light_of_the_protector) >= 2 or SpellCharges(hand_of_the_protector) >= 2))
-}
-
 AddFunction PaladinHealMe
 {
 	unless(DebuffPresent(healing_immunity_debuff)) 
 	{
-		if ProtectionSelfHealCondition() Spell(light_of_the_protector)
+		if (HealthPercent() <= 50) Spell(light_of_the_protector)
 		if (HealthPercent() < 35) UseHealthPotions()
 	}
 }
