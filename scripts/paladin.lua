@@ -76,25 +76,21 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
-	if Speed() == 0 and HasEquippedItem(heathcliffs_immortality) and not BuffPresent(consecration_buff) Spell(consecration)
-	if Talent(blessed_hammer_talent) and (not PreviousGCDSpell(blessed_hammer) or Charges(blessed_hammer) == SpellMaxCharges(blessed_hammer)) Spell(blessed_hammer)
-	Spell(judgment_prot)
-	if Talent(crusaders_judgment_talent) and BuffPresent(grand_crusader_buff) Spell(avengers_shield)
-	if Speed() == 0 and not Talent(consecrated_hammer_talent) and not BuffPresent(consecration_buff) Spell(consecration)
-	Spell(avengers_shield)
-	if Speed() == 0 Spell(consecration)
-	Spell(hammer_of_the_righteous)
+    Spell(judgment_prot)
+	if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
+    Spell(avengers_shield)
+    Spell(hammer_of_the_righteous)
+    Spell(consecration)
 }
 
 AddFunction ProtectionDefaultAoEActions
 {
-	if Speed() == 0 and HasEquippedItem(heathcliffs_immortality) and not BuffPresent(consecration_buff) Spell(consecration)
-	Spell(avengers_shield)
-	if Speed() == 0 and not Talent(consecrated_hammer_talent) and not BuffPresent(consecration_buff) Spell(consecration)
-	if Talent(blessed_hammer_talent) Spell(blessed_hammer)
-	Spell(judgment_prot)
-	if Speed() == 0 Spell(consecration)
-	Spell(hammer_of_the_righteous)
+    if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
+    Spell(avengers_shield)
+    Spell(judgment_prot)
+    if BuffPresent(consecration_buff) Spell(hammer_of_the_righteous)
+    Spell(consecration)
+    Spell(hammer_of_the_righteous)
 }
 
 AddCheckBox(opt_avenging_wrath SpellName(avenging_wrath) default specialization=protection)
