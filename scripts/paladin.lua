@@ -41,9 +41,9 @@ AddFunction ProtectionDefaultShortCDActions
 {
 	PaladinHealMe()
 	#bastion_of_light,if=talent.bastion_of_light.enabled&action.shield_of_the_righteous.charges<1
-	if Talent(bastion_of_light_talent) and Charges(shield_of_the_righteous) < 1 Spell(bastion_of_light)
+	if Charges(shield_of_the_righteous) < 1 Spell(bastion_of_light)
 	#seraphim,if=talent.seraphim.enabled&action.shield_of_the_righteous.charges>=2
-	if Talent(seraphim_talent) and Charges(shield_of_the_righteous) >= 2 Spell(seraphim)
+	if Charges(shield_of_the_righteous) >= 2 Spell(seraphim)
 
 	ProtectionGetInMeleeRange()
 	
