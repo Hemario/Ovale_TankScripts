@@ -68,7 +68,7 @@ AddFunction GuardianDefaultMainActions
 	Spell(mangle)
 	Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
-	if (RageDeficit() <= 20 or IncomingDamage(5) == 0) Spell(maul)
+	if (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty()) Spell(maul)
 	Spell(swipe_bear)
 }
 
