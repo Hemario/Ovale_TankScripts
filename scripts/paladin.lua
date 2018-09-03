@@ -9,9 +9,6 @@ Include(ovale_trinkets_mop)
 Include(ovale_trinkets_wod)
 Include(ovale_paladin_spells)
 
-#temp fix
-SpellInfo(hammer_of_the_righteous replace=hammer_of_the_righteous)
-
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=protection)
