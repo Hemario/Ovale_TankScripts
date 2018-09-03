@@ -91,16 +91,19 @@ AddFunction ProtectionDefaultCdActions
 	
 	if ProtectionCooldownTreshold() 
     {
+        if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 15 Spell(lay_on_hands)
         Spell(divine_protection)
         Spell(ardent_defender)
         Spell(guardian_of_ancient_kings)
         Spell(aegis_of_light)
         if Talent(final_stand_talent) Spell(divine_shield)
-        if not DebuffPresent(forbearance_debuff) and HealthPercent() < 15 Spell(lay_on_hands)
+        if CheckBoxOn(opt_use_consumables) 
+        {
+            Item(steelskin_potion usable=1)
+            Item(battle_potion_of_stamina usable=1)
+        }
+        UseRacialSurvivalActions()
     }
-
-	if ProtectionCooldownTreshold() and CheckBoxOn(opt_use_consumables) Item(unbending_potion usable=1)
-	if ProtectionCooldownTreshold() UseRacialSurvivalActions()
 }
 
 AddFunction ProtectionInterruptActions
