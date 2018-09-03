@@ -63,6 +63,7 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
+    if target.IsInterruptible() Spell(avengers_shield)
     Spell(judgment_prot)
 	if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(avengers_shield)
