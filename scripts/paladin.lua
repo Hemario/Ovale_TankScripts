@@ -72,12 +72,11 @@ AddFunction ProtectionDefaultMainActions
 
 AddFunction ProtectionDefaultAoEActions
 {
-    if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(avengers_shield)
+	if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(judgment_prot)
-    if BuffPresent(consecration_buff) Spell(hammer_of_the_righteous)
-    Spell(consecration)
     Spell(hammer_of_the_righteous)
+    Spell(consecration)
 }
 
 AddCheckBox(opt_avenging_wrath SpellName(avenging_wrath) default specialization=protection)
