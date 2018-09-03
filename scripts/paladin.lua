@@ -113,7 +113,6 @@ AddFunction ProtectionInterruptActions
 			if target.InRange(hammer_of_justice) Spell(hammer_of_justice)
 			if target.Distance(less 10) Spell(blinding_light)
 			if target.Distance(less 8) Spell(war_stomp)
-			if target.InRange(quaking_palm) Spell(quaking_palm)
 		}
 	}
 }
