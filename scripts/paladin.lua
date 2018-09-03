@@ -41,23 +41,23 @@ AddFunction ProtectionDefaultShortCDActions
 {
 	PaladinHealMe()
 	#bastion_of_light,if=talent.bastion_of_light.enabled&action.shield_of_the_righteous.charges<1
-	if Charges(shield_of_the_righteous) < 1 Spell(bastion_of_light)
+	if Charges(shield_of_the_righteous count=0) < 0.8 Spell(bastion_of_light)
 	#seraphim,if=talent.seraphim.enabled&action.shield_of_the_righteous.charges>=2
 	if Charges(shield_of_the_righteous) >= 2 Spell(seraphim)
 
 	ProtectionGetInMeleeRange()
 	
-	#max sotr charges
-	if (Charges(shield_of_the_righteous) >= SpellMaxCharges(shield_of_the_righteous)) Spell(shield_of_the_righteous text=max)
-	
-    if not ProtectionHasProtectiveCooldown() 
+	if (BuffRemaining(shield_of_the_righteous_buff) < 2*BaseDuration(shield_of_the_righteous_buff)) 
     {
-        #shield_of_the_righteous (no Bastion and no seraphim) -- always bank 1 charge
-        if Charges(shield_of_the_righteous) >= 2+Talent(seraphim_talent) Spell(shield_of_the_righteous)
-        #shield_of_the_righteous,if=(talent.bastion_of_light.enabled&talent.seraphim.enabled&buff.seraphim.up&cooldown.bastion_of_light.up)&!(debuff.eye_of_tyr.up|buff.aegis_of_light.up|buff.ardent_defender.up|buff.guardian_of_ancient_kings.up|buff.divine_shield.up|buff.potion.up)
-        if Talent(bastion_of_light_talent) and Talent(seraphim_talent) and BuffPresent(seraphim_buff) and SpellCooldown(bastion_of_light) == 0 Spell(shield_of_the_righteous)
-        #shield_of_the_righteous,if=(talent.bastion_of_light.enabled&!talent.seraphim.enabled&cooldown.bastion_of_light.up)&!(debuff.eye_of_tyr.up|buff.aegis_of_light.up|buff.ardent_defender.up|buff.guardian_of_ancient_kings.up|buff.divine_shield.up|buff.potion.up)
-        if Talent(bastion_of_light_talent) and not Talent(seraphim_talent) and SpellCooldown(bastion_of_light) == 0 Spell(shield_of_the_righteous)
+        #max sotr charges
+        if (SpellCharges(shield_of_the_righteous count=0) >= SpellMaxCharges(shield_of_the_righteous)-0.2) Spell(shield_of_the_righteous text=max)
+        
+        if IncomingDamage(5 physical=1) > 0 and not ProtectionHasProtectiveCooldown() and BuffPresent(avengers_valor_buff)
+        {
+            # Dumping SotR charges
+            if (Talent(bastion_of_light_talent) and SpellCooldown(bastion_of_light) == 0) Spell(shield_of_the_righteous)
+            if (SpellCharges(shield_of_the_righteous count=0) >= 1.8 and (not Talent(seraphim_talent) or SpellFullRecharge(shield_of_the_righteous) < SpellCooldown(seraphim))) Spell(shield_of_the_righteous)
+        }
     }
 }
 
