@@ -17,8 +17,9 @@ AddFunction PaladinHealMe
 {
 	unless(DebuffPresent(healing_immunity_debuff)) 
 	{
-		if (HealthPercent() <= 50) Spell(light_of_the_protector)
-		if (HealthPercent() < 35) UseHealthPotions()
+        if (HealthPercent() <= 50) Spell(light_of_the_protector)
+        if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 25 Spell(lay_on_hands)
+        if (HealthPercent() < 35) UseHealthPotions()
 	}
 }
 
@@ -91,7 +92,6 @@ AddFunction ProtectionDefaultCdActions
 	
 	if ProtectionCooldownTreshold() 
     {
-        if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 15 Spell(lay_on_hands)
         Spell(divine_protection)
         Spell(ardent_defender)
         Spell(guardian_of_ancient_kings)
