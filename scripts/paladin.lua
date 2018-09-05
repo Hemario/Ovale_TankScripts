@@ -56,6 +56,7 @@ AddFunction ProtectionDefaultShortCDActions
         if not ProtectionHasProtectiveCooldown() 
             and BuffPresent(avengers_valor_buff) 
             and (IncomingDamage(5 physical=1) > 0 or (IncomingDamage(5) > 0 and Talent(holy_shield_talent)))
+            and (not HasAzeriteTrait(inner_light_trait) or not BuffPresent(shield_of_the_righteous_buff))
         {
             # Dumping SotR charges
             if (Talent(bastion_of_light_talent) and SpellCooldown(bastion_of_light) == 0) Spell(shield_of_the_righteous)
