@@ -53,7 +53,9 @@ AddFunction ProtectionDefaultShortCDActions
         #max sotr charges
         if (SpellCharges(shield_of_the_righteous count=0) >= SpellMaxCharges(shield_of_the_righteous)-0.2) Spell(shield_of_the_righteous text=max)
         
-        if IncomingDamage(5 physical=1) > 0 and not ProtectionHasProtectiveCooldown() and BuffPresent(avengers_valor_buff)
+        if not ProtectionHasProtectiveCooldown() 
+            and BuffPresent(avengers_valor_buff) 
+            and (IncomingDamage(5 physical=1) > 0 or (IncomingDamage(5) > 0 and Talent(holy_shield_talent)))
         {
             # Dumping SotR charges
             if (Talent(bastion_of_light_talent) and SpellCooldown(bastion_of_light) == 0) Spell(shield_of_the_righteous)
