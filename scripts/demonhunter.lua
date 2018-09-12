@@ -110,7 +110,12 @@ AddFunction VengeanceDefaultCdActions
         if (HasEquippedItem(shifting_cosmic_sliver) or ArmorSetBonus(T21 4)) Spell(metamorphosis_veng)
         Spell(fiery_brand)
         Spell(metamorphosis_veng)
-        if CheckBoxOn(opt_use_consumables) Item(unbending_potion usable=1)
+        if CheckBoxOn(opt_use_consumables) 
+        {
+            Item(battle_potion_of_agility usable=1)
+            Item(steelskin_potion usable=1)
+            Item(battle_potion_of_stamina usable=1)
+        }
     }
 }
 
