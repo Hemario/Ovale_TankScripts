@@ -107,7 +107,6 @@ AddFunction VengeanceDefaultCdActions
 	Item(Trinket1Slot text=14 usable=1)
 	if (BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) 
     {
-        if (HasEquippedItem(shifting_cosmic_sliver) or ArmorSetBonus(T21 4)) Spell(metamorphosis_veng)
         Spell(fiery_brand)
         Spell(metamorphosis_veng)
         if CheckBoxOn(opt_use_consumables) 
