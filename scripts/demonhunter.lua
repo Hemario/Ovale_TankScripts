@@ -83,18 +83,12 @@ AddFunction VengeanceDefaultMainActions
         Spell(fel_eruption)
     }
     
-    # Razor spikes are up
-	if (Talent(razor_spikes_talent) and not BuffExpires(demon_spikes_buff))
-	{
-		#if (Enemies() > 1 or Pain()>=50) Spell(soul_cleave)
-        #Spell(fracture)
-        #if not BuffExpires(metamorphosis_veng_buff) Spell(shear)
-	}
-    
     if (SoulFragments() >= 4) Spell(spirit_bomb)
-    if (Talent(fracture_talent) and PainDeficit() >= 25) Spell(fracture)
+    if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) Spell(soul_cleave)
     if (PainDeficit() >= 10) Spell(immolation_aura)
-    if (not (PreviousGCDSpell(shear) or PreviousGCDSpell(fracture)) and (SoulFragments() >= 4 or PainDeficit() < 20)) Spell(soul_cleave)
+    if (PainDeficit() >= 30) Spell(felblade)
+    if (SoulFragments() <= 3) Spell(fracture)
+    Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
     if (not Talent(fracture_talent) and PainDeficit() >= 10) Spell(shear)
     Spell(throw_glaive_veng)
