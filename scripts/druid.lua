@@ -104,13 +104,15 @@ AddFunction GuardianDefaultCdActions
 {
 	GuardianInterruptActions()
 	Spell(incarnation_guardian_of_ursoc)
+    
+    Item(Trinket0Slot usable=1 text=13)
+    Item(Trinket1Slot usable=1 text=14)
+
 	if BuffExpires(bristling_fur_buff) and BuffExpires(survival_instincts_buff) and BuffExpires(barkskin_buff) and BuffExpires(potion_buff)
 	{
 		Spell(bristling_fur)
         if (HasEquippedItem(shifting_cosmic_sliver)) Spell(survival_instincts)
         if (Talent(brambles_talent) and (not HasEquippedItem(oakhearts_puny_quods) or RageDeficit() > 75)) Spell(barkskin)
-		Item(Trinket0Slot usable=1 text=13)
-		Item(Trinket1Slot usable=1 text=14)
 		Spell(survival_instincts)
 		if (not HasEquippedItem(oakhearts_puny_quods) or RageDeficit() > 75) Spell(barkskin)
 		if CheckBoxOn(opt_use_consumables) 
