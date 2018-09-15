@@ -9,6 +9,9 @@ Include(ovale_trinkets_mop)
 Include(ovale_trinkets_wod)
 Include(ovale_paladin_spells)
 
+#temp until Ovale 8.0.23
+Define(inner_light_trait 275477)
+
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=protection)
