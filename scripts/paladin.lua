@@ -21,7 +21,6 @@ AddFunction PaladinHealMe
 	unless(DebuffPresent(healing_immunity_debuff)) 
 	{
         if (HealthPercent() <= 50) Spell(light_of_the_protector)
-        if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 25 Spell(lay_on_hands)
         if (HealthPercent() < 35) UseHealthPotions()
 	}
 }
@@ -92,7 +91,7 @@ AddFunction ProtectionDefaultCdActions
 {
 	ProtectionInterruptActions()
 	if CheckBoxOn(opt_avenging_wrath) Spell(avenging_wrath)
-	
+	if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 15 Spell(lay_on_hands)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	
