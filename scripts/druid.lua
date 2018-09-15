@@ -113,7 +113,12 @@ AddFunction GuardianDefaultCdActions
 		Item(Trinket1Slot usable=1 text=14)
 		Spell(survival_instincts)
 		if (not HasEquippedItem(oakhearts_puny_quods) or RageDeficit() > 75) Spell(barkskin)
-		if CheckBoxOn(opt_use_consumables) Item(unbending_potion usable=1)
+		if CheckBoxOn(opt_use_consumables) 
+        {
+            Item(battle_potion_of_agility usable=1)
+            Item(steelskin_potion usable=1)
+            Item(battle_potion_of_stamina usable=1)
+        }
 	}
 }
 
