@@ -111,10 +111,8 @@ AddFunction GuardianDefaultCdActions
 	if BuffExpires(bristling_fur_buff) and BuffExpires(survival_instincts_buff) and BuffExpires(barkskin_buff) and BuffExpires(potion_buff)
 	{
 		Spell(bristling_fur)
-        if (HasEquippedItem(shifting_cosmic_sliver)) Spell(survival_instincts)
-        if (Talent(brambles_talent) and (not HasEquippedItem(oakhearts_puny_quods) or RageDeficit() > 75)) Spell(barkskin)
+        Spell(barkskin)
 		Spell(survival_instincts)
-		if (not HasEquippedItem(oakhearts_puny_quods) or RageDeficit() > 75) Spell(barkskin)
 		if CheckBoxOn(opt_use_consumables) 
         {
             Item(battle_potion_of_agility usable=1)
