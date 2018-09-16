@@ -118,7 +118,7 @@ AddFunction ProtectionDefaultCdActions
 {
 	ProtectionInterruptActions()
 	ProtectionOffensiveCooldowns()
-	if IncomingDamage(1.5 magic=1) > 0 Spell(spell_reflection)
+	if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection_buff) Spell(spell_reflection)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	Spell(demoralizing_shout)
