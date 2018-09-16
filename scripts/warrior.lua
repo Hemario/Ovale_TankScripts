@@ -50,12 +50,6 @@ AddFunction ProtectionInterruptActions
 	}
 }
 
-AddFunction ProtectionOffensiveCooldowns
-{
-	Spell(avatar)
-	if (Talent(booming_voice_talent) and RageDeficit() >= Talent(booming_voice_talent)*60) Spell(demoralizing_shout)
-}
-
 #
 # Short
 #
@@ -117,7 +111,7 @@ AddFunction ProtectionDefaultAoEActions
 AddFunction ProtectionDefaultCdActions 
 {
 	ProtectionInterruptActions()
-	ProtectionOffensiveCooldowns()
+    if not CheckBoxOn(opt_warrior_protection_offensive) ProtectionDefaultOffensiveCooldowns()
 	if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection_buff) Spell(spell_reflection)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -131,6 +125,12 @@ AddFunction ProtectionDefaultCdActions
         Item(battle_potion_of_stamina usable=1)
     }
     if not BuffPresent(rallying_cry_buff) Spell(rallying_cry)
+}
+
+AddFunction ProtectionDefaultOffensiveCooldowns
+{
+	Spell(avatar)
+	if (Talent(booming_voice_talent) and RageDeficit() >= Talent(booming_voice_talent)*60) Spell(demoralizing_shout)
 }
 
 #
@@ -155,6 +155,12 @@ AddIcon checkbox=opt_warrior_protection_aoe help=aoe specialization=protection
 AddIcon help=cd specialization=protection
 {
 	ProtectionDefaultCdActions()
+}
+
+AddCheckBox(opt_warrior_protection_offensive L(opt_warrior_protection_offensive) default specialization=protection)
+AddIcon checkbox=opt_warrior_protection_offensive size=small specialization=protection
+{
+    ProtectionDefaultOffensiveCooldowns()
 }
 ]]
     OvaleScripts:RegisterScript("WARRIOR", "protection", name, desc, code, "script")

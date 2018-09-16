@@ -103,7 +103,7 @@ AddFunction GuardianDefaultAoEActions
 AddFunction GuardianDefaultCdActions 
 {
 	GuardianInterruptActions()
-	Spell(incarnation_guardian_of_ursoc)
+	if not CheckBoxOn(opt_druid_guardian_offensive) GuardianDefaultOffensiveCooldowns()
     
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
@@ -120,6 +120,11 @@ AddFunction GuardianDefaultCdActions
             Item(battle_potion_of_stamina usable=1)
         }
 	}
+}
+
+AddFunction GuardianDefaultOffensiveCooldowns
+{
+    Spell(incarnation_guardian_of_ursoc)
 }
 
 AddFunction GuardianInterruptActions
@@ -155,6 +160,12 @@ AddIcon checkbox=opt_druid_guardian_aoe help=aoe specialization=guardian
 AddIcon help=cd specialization=guardian
 {
 	GuardianDefaultCdActions()
+}
+
+AddCheckBox(opt_druid_guardian_offensive L(opt_druid_guardian_offensive) default specialization=guardian)
+AddIcon checkbox=opt_druid_guardian_offensive size=small specialization=guardian
+{
+    GuardianDefaultOffensiveCooldowns()
 }
 ]]
     OvaleScripts:RegisterScript("DRUID", "guardian", name, desc, code, "script")

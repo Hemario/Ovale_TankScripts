@@ -153,7 +153,7 @@ AddFunction BrewmasterDefaultCdActions
 {
 	BrewmasterInterruptActions()
 	Spell(guard)
-	if not PetPresent(name=Niuzao) Spell(invoke_niuzao_the_black_ox)
+    if not CheckBoxOn(opt_monk_bm_offensive) BrewmasterDefaultOffensiveCooldowns()
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	Spell(fortifying_brew)
@@ -180,6 +180,11 @@ AddFunction BrewmasterInterruptActions
 	}
 }
 
+AddFunction BrewmasterDefaultOffensiveCooldowns
+{
+    if not PetPresent(name=Niuzao) Spell(invoke_niuzao_the_black_ox)
+}
+
 AddIcon help=shortcd specialization=brewmaster
 {
 	BrewmasterDefaultShortCDActions()
@@ -198,6 +203,12 @@ AddIcon checkbox=opt_monk_bm_aoe help=aoe specialization=brewmaster
 AddIcon help=cd specialization=brewmaster
 {
 	BrewmasterDefaultCdActions()
+}
+
+AddCheckBox(opt_monk_bm_offensive L(opt_monk_bm_offensive) default specialization=brewmaster)
+AddIcon checkbox=opt_monk_bm_offensive size=small specialization=brewmaster
+{
+    BrewmasterDefaultOffensiveCooldowns()
 }
 ]]
     OvaleScripts:RegisterScript("MONK", "brewmaster", name, desc, code, "script")

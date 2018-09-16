@@ -71,8 +71,8 @@ AddFunction BloodHealMe
 AddFunction BloodDefaultCdActions
 {
 	BloodInterruptActions()
+    if not CheckBoxOn(opt_deathknight_blood_offensive) BloodDefaultOffensiveCooldowns()
 	if IncomingDamage(1.5 magic=1) > 0 spell(antimagic_shell)
-    Spell(dancing_rune_weapon)
     Spell(consumption)
     if (BuffStacks(bone_shield_buff) >= 6) Spell(tombstone)
 	Item(Trinket0Slot usable=1 text=13)
@@ -81,6 +81,11 @@ AddFunction BloodDefaultCdActions
 	Spell(icebound_fortitude)
 	if CheckBoxOn(opt_use_consumables) Item(unbending_potion usable=1)
 	UseRacialSurvivalActions()
+}
+
+AddFunction BloodDefaultOffensiveCooldowns
+{
+    Spell(dancing_rune_weapon)
 }
 
 AddFunction BloodInterruptActions
@@ -114,6 +119,12 @@ AddIcon help=cd specialization=blood
 {
 	#if not InCombat() ProtectionPrecombatCdActions()
 	BloodDefaultCdActions()
+}
+
+AddCheckBox(opt_deathknight_blood_offensive L(opt_deathknight_blood_offensive) default specialization=blood)
+AddIcon checkbox=opt_deathknight_blood_offensive size=small specialization=blood
+{
+    BloodDefaultOffensiveCooldowns()
 }
 ]]
     OvaleScripts:RegisterScript("DEATHKNIGHT", "blood", name, desc, code, "script")
