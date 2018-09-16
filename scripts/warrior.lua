@@ -82,8 +82,7 @@ AddFunction ProtectionDefaultMainActions
 {
     if not BuffPresent(battle_shout_buff) Spell(battle_shout)
 	Spell(shield_slam)
-	if Talent(devastatator_talent) and BuffPresent(revenge_buff) Spell(revenge)
-	if BuffPresent(vengeance_revenge_buff) Spell(revenge)
+    Spell(dragon_roar)
 	Spell(thunder_clap)
 	if BuffPresent(revenge_buff) Spell(revenge)
 	Spell(storm_bolt)
@@ -114,13 +113,17 @@ AddFunction ProtectionDefaultCdActions
 	ProtectionInterruptActions()
 	ProtectionOffensiveCooldowns()
 	if IncomingDamage(1.5 magic=1) > 0 Spell(spell_reflection)
-	if (HasEquippedItem(shifting_cosmic_sliver)) Spell(shield_wall)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	Spell(demoralizing_shout)
-	Spell(shield_wall)
-	Spell(last_stand)
-	
+	if not Talent(bolster_talent) or not BuffPresent(shield_block_buff) Spell(last_stand)
+    Spell(shield_wall)
+	if CheckBoxOn(opt_use_consumables) 
+    {
+        Item(battle_potion_of_agility usable=1)
+        Item(steelskin_potion usable=1)
+        Item(battle_potion_of_stamina usable=1)
+    }
 }
 
 #
