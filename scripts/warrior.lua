@@ -38,12 +38,15 @@ AddFunction ProtectionInterruptActions
 	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
 	{
 		if target.InRange(pummel) and target.IsInterruptible() Spell(pummel)
-		if target.InRange(storm_bolt) and not target.Classification(worldboss) Spell(storm_bolt)
-		if target.InRange(intercept) and not target.Classification(worldboss) and Talent(warbringer_talent) Spell(intercept)
-		if target.Distance(less 10) and not target.Classification(worldboss) Spell(shockwave)
-		if target.InRange(quaking_palm) and not target.Classification(worldboss) Spell(quaking_palm)
-		if target.Distance(less 5) and not target.Classification(worldboss) Spell(war_stomp)
-		if target.InRange(intimidating_shout) and not target.Classification(worldboss) Spell(intimidating_shout)
+		if not target.Classification(worldboss) 
+        {
+            if target.InRange(storm_bolt) Spell(storm_bolt)
+            if target.InRange(intercept) and Talent(warbringer_talent) Spell(intercept)
+            if target.Distance(less 10) Spell(shockwave)
+            if target.InRange(quaking_palm) Spell(quaking_palm)
+            if target.Distance(less 5) Spell(war_stomp)
+            if target.InRange(intimidating_shout) Spell(intimidating_shout)
+        }
 	}
 }
 
