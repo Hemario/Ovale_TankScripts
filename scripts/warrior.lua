@@ -85,7 +85,6 @@ AddFunction ProtectionDefaultMainActions
     Spell(dragon_roar)
 	Spell(thunder_clap)
 	if BuffPresent(revenge_buff) Spell(revenge)
-    if not BuffPresent(shield_block_buff) Spell(shockwave)
 	if not target.Classification(worldboss) Spell(storm_bolt)
     if RageDeficit() <= 20 Spell(revenge)
     Spell(devastate)
