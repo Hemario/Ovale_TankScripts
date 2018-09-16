@@ -1,9 +1,9 @@
 local __Scripts = LibStub:GetLibrary("ovale/Scripts")
 local OvaleScripts = __Scripts.OvaleScripts
 do
-    local name = "icyveins_demonhunter_vengeance"
-    local desc = "[8.0.1] Icy-Veins: DemonHunter Vengeance"
-    local code = [[
+	local name = "icyveins_demonhunter_vengeance"
+	local desc = "[8.0.1] Icy-Veins: DemonHunter Vengeance"
+	local code = [[
 Include(ovale_common)
 Include(ovale_trinkets_mop)
 Include(ovale_trinkets_wod)
@@ -16,7 +16,7 @@ AddCheckBox(opt_infernal_strike SpellName(infernal_strike) default specializatio
 
 AddFunction VengeanceHealMeShortCd
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
+	unless(DebuffPresent(healing_immunity_debuff)) 
 	{
  		if (HealthPercent() < 35) UseHealthPotions()
 	}
@@ -27,10 +27,10 @@ AddFunction VengeanceHealMeMain
 	{
 		if (HealthPercent() < 70) Spell(fel_devastation)
 		if (HealthPercent() < 50) 
-        {
-            if (SoulFragments() >= 4 and Enemies()>=3) Spell(spirit_bomb)
-            Spell(soul_cleave)
-        }
+		{
+			if (SoulFragments() >= 4 and Enemies()>=3) Spell(spirit_bomb)
+			Spell(soul_cleave)
+		}
 	}
 }
 
@@ -56,8 +56,8 @@ AddFunction VengeanceRangeCheck
 
 AddFunction VengeanceDefaultShortCDActions
 {
-    VengeanceHealMeShortCd()
-    Spell(soul_barrier)
+	VengeanceHealMeShortCd()
+	Spell(soul_barrier)
 	
 	if (IncomingDamage(5 physical=1) > 0 and (BuffExpires(metamorphosis_veng_buff) or SpellCharges(demon_spikes) == SpellMaxCharges(demon_spikes) or Talent(razor_spikes_talent)))
 	{
@@ -69,54 +69,54 @@ AddFunction VengeanceDefaultShortCDActions
 
 AddFunction VengeanceDefaultMainActions
 {
-    VengeanceHealMeMain()
-    if (VengeanceInfernalStrike()) Spell(infernal_strike)
-    
-    # fiery demise
-    if (not target.DebuffExpires(fiery_demise_debuff))
-    {
-        if (SoulFragments() >= 4) Spell(spirit_bomb)
-        Spell(immolation_aura)
-        Spell(sigil_of_flame)
-        Spell(fel_devastation)
-        Spell(felblade)
-        Spell(fel_eruption)
-    }
-    
-    if (SoulFragments() >= 4) Spell(spirit_bomb)
-    if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) Spell(soul_cleave)
-    if (PainDeficit() >= 10) Spell(immolation_aura)
-    if (PainDeficit() >= 30) Spell(felblade)
-    if (SoulFragments() <= 3) Spell(fracture)
-    Spell(fel_devastation)
-    if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
-    if (not Talent(fracture_talent) and PainDeficit() >= 10) Spell(shear)
-    Spell(throw_glaive_veng)
+	VengeanceHealMeMain()
+	if (VengeanceInfernalStrike()) Spell(infernal_strike)
+	
+	# fiery demise
+	if (not target.DebuffExpires(fiery_demise_debuff))
+	{
+		if (SoulFragments() >= 4) Spell(spirit_bomb)
+		Spell(immolation_aura)
+		Spell(sigil_of_flame)
+		Spell(fel_devastation)
+		Spell(felblade)
+		Spell(fel_eruption)
+	}
+	
+	if (SoulFragments() >= 4) Spell(spirit_bomb)
+	if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) Spell(soul_cleave)
+	if (PainDeficit() >= 10) Spell(immolation_aura)
+	if (PainDeficit() >= 30) Spell(felblade)
+	if (SoulFragments() <= 3) Spell(fracture)
+	Spell(fel_devastation)
+	if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
+	if (not Talent(fracture_talent) and PainDeficit() >= 10) Spell(shear)
+	Spell(throw_glaive_veng)
 }
 
 AddFunction VengeanceDefaultCdActions
 {
 	VengeanceInterruptActions()
-    if not CheckBoxOn(opt_demonhunter_vengeance_offensive) VengeanceDefaultOffensiveCooldowns()
-    Item(Trinket0Slot text=13 usable=1)
+	if not CheckBoxOn(opt_demonhunter_vengeance_offensive) VengeanceDefaultOffensiveCooldowns()
+	Item(Trinket0Slot text=13 usable=1)
 	Item(Trinket1Slot text=14 usable=1)
 	if (BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) 
-    {
-        Spell(fiery_brand)
-        Spell(metamorphosis_veng)
-        if CheckBoxOn(opt_use_consumables) 
-        {
-            Item(battle_potion_of_agility usable=1)
-            Item(steelskin_potion usable=1)
-            Item(battle_potion_of_stamina usable=1)
-        }
-    }
+	{
+		Spell(fiery_brand)
+		Spell(metamorphosis_veng)
+		if CheckBoxOn(opt_use_consumables) 
+		{
+			Item(battle_potion_of_agility usable=1)
+			Item(steelskin_potion usable=1)
+			Item(battle_potion_of_stamina usable=1)
+		}
+	}
 }
 
 AddFunction VengeanceDefaultOffensiveCooldowns
 {
-    if Talent(charred_flesh_talent) Spell(fiery_brand)
-    Spell(metamorphosis_veng)
+	if Talent(charred_flesh_talent) Spell(fiery_brand)
+	Spell(metamorphosis_veng)
 }
 
 AddFunction VengeanceInterruptActions
@@ -165,8 +165,8 @@ AddIcon help=cd specialization=vengeance
 AddCheckBox(opt_demonhunter_vengeance_offensive L(opt_demonhunter_vengeance_offensive) default specialization=vengeance)
 AddIcon checkbox=opt_demonhunter_vengeance_offensive size=small specialization=vengeance
 {
-    VengeanceDefaultOffensiveCooldowns()
+	VengeanceDefaultOffensiveCooldowns()
 }
 	]]
-    OvaleScripts:RegisterScript("DEMONHUNTER", "vengeance", name, desc, code, "script")
+	OvaleScripts:RegisterScript("DEMONHUNTER", "vengeance", name, desc, code, "script")
 end
