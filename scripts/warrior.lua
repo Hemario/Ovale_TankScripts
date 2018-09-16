@@ -128,6 +128,7 @@ AddFunction ProtectionDefaultCdActions
         Item(steelskin_potion usable=1)
         Item(battle_potion_of_stamina usable=1)
     }
+    if not BuffPresent(rallying_cry_buff) Spell(rallying_cry)
 }
 
 #
