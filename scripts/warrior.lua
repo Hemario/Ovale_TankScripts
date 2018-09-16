@@ -63,11 +63,13 @@ AddFunction ProtectionOffensiveCooldowns
 AddFunction ProtectionDefaultShortCDActions
 {
 	ProtectionHealMe()
-    if IncomingDamage(5 physical=1)
-        and (not Talent(bolster_talent) or not BuffPresent(last_stand_buff)) 
-        and (BuffRemaining(shield_block_buff) < 2*BaseDuration(shield_block_buff)) 
+    if (BuffRemaining(shield_block_buff) < 2*BaseDuration(shield_block_buff)) 
     {
-        Spell(shield_block)
+        if IncomingDamage(5 physical=1)
+            and (not Talent(bolster_talent) or not BuffPresent(last_stand_buff)) 
+        {
+            Spell(shield_block)
+        }
     }
 	if (IncomingDamage(5) and Rage() >= 70) Spell(ignore_pain)
 	# range check
