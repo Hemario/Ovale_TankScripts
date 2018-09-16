@@ -102,6 +102,7 @@ AddFunction ProtectionDefaultAoEActions
     if (Talent(best_served_cold_talent) and Enemies()>= 2) Spell(revenge)
     Spell(thunder_clap)
     Spell(revenge)
+    if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
 	Spell(shield_slam)
 	if Enemies() >= 3 Spell(shockwave)
 	Spell(devastate)
