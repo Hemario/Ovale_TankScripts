@@ -95,10 +95,12 @@ AddFunction ProtectionDefaultMainActions
 
 AddFunction ProtectionDefaultAoEActions
 {
-	Spell(ravager)
-	Spell(revenge)
-	Spell(thunder_clap)
 	if not BuffPresent(battle_shout_buff) Spell(battle_shout)
+    Spell(ravager)
+    Spell(dragon_roar)
+    if (Talent(best_served_cold_talent) and Enemies()>= 2) Spell(revenge)
+    Spell(thunder_clap)
+    Spell(revenge)
 	Spell(shield_slam)
 	if Enemies() >= 3 Spell(shockwave)
 	Spell(devastate)
