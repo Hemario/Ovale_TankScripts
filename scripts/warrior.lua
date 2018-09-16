@@ -64,12 +64,13 @@ AddFunction ProtectionOffensiveCooldowns
 AddFunction ProtectionDefaultShortCDActions
 {
 	ProtectionHealMe()
-	if ArmorSetBonus(T20 2) and RageDeficit() >= 26 Spell(berserker_rage)
-	if IncomingDamage(5 physical=1) 
-	{
-		if SpellCharges(shield_block) == SpellMaxCharges(shield_block) Spell(shield_block)
-	}
-	if ((not BuffPresent(renewed_fury_buff) and Talent(renewed_fury_talent)) or Rage() >= 60) Spell(ignore_pain)
+    if IncomingDamage(5 physical=1)
+        and (not Talent(bolster_talent) or not BuffPresent(last_stand_buff)) 
+        and (BuffRemaining(shield_block_buff) < 2*BaseDuration(shield_block_buff)) 
+    {
+        Spell(shield_block)
+    }
+	if (IncomingDamage(5) and Rage() >= 70) Spell(ignore_pain)
 	# range check
 	ProtectionGetInMeleeRange()
 }
