@@ -80,6 +80,7 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
+    if not BuffPresent(battle_shout_buff) Spell(battle_shout)
 	Spell(shield_slam)
 	if Talent(devastatator_talent) and BuffPresent(revenge_buff) Spell(revenge)
 	if BuffPresent(vengeance_revenge_buff) Spell(revenge)
@@ -98,6 +99,7 @@ AddFunction ProtectionDefaultAoEActions
 	Spell(ravager)
 	Spell(revenge)
 	Spell(thunder_clap)
+	if not BuffPresent(battle_shout_buff) Spell(battle_shout)
 	Spell(shield_slam)
 	if Enemies() >= 3 Spell(shockwave)
 	Spell(devastate)
