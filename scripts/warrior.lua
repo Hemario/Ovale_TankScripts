@@ -122,7 +122,7 @@ AddFunction ProtectionDefaultCdActions
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	Spell(demoralizing_shout)
-	if not Talent(bolster_talent) or not BuffPresent(shield_block_buff) Spell(last_stand)
+	Spell(last_stand)
 	Spell(shield_wall)
 	if CheckBoxOn(opt_use_consumables) 
 	{
