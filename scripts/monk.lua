@@ -9,9 +9,6 @@ Include(ovale_trinkets_mop)
 Include(ovale_trinkets_wod)
 Include(ovale_monk_spells)
 
-#temp fix
-SpellInfo(blackout_strike replace=100784)
-
 AddCheckBox(opt_interrupt L(interrupt) default specialization=brewmaster)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=brewmaster)
 AddCheckBox(opt_monk_bm_aoe L(AOE) default specialization=brewmaster)
