@@ -11,6 +11,7 @@ Include(ovale_paladin_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
+AddCheckBox(opt_paladin_protection_aoe L(AOE) default specialization=protection)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=protection)
 
 AddFunction PaladinHealMe
@@ -132,7 +133,7 @@ AddIcon enemies=1 help=main specialization=protection
 	ProtectionDefaultMainActions()
 }
 
-AddIcon help=aoe specialization=protection
+AddIcon checkbox=opt_paladin_protection_aoe help=aoe specialization=protection
 {
 	ProtectionDefaultAoEActions()
 }
