@@ -63,8 +63,8 @@ AddFunction BrewmasterDefaultShortCDActions
 	
 	# heal me
 	BrewmasterHealMeShortCd()
-    # Guard
-    Spell(guard)
+	# Guard
+	Spell(guard)
 	# range check
 	BrewmasterRangeCheck()
 
