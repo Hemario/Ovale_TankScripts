@@ -65,7 +65,7 @@ AddFunction ProtectionDefaultShortCDActions
 			Spell(shield_block)
 		}
 	}
-	if (IncomingDamage(5) and Rage() >= 70) Spell(ignore_pain)
+	if (IncomingDamage(5)>0 and Rage() >= 70) Spell(ignore_pain)
 	# range check
 	ProtectionGetInMeleeRange()
 }
