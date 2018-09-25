@@ -86,8 +86,11 @@ AddFunction ProtectionDefaultAoEActions
 
 AddFunction ProtectionDefaultCdActions
 {
-	ProtectionInterruptActions()
-	if not CheckBoxOn(opt_paladin_protection_offensive) Spell(avenging_wrath)
+	if not CheckBoxOn(opt_paladin_protection_offensive) 
+	{
+		ProtectionInterruptActions()
+		ProtectionDefaultOffensiveCooldowns()
+	}
 	if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 15 Spell(lay_on_hands)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -151,6 +154,7 @@ AddIcon help=cd specialization=protection
 AddCheckBox(opt_paladin_protection_offensive L(opt_paladin_protection_offensive) default specialization=protection)
 AddIcon checkbox=opt_paladin_protection_offensive size=small specialization=protection
 {
+	ProtectionInterruptActions()
 	ProtectionDefaultOffensiveCooldowns()
 }
 	]]

@@ -110,8 +110,11 @@ AddFunction ProtectionDefaultAoEActions
 
 AddFunction ProtectionDefaultCdActions 
 {
-	ProtectionInterruptActions()
-	if not CheckBoxOn(opt_warrior_protection_offensive) ProtectionDefaultOffensiveCooldowns()
+	if not CheckBoxOn(opt_warrior_protection_offensive) 
+	{
+		ProtectionInterruptActions()
+		ProtectionDefaultOffensiveCooldowns()
+	}
 	if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection_buff) Spell(spell_reflection)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -160,6 +163,7 @@ AddIcon help=cd specialization=protection
 AddCheckBox(opt_warrior_protection_offensive L(opt_warrior_protection_offensive) default specialization=protection)
 AddIcon checkbox=opt_warrior_protection_offensive size=small specialization=protection
 {
+	ProtectionInterruptActions()
 	ProtectionDefaultOffensiveCooldowns()
 }
 ]]

@@ -102,8 +102,11 @@ AddFunction GuardianDefaultAoEActions
 
 AddFunction GuardianDefaultCdActions 
 {
-	GuardianInterruptActions()
-	if not CheckBoxOn(opt_druid_guardian_offensive) GuardianDefaultOffensiveCooldowns()
+	if not CheckBoxOn(opt_druid_guardian_offensive) 
+	{
+		GuardianInterruptActions()
+		GuardianDefaultOffensiveCooldowns()
+	}
 	
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -165,6 +168,7 @@ AddIcon help=cd specialization=guardian
 AddCheckBox(opt_druid_guardian_offensive L(opt_druid_guardian_offensive) default specialization=guardian)
 AddIcon checkbox=opt_druid_guardian_offensive size=small specialization=guardian
 {
+	GuardianInterruptActions()
 	GuardianDefaultOffensiveCooldowns()
 }
 ]]

@@ -150,8 +150,11 @@ AddFunction BrewmasterDefaultAoEActions
 
 AddFunction BrewmasterDefaultCdActions 
 {
-	BrewmasterInterruptActions()
-	if not CheckBoxOn(opt_monk_bm_offensive) BrewmasterDefaultOffensiveCooldowns()
+	if not CheckBoxOn(opt_monk_bm_offensive) 
+	{
+		BrewmasterInterruptActions()
+		BrewmasterDefaultOffensiveCooldowns()
+	}
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	Spell(fortifying_brew)
@@ -206,6 +209,7 @@ AddIcon help=cd specialization=brewmaster
 AddCheckBox(opt_monk_bm_offensive L(opt_monk_bm_offensive) default specialization=brewmaster)
 AddIcon checkbox=opt_monk_bm_offensive size=small specialization=brewmaster
 {
+	BrewmasterInterruptActions()
 	BrewmasterDefaultOffensiveCooldowns()
 }
 ]]

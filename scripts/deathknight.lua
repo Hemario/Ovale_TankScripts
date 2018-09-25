@@ -70,8 +70,11 @@ AddFunction BloodHealMe
 
 AddFunction BloodDefaultCdActions
 {
-	BloodInterruptActions()
-	if not CheckBoxOn(opt_deathknight_blood_offensive) BloodDefaultOffensiveCooldowns()
+	if not CheckBoxOn(opt_deathknight_blood_offensive) 
+	{
+		BloodInterruptActions()
+		BloodDefaultOffensiveCooldowns()
+	}
 	if IncomingDamage(1.5 magic=1) > 0 spell(antimagic_shell)
 	Spell(consumption)
 	if (BuffStacks(bone_shield_buff) >= 6) Spell(tombstone)
@@ -124,6 +127,7 @@ AddIcon help=cd specialization=blood
 AddCheckBox(opt_deathknight_blood_offensive L(opt_deathknight_blood_offensive) default specialization=blood)
 AddIcon checkbox=opt_deathknight_blood_offensive size=small specialization=blood
 {
+	BloodInterruptActions()
 	BloodDefaultOffensiveCooldowns()
 }
 ]]

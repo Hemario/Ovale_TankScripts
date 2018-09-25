@@ -96,8 +96,11 @@ AddFunction VengeanceDefaultMainActions
 
 AddFunction VengeanceDefaultCdActions
 {
-	VengeanceInterruptActions()
-	if not CheckBoxOn(opt_demonhunter_vengeance_offensive) VengeanceDefaultOffensiveCooldowns()
+	if not CheckBoxOn(opt_demonhunter_vengeance_offensive) 
+	{
+		VengeanceInterruptActions()
+		VengeanceDefaultOffensiveCooldowns()
+	}
 	Item(Trinket0Slot text=13 usable=1)
 	Item(Trinket1Slot text=14 usable=1)
 	if (BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) 
@@ -158,13 +161,13 @@ AddIcon checkbox=opt_demonhunter_vengeance_aoe help=aoe specialization=vengeance
 
 AddIcon help=cd specialization=vengeance
 {
-	#if not InCombat() VengeancePrecombatCdActions()
 	VengeanceDefaultCdActions()
 }
 
 AddCheckBox(opt_demonhunter_vengeance_offensive L(opt_demonhunter_vengeance_offensive) default specialization=vengeance)
 AddIcon checkbox=opt_demonhunter_vengeance_offensive size=small specialization=vengeance
 {
+	VengeanceInterruptActions()
 	VengeanceDefaultOffensiveCooldowns()
 }
 	]]
