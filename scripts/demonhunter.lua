@@ -41,7 +41,7 @@ AddFunction VengeanceInfernalStrike
 
 AddFunction VengeanceSigilOfFlame
 {
-	(not SigilCharging(flame) and target.DebuffRemaining(sigil_of_flame_debuff) <= 2-Talent(quickened_sigils_talent))
+	(not SigilCharging(flame) and target.DebuffRemaining(sigil_of_flame_debuff) <= 1.8+2-Talent(quickened_sigils_talent))
 }
 
 AddFunction VengeanceRangeCheck
@@ -77,7 +77,7 @@ AddFunction VengeanceDefaultMainActions
 	{
 		if (SoulFragments() >= 4) Spell(spirit_bomb)
 		Spell(immolation_aura)
-		Spell(sigil_of_flame)
+		if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
 		Spell(fel_devastation)
 		Spell(felblade)
 		Spell(fel_eruption)
