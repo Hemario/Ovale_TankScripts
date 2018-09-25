@@ -96,35 +96,40 @@ AddFunction BrewmasterDefaultShortCDActions
 AddFunction BrewmasterDefaultMainActions
 {
 	BrewmasterHealMeMain()
-	if (not InCombat()) Spell(keg_smash)
 		
 	if Talent(blackout_combo_talent) BrewmasterBlackoutComboMainActions()
 	unless Talent(blackout_combo_talent) 
 	{
 		Spell(keg_smash)
-		Spell(blackout_strike)
-		if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
-		if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
-		if (Energy() >= 65 or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
-		Spell(chi_burst)
-		Spell(chi_wave)
-		Spell(arcane_pulse)
+		unless (SpellCooldown(keg_smash) < GCD()) 
+		{
+			Spell(blackout_strike)
+			if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
+			if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
+			if (Energy() >= 65 or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
+			Spell(chi_burst)
+			Spell(chi_wave)
+			Spell(arcane_pulse)
+		}
 	}
 }
 
 AddFunction BrewmasterBlackoutComboMainActions
 {
-	if(not BuffPresent(blackout_combo_buff) or (SpellCharges(ironskin_brew) <= 1) and BuffRemaining(ironskin_brew_buff) < BaseDuration(ironskin_brew)) Spell(keg_smash)
-	if(not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
 	if(BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
-	
-	unless BuffPresent(blackout_combo_buff)
+	unless (BuffPresent(blackout_combo_buff)) 
 	{
-		if target.DebuffPresent(keg_smash) Spell(breath_of_fire)
-		if BuffRefreshable(rushing_jade_wind_buff) Spell(rushing_jade_wind)
-		Spell(chi_burst)
-		Spell(chi_wave)
-		Spell(arcane_pulse)
+		Spell(keg_smash)
+		unless (SpellCooldown(keg_smash) < GCD())
+		{
+			Spell(blackout_strike)
+			if target.DebuffPresent(keg_smash) Spell(breath_of_fire)
+			if BuffRefreshable(rushing_jade_wind_buff) 
+			Spell(chi_burst)
+			Spell(chi_wave)
+			Spell(arcane_pulse)
+			Spell(rushing_jade_wind)
+		}
 	}
 }
 
@@ -135,17 +140,19 @@ AddFunction BrewmasterBlackoutComboMainActions
 AddFunction BrewmasterDefaultAoEActions
 {
 	BrewmasterHealMeMain()
-	if (not InCombat()) Spell(keg_smash)
- 
-	if (Talent(blackout_combo_talent) and not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
-	if (not Talent(blackout_combo_talent) or (BuffPresent(blackout_combo_buff) and SpellCharges(ironskin_brew) <= SpellData(ironskin_brew charges)-2) or SpellFullRecharge(keg_smash) == 0) Spell(keg_smash)
-	Spell(chi_burst)
-	Spell(chi_wave)
-	if (target.DebuffPresent(keg_smash) and not BuffPresent(blackout_combo_buff)) Spell(breath_of_fire)
-	if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
-	Spell(arcane_pulse)
-	if (Energy() >= 65 or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
-	if (not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)	
+	Spell(keg_smash)
+	unless (SpellCooldown(keg_smash) < GCD()) 
+	{
+		if (Talent(blackout_combo_talent) and not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
+		Spell(chi_burst)
+		Spell(chi_wave)
+		if (target.DebuffPresent(keg_smash) and not BuffPresent(blackout_combo_buff)) Spell(breath_of_fire)
+		if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
+		Spell(arcane_pulse)
+		if (Energy() >= 65 or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
+		if (not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
+		Spell(rushing_jade_wind)
+	}
 }
 
 AddFunction BrewmasterDefaultCdActions 
