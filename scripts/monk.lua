@@ -63,6 +63,8 @@ AddFunction BrewmasterDefaultShortCDActions
 	
 	# heal me
 	BrewmasterHealMeShortCd()
+    # Guard
+    Spell(guard)
 	# range check
 	BrewmasterRangeCheck()
 
@@ -149,7 +151,6 @@ AddFunction BrewmasterDefaultAoEActions
 AddFunction BrewmasterDefaultCdActions 
 {
 	BrewmasterInterruptActions()
-	Spell(guard)
 	if not CheckBoxOn(opt_monk_bm_offensive) BrewmasterDefaultOffensiveCooldowns()
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
