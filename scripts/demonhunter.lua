@@ -124,13 +124,11 @@ AddFunction VengeanceDefaultOffensiveCooldowns
 
 AddFunction VengeanceInterruptActions
 {
-	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.IsInterruptible()
+	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
 	{
-		if target.InRange(consume_magic) Spell(consume_magic)
+		if target.InRange(disrupt) and target.IsInterruptible() Spell(disrupt)
 		if not target.Classification(worldboss) and not SigilCharging(silence misery chains)
 		{
-			if target.Distance(less 8) Spell(arcane_torrent_dh)
-			Spell(fel_eruption)
 			if (target.RemainingCastTime() >= (2 - Talent(quickened_sigils_talent) + GCDRemaining()))
 			{
 				Spell(sigil_of_silence)
