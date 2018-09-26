@@ -5,8 +5,6 @@ do
 	local desc = "[8.0.1] Icy-Veins: Druid Guardian"
 	local code = [[
 Include(ovale_common)
-Include(ovale_trinkets_mop)
-Include(ovale_trinkets_wod)
 Include(ovale_druid_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=guardian)

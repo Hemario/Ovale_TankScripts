@@ -5,8 +5,6 @@ do
 	local desc = "[8.0.1] Icy-Veins: Warrior Protection"
 	local code = [[
 Include(ovale_common)
-Include(ovale_trinkets_mop)
-Include(ovale_trinkets_wod)
 Include(ovale_warrior_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
