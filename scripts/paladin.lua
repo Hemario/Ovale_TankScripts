@@ -111,7 +111,7 @@ AddFunction ProtectionDefaultCdActions
 
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
-	Spell(avenging_wrath)
+	if (not Talent(seraphim_talent) or SpellCooldown(seraphim) <= 4) Spell(avenging_wrath)
 	if (Charges(shield_of_the_righteous) >= 2) Spell(seraphim)
 }
 
