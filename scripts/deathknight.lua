@@ -98,8 +98,13 @@ AddFunction BloodInterruptActions
 	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
 	{
 		if target.InRange(mind_freeze) and target.IsInterruptible() Spell(mind_freeze)
-		if target.InRange(asphyxiate) and not target.Classification(worldboss) Spell(asphyxiate)
-		if target.Distance(less 5) and not target.Classification(worldboss) Spell(war_stomp)
+		if not target.Classification(worldboss) 
+        {
+            if target.InRange(asphyxiate_blood) Spell(asphyxiate_blood)
+            if target.InRange(death_grip) Spell(death_grip)
+            if target.Distance(less 15) Spell(gorefiends_grasp)
+            if target.Distance(less 5) Spell(war_stomp)
+        }
 	}
 }
 
