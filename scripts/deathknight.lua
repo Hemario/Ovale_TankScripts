@@ -33,7 +33,7 @@ AddFunction BloodDefaultMainActions
 	# keep marrowrend up
 	if InCombat() and BuffExpires(bone_shield_buff 3) Spell(marrowrend)
 	# AoE
-	if (Enemies() >= 4 and RunicPower() >= 100) Spell(bonestorm)
+	if (Enemies() >= 4 and RunicPower() >= 90) Spell(bonestorm)
 	if (Enemies() >= 3) Spell(consumption)
 	# Death Strike
 	if (BuffPresent(blood_shield_buff) and BuffExpires(blood_shield_buff 3)) Spell(death_strike)
