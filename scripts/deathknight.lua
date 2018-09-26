@@ -38,6 +38,7 @@ AddFunction BloodDefaultMainActions
 	# Death Strike
 	if (BuffPresent(blood_shield_buff) and BuffExpires(blood_shield_buff 3)) Spell(death_strike)
 	if (RunicPowerDeficit() <= 20) Spell(death_strike)
+	# Mark of Blood
 	if (target.BuffExpires(mark_of_blood_debuff) and target.IsTargetingPlayer()) Spell(mark_of_blood)
 	# Blooddrinker
 	if not BuffPresent(dancing_rune_weapon_buff) Spell(blooddrinker)
