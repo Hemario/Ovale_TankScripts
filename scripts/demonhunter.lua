@@ -119,7 +119,6 @@ AddFunction VengeanceDefaultCdActions
 AddFunction VengeanceDefaultOffensiveCooldowns
 {
 	if Talent(charred_flesh_talent) Spell(fiery_brand)
-	Spell(metamorphosis_veng)
 }
 
 AddFunction VengeanceInterruptActions
