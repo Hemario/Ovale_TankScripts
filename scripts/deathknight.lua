@@ -36,7 +36,7 @@ AddFunction BloodDefaultMainActions
 	if (Enemies() >= 4 and RunicPower() >= 100) Spell(bonestorm)
 	if (Enemies() >= 3) Spell(consumption)
 	# Death Strike
-	if (BuffExpires(blood_shield_buff 3)) Spell(death_strike)
+	if (BuffPresent(blood_shield_buff) and BuffExpires(blood_shield_buff 3)) Spell(death_strike)
 	if (RunicPowerDeficit() <= 20) Spell(death_strike)
 	if (target.BuffExpires(mark_of_blood_debuff) and target.IsTargetingPlayer()) Spell(mark_of_blood)
 	# Blooddrinker
@@ -62,8 +62,7 @@ AddFunction BloodHealMe
 {
 	unless(DebuffPresent(healing_immunity_debuff)) 
 	{
-		if HealthPercent() <= 70 Spell(death_strike)
-		if (HealthPercent() <= 50 and BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike)
+		if (HealthPercent() <= 70 or BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike)
 		if (HealthPercent() < 35) UseHealthPotions()
 	}
 }
