@@ -99,6 +99,7 @@ AddFunction ProtectionDefaultAoEActions
 	if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
 	Spell(shield_slam)
 	if Enemies() >= 3 Spell(shockwave)
+    Spell(arcane_pulse)
     Spell(lights_judgment)
 	Spell(devastate)
 }
