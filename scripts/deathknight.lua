@@ -24,6 +24,18 @@ AddFunction BloodDefaultShortCDActions
 	if not BuffPresent(rune_tap_buff) Spell(rune_tap)
 }
 
+AddFunction BloodHealMe
+{
+	unless(DebuffPresent(healing_immunity_debuff)) 
+	{
+		if (HealthPercent() <= 70) 
+        {
+            if ((HealthPercent() <= 50) or (BloodDeathStrikeHealing() <= HealthMissing())) Spell(death_strike)
+            if (HealthPercent() < 35) UseHealthPotions()
+        } 
+	}
+}
+
 AddFunction BloodDefaultMainActions
 {
 	# Heal
@@ -55,15 +67,6 @@ AddFunction BloodDefaultMainActions
 	if BuffPresent(crimson_scourge_buff) Spell(death_and_decay)
 	Spell(blood_boil)
 	Spell(rune_strike)
-}
-
-AddFunction BloodHealMe
-{
-	unless(DebuffPresent(healing_immunity_debuff)) 
-	{
-		if (HealthPercent() <= 70 or BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike)
-		if (HealthPercent() < 35) UseHealthPotions()
-	}
 }
 
 AddFunction BloodDefaultCdActions
