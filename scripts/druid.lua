@@ -93,8 +93,8 @@ AddFunction GuardianDefaultAoEActions
 	Spell(thrash_bear)
 	if (Enemies() <= 2 and BuffRefreshable(pulverize_buff)) Spell(pulverize)
 	if (Enemies() <= 4) Spell(mangle)
-	if (Enemies() <= 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
 	if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0)) Spell(maul)
+	if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
 	Spell(swipe_bear)
 }
 
