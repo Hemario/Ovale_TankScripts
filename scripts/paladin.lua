@@ -78,6 +78,7 @@ AddFunction ProtectionDefaultAoEActions
 	Spell(judgment_prot)
 	Spell(hammer_of_the_righteous)
 	Spell(consecration)
+    Spell(lights_judgment)
 }
 
 AddFunction ProtectionDefaultCdActions
