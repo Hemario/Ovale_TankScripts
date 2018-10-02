@@ -130,7 +130,7 @@ AddFunction ProtectionDefaultCdActions
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
 	Spell(avatar)
-	if (Talent(booming_voice_talent) and RageDeficit() >= Talent(booming_voice_talent)*60) Spell(demoralizing_shout)
+	if (Talent(booming_voice_talent) and RageDeficit() >= 60) Spell(demoralizing_shout)
 }
 
 #
