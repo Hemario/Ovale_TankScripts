@@ -84,6 +84,7 @@ AddFunction GuardianDefaultAoEActions
 	{
 		if (DebuffCountOnAny(moonfire_debuff) < 1) Spell(moonfire)
 		if (BuffRefreshable(pulverize_buff)) Spell(pulverize)
+        if (target.DebuffStacks(thrash_bear_debuff) < 3) Spell(thrash_bear)
 		if (Enemies() <= 3) Spell(mangle)
 		Spell(thrash_bear)
 	}
