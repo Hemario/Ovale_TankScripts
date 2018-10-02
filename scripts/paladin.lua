@@ -130,6 +130,7 @@ AddFunction ProtectionDispelActions
 {
     if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
     if Spell(arcane_torrent_holy) and target.HasDebuffType(magic) Spell(arcane_torrent_holy)
+    if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
 }
 
 AddFunction ProtectionDefaultOffensiveCooldowns

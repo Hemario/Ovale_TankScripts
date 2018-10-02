@@ -120,6 +120,7 @@ AddFunction ProtectionInterruptActions
 AddFunction ProtectionDispelActions
 {
     if Spell(arcane_torrent_rage) and target.HasDebuffType(magic) Spell(arcane_torrent_rage)
+    if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
 }
 
 AddFunction ProtectionDefaultOffensiveCooldowns
