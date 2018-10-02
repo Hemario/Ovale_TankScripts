@@ -102,12 +102,13 @@ AddFunction BrewmasterDefaultMainActions
 		unless (SpellCooldown(keg_smash) < GCD()) 
 		{
 			Spell(blackout_strike)
-			if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
+			if (target.DebuffPresent(keg_smash) and target.DebuffRefreshable(breath_of_fire_debuff)) Spell(breath_of_fire)
 			if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
 			if (Energy() >= 65 or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
 			Spell(chi_burst)
 			Spell(chi_wave)
 			Spell(arcane_pulse)
+            if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
 		}
 	}
 }
