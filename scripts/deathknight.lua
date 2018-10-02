@@ -72,11 +72,8 @@ AddFunction BloodDefaultMainActions
 
 AddFunction BloodDefaultCdActions
 {
-	if not CheckBoxOn(opt_deathknight_blood_offensive) 
-	{
-		BloodInterruptActions()
-		BloodDefaultOffensiveCooldowns()
-	}
+	if not CheckBoxOn(opt_deathknight_blood_offensive) { BloodDefaultOffensiveActions() }
+
 	if IncomingDamage(1.5 magic=1) > 0 spell(antimagic_shell)
 	Spell(consumption)
 	if (BuffStacks(bone_shield_buff) >= 6) Spell(tombstone)
@@ -92,9 +89,11 @@ AddFunction BloodDefaultCdActions
 	UseRacialSurvivalActions()
 }
 
-AddFunction BloodDefaultOffensiveCooldowns
+AddFunction BloodDefaultOffensiveActions
 {
-	Spell(dancing_rune_weapon)
+    BloodInterruptActions()
+    BloodDispelActions()
+    BloodDefaultOffensiveCooldowns()
 }
 
 AddFunction BloodInterruptActions
@@ -110,6 +109,16 @@ AddFunction BloodInterruptActions
             if target.Distance(less 5) Spell(war_stomp)
         }
 	}
+}
+
+AddFunction BloodDispelActions
+{
+	if Spell(arcane_torrent_runicpower) and target.HasDebuffType(magic) Spell(arcane_torrent_runicpower)
+}
+
+AddFunction BloodDefaultOffensiveCooldowns
+{
+	Spell(dancing_rune_weapon)
 }
 
 AddCheckBox(opt_deathknight_blood_aoe L(AOE) default specialization=blood)
@@ -138,8 +147,7 @@ AddIcon help=cd specialization=blood
 AddCheckBox(opt_deathknight_blood_offensive L(opt_deathknight_blood_offensive) default specialization=blood)
 AddIcon checkbox=opt_deathknight_blood_offensive size=small specialization=blood
 {
-	BloodInterruptActions()
-	BloodDefaultOffensiveCooldowns()
+	BloodDefaultOffensiveActions()
 }
 ]]
 	OvaleScripts:RegisterScript("DEATHKNIGHT", "blood", name, desc, code, "script")

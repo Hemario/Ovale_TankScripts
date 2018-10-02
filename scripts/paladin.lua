@@ -83,11 +83,8 @@ AddFunction ProtectionDefaultAoEActions
 
 AddFunction ProtectionDefaultCdActions
 {
-	if not CheckBoxOn(opt_paladin_protection_offensive) 
-	{
-		ProtectionInterruptActions()
-		ProtectionDefaultOffensiveCooldowns()
-	}
+	if not CheckBoxOn(opt_paladin_protection_offensive) { ProtectionDefaultOffensiveActions() }
+    
 	if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 15 Spell(lay_on_hands)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -108,10 +105,11 @@ AddFunction ProtectionDefaultCdActions
 	}
 }
 
-AddFunction ProtectionDefaultOffensiveCooldowns
+AddFunction ProtectionDefaultOffensiveActions
 {
-	if (not Talent(seraphim_talent) or SpellCooldown(seraphim) <= 4 or BuffPresent(seraphim)) Spell(avenging_wrath)
-	if (Charges(shield_of_the_righteous) >= 2) Spell(seraphim)
+    ProtectionInterruptActions()
+    ProtectionDispelActions()
+    ProtectionDefaultOffensiveCooldowns()
 }
 
 AddFunction ProtectionInterruptActions
@@ -126,6 +124,18 @@ AddFunction ProtectionInterruptActions
 			if target.Distance(less 8) Spell(war_stomp)
 		}
 	}
+}
+
+AddFunction ProtectionDispelActions
+{
+    if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
+    if Spell(arcane_torrent_holy) and target.HasDebuffType(magic) Spell(arcane_torrent_holy)
+}
+
+AddFunction ProtectionDefaultOffensiveCooldowns
+{
+	if (not Talent(seraphim_talent) or SpellCooldown(seraphim) <= 4 or BuffPresent(seraphim)) Spell(avenging_wrath)
+	if (Charges(shield_of_the_righteous) >= 2) Spell(seraphim)
 }
 
 AddIcon help=shortcd specialization=protection
@@ -152,6 +162,7 @@ AddIcon help=cd specialization=protection
 AddCheckBox(opt_paladin_protection_offensive L(opt_paladin_protection_offensive) default specialization=protection)
 AddIcon checkbox=opt_paladin_protection_offensive size=small specialization=protection
 {
+    ProtectionDefaultOffensiveActions()
 	ProtectionInterruptActions()
 	ProtectionDefaultOffensiveCooldowns()
 }

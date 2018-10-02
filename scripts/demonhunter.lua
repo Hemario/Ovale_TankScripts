@@ -94,11 +94,8 @@ AddFunction VengeanceDefaultMainActions
 
 AddFunction VengeanceDefaultCdActions
 {
-	if not CheckBoxOn(opt_demonhunter_vengeance_offensive) 
-	{
-		VengeanceInterruptActions()
-		VengeanceDefaultOffensiveCooldowns()
-	}
+	if not CheckBoxOn(opt_demonhunter_vengeance_offensive) { VengeanceDefaultOffensiveActions() }
+    
 	Item(Trinket0Slot text=13 usable=1)
 	Item(Trinket1Slot text=14 usable=1)
 	if (BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) 
@@ -114,9 +111,11 @@ AddFunction VengeanceDefaultCdActions
 	}
 }
 
-AddFunction VengeanceDefaultOffensiveCooldowns
+AddFunction VengeanceDefaultOffensiveActions
 {
-	if Talent(charred_flesh_talent) Spell(fiery_brand)
+    VengeanceInterruptActions()
+    VengeanceDispelActions()
+    VengeanceDefaultOffensiveCooldowns()
 }
 
 AddFunction VengeanceInterruptActions
@@ -135,6 +134,20 @@ AddFunction VengeanceInterruptActions
 			if target.CreatureType(Demon Humanoid Beast) Spell(imprison)
 		}
 	}
+}
+
+AddFunction VengeanceDispelActions
+{
+    if target.HasDebuffType(magic) 
+    {
+        Spell(consume_magic)
+        Spell(arcane_torrent_dh)
+    }
+}
+
+AddFunction VengeanceDefaultOffensiveCooldowns
+{
+	if Talent(charred_flesh_talent) Spell(fiery_brand)
 }
 
 AddCheckBox(opt_demonhunter_vengeance_aoe L(AOE) default specialization=vengeance)
@@ -162,8 +175,7 @@ AddIcon help=cd specialization=vengeance
 AddCheckBox(opt_demonhunter_vengeance_offensive L(opt_demonhunter_vengeance_offensive) default specialization=vengeance)
 AddIcon checkbox=opt_demonhunter_vengeance_offensive size=small specialization=vengeance
 {
-	VengeanceInterruptActions()
-	VengeanceDefaultOffensiveCooldowns()
+    VengeanceDefaultOffensiveActions()
 }
 	]]
 	OvaleScripts:RegisterScript("DEMONHUNTER", "vengeance", name, desc, code, "script")

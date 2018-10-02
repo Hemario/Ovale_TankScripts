@@ -101,11 +101,7 @@ AddFunction GuardianDefaultAoEActions
 
 AddFunction GuardianDefaultCdActions 
 {
-	if not CheckBoxOn(opt_druid_guardian_offensive) 
-	{
-		GuardianInterruptActions()
-		GuardianDefaultOffensiveCooldowns()
-	}
+	if not CheckBoxOn(opt_druid_guardian_offensive) { GuardianDefaultOffensiveActions() }
 	
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -124,9 +120,17 @@ AddFunction GuardianDefaultCdActions
 	}
 }
 
-AddFunction GuardianDefaultOffensiveCooldowns
+AddFunction GuardianDefaultOffensiveActions
 {
-	Spell(incarnation_guardian_of_ursoc)
+    GuardianInterruptActions()
+    GuardianDispelActions()
+	GuardianDefaultOffensiveCooldowns()
+}
+
+AddFunction GuardianDispelActions
+{
+    if (player.HasDebuffType(poison curse) and (not InCombat() or not Stance(druid_bear_form))) Spell(remove_corruption)
+    if (targer.HasDebuffType(enrage)) Spell(soothe)
 }
 
 AddFunction GuardianInterruptActions
@@ -142,6 +146,11 @@ AddFunction GuardianInterruptActions
 			if target.Distance(less 15) Spell(typhoon)
 		}
 	}
+}
+
+AddFunction GuardianDefaultOffensiveCooldowns
+{
+	Spell(incarnation_guardian_of_ursoc)
 }
 
 AddIcon help=shortcd specialization=guardian
@@ -167,8 +176,7 @@ AddIcon help=cd specialization=guardian
 AddCheckBox(opt_druid_guardian_offensive L(opt_druid_guardian_offensive) default specialization=guardian)
 AddIcon checkbox=opt_druid_guardian_offensive size=small specialization=guardian
 {
-	GuardianInterruptActions()
-	GuardianDefaultOffensiveCooldowns()
+    GuardianDefaultOffensiveActions()
 }
 ]]
 	OvaleScripts:RegisterScript("DRUID", "guardian", name, desc, code, "script")

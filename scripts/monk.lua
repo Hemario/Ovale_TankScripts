@@ -156,23 +156,29 @@ AddFunction BrewmasterDefaultAoEActions
 
 AddFunction BrewmasterDefaultCdActions 
 {
-	if not CheckBoxOn(opt_monk_bm_offensive) 
-	{
-		BrewmasterInterruptActions()
-		BrewmasterDefaultOffensiveCooldowns()
-	}
+	if not CheckBoxOn(opt_monk_bm_offensive) { BrewmasterDefaultOffensiveActions() }
+	
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
 	Spell(fortifying_brew)
 	Spell(dampen_harm)
-	if CheckBoxOn(opt_use_consumables) 
+	
+    if CheckBoxOn(opt_use_consumables) 
 	{
 		Item(battle_potion_of_agility usable=1)
 		Item(steelskin_potion usable=1)
 		Item(battle_potion_of_stamina usable=1)
 	}
-	Spell(zen_meditation)
+	
+    Spell(zen_meditation)
 	UseRacialSurvivalActions()
+}
+
+AddFunction BrewmasterDefaultOffensiveActions
+{
+    BrewmasterInterruptActions()
+    BrewmasterDispelActions()
+	BrewmasterDefaultOffensiveCooldowns()
 }
 
 AddFunction BrewmasterInterruptActions
@@ -188,6 +194,12 @@ AddFunction BrewmasterInterruptActions
             if target.InRange(paralysis) Spell(paralysis)
         }
 	}
+}
+
+AddFunction BrewmasterDispelActions
+{
+    if player.HasDebuffType(poison disease) Spell(detox)
+    if Spell(arcane_torrent_chi) and target.HasDebuffType(magic) Spell(arcane_torrent_chi)
 }
 
 AddFunction BrewmasterDefaultOffensiveCooldowns
@@ -218,8 +230,8 @@ AddIcon help=cd specialization=brewmaster
 AddCheckBox(opt_monk_bm_offensive L(opt_monk_bm_offensive) default specialization=brewmaster)
 AddIcon checkbox=opt_monk_bm_offensive size=small specialization=brewmaster
 {
-	BrewmasterInterruptActions()
-	BrewmasterDefaultOffensiveCooldowns()
+    BrewmasterDefaultOffensiveActions()
+
 }
 ]]
 	OvaleScripts:RegisterScript("MONK", "brewmaster", name, desc, code, "script")

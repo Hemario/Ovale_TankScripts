@@ -31,27 +31,6 @@ AddFunction ProtectionGetInMeleeRange
 	}
 }
 
-AddFunction ProtectionInterruptActions
-{
-	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
-	{
-		if target.InRange(pummel) and target.IsInterruptible() Spell(pummel)
-		if not target.Classification(worldboss) 
-		{
-			if target.InRange(storm_bolt) Spell(storm_bolt)
-			if target.InRange(intercept) and Talent(warbringer_talent) Spell(intercept)
-			if target.Distance(less 10) Spell(shockwave)
-			if target.InRange(quaking_palm) Spell(quaking_palm)
-			if target.Distance(less 5) Spell(war_stomp)
-			if target.InRange(intimidating_shout) Spell(intimidating_shout)
-		}
-	}
-}
-
-#
-# Short
-#
-
 AddFunction ProtectionDefaultShortCDActions
 {
 	ProtectionHealMe()
@@ -68,10 +47,6 @@ AddFunction ProtectionDefaultShortCDActions
 	ProtectionGetInMeleeRange()
 }
 
-#
-# Single-Target
-#
-
 AddFunction ProtectionDefaultMainActions
 {
 	if not BuffPresent(battle_shout_buff) Spell(battle_shout)
@@ -83,10 +58,6 @@ AddFunction ProtectionDefaultMainActions
 	if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(revenge)
 	Spell(devastate)
 }
-
-#
-# AOE
-#
 
 AddFunction ProtectionDefaultAoEActions
 {
@@ -104,17 +75,10 @@ AddFunction ProtectionDefaultAoEActions
 	Spell(devastate)
 }
 
-#
-# Cooldowns
-#
-
 AddFunction ProtectionDefaultCdActions 
 {
-	if not CheckBoxOn(opt_warrior_protection_offensive) 
-	{
-		ProtectionInterruptActions()
-		ProtectionDefaultOffensiveCooldowns()
-	}
+	if not CheckBoxOn(opt_warrior_protection_offensive) { ProtectionDefaultOffensiveActions() }
+	
 	if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection_buff) Spell(spell_reflection)
 	Item(Trinket0Slot usable=1 text=13)
 	Item(Trinket1Slot usable=1 text=14)
@@ -129,15 +93,40 @@ AddFunction ProtectionDefaultCdActions
 	if not BuffPresent(rallying_cry_buff) Spell(rallying_cry)
 }
 
+AddFunction ProtectionDefaultOffensiveActions 
+{
+    ProtectionInterruptActions()
+    ProtectionDispelActions()
+    ProtectionDefaultOffensiveCooldowns()
+}
+
+AddFunction ProtectionInterruptActions
+{
+	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
+	{
+		if target.InRange(pummel) and target.IsInterruptible() Spell(pummel)
+		if not target.Classification(worldboss) 
+		{
+			if target.InRange(storm_bolt) Spell(storm_bolt)
+			if target.InRange(intercept) and Talent(warbringer_talent) Spell(intercept)
+			if target.Distance(less 10) Spell(shockwave)
+			if target.InRange(quaking_palm) Spell(quaking_palm)
+			if target.Distance(less 5) Spell(war_stomp)
+			if target.InRange(intimidating_shout) Spell(intimidating_shout)
+		}
+	}
+}
+
+AddFunction ProtectionDispelActions
+{
+    if Spell(arcane_torrent_rage) and target.HasDebuffType(magic) Spell(arcane_torrent_rage)
+}
+
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
 	Spell(avatar)
 	if (Talent(booming_voice_talent) and RageDeficit() >= 60) Spell(demoralizing_shout)
 }
-
-#
-# Icons
-#
 
 AddIcon help=shortcd specialization=protection
 {
@@ -162,8 +151,7 @@ AddIcon help=cd specialization=protection
 AddCheckBox(opt_warrior_protection_offensive L(opt_warrior_protection_offensive) default specialization=protection)
 AddIcon checkbox=opt_warrior_protection_offensive size=small specialization=protection
 {
-	ProtectionInterruptActions()
-	ProtectionDefaultOffensiveCooldowns()
+    ProtectionDefaultOffensiveActions()
 }
 ]]
 	OvaleScripts:RegisterScript("WARRIOR", "protection", name, desc, code, "script")
