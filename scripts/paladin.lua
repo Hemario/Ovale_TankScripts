@@ -163,8 +163,6 @@ AddCheckBox(opt_paladin_protection_offensive L(opt_paladin_protection_offensive)
 AddIcon checkbox=opt_paladin_protection_offensive size=small specialization=protection
 {
     ProtectionDefaultOffensiveActions()
-	ProtectionInterruptActions()
-	ProtectionDefaultOffensiveCooldowns()
 }
 	]]
 	OvaleScripts:RegisterScript("PALADIN", "protection", name, desc, code, "script")
