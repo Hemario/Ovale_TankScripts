@@ -8,6 +8,7 @@ Include(ovale_common)
 Include(ovale_warrior_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
+AddCheckBox(opt_dispel L(dispel) default specialization=protection)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
 AddCheckBox(opt_warrior_protection_aoe L(AOE) default specialization=protection)
 

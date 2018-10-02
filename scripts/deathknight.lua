@@ -9,6 +9,7 @@ Include(ovale_common)
 Include(ovale_deathknight_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=blood)
+AddCheckBox(opt_dispel L(dispel) default specialization=blood)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=blood)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=blood)
 

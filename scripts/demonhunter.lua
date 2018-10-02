@@ -8,6 +8,7 @@ Include(ovale_common)
 Include(ovale_demonhunter_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=vengeance)
+AddCheckBox(opt_dispel L(dispel) default specialization=vengeance)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=vengeance)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=vengeance)
 AddCheckBox(opt_infernal_strike SpellName(infernal_strike) default specialization=vengeance)

@@ -8,6 +8,7 @@ Include(ovale_common)
 Include(ovale_monk_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=brewmaster)
+AddCheckBox(opt_dispel L(dispel) default specialization=brewmaster)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=brewmaster)
 AddCheckBox(opt_monk_bm_aoe L(AOE) default specialization=brewmaster)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=brewmaster)

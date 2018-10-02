@@ -8,6 +8,7 @@ Include(ovale_common)
 Include(ovale_druid_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=guardian)
+AddCheckBox(opt_dispel L(dispel) default specialization=guardian)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=guardian)
 AddCheckBox(opt_druid_guardian_aoe L(AOE) default specialization=guardian)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=guardian)
