@@ -128,12 +128,6 @@ AddFunction GuardianDefaultOffensiveActions
 	GuardianDefaultOffensiveCooldowns()
 }
 
-AddFunction GuardianDispelActions
-{
-    if (player.HasDebuffType(poison curse) and (not InCombat() or not Stance(druid_bear_form))) Spell(remove_corruption)
-    if (targer.HasDebuffType(enrage)) Spell(soothe)
-}
-
 AddFunction GuardianInterruptActions
 {
 	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
@@ -147,6 +141,15 @@ AddFunction GuardianInterruptActions
 			if target.Distance(less 15) Spell(typhoon)
 		}
 	}
+}
+
+AddFunction GuardianDispelActions
+{
+    if CheckBoxOn(opt_dispel) 
+    {
+        if (player.HasDebuffType(poison curse) and (not InCombat() or not Stance(druid_bear_form))) Spell(remove_corruption)
+        if (targer.HasDebuffType(enrage)) Spell(soothe)
+    }
 }
 
 AddFunction GuardianDefaultOffensiveCooldowns

@@ -88,10 +88,6 @@ AddFunction BrewmasterDefaultShortCDActions
 	}
 }
 
-#
-# Single-Target
-#
-
 AddFunction BrewmasterDefaultMainActions
 {
 	BrewmasterHealMeMain()
@@ -132,10 +128,6 @@ AddFunction BrewmasterBlackoutComboMainActions
 		}
 	}
 }
-
-#
-# AOE
-#
 
 AddFunction BrewmasterDefaultAoEActions
 {
@@ -199,9 +191,12 @@ AddFunction BrewmasterInterruptActions
 
 AddFunction BrewmasterDispelActions
 {
-    if player.HasDebuffType(poison disease) Spell(detox)
-    if Spell(arcane_torrent_chi) and target.HasDebuffType(magic) Spell(arcane_torrent_chi)
-    if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+    if CheckBoxOn(opt_dispel) 
+    {
+        if player.HasDebuffType(poison disease) Spell(detox)
+        if Spell(arcane_torrent_chi) and target.HasDebuffType(magic) Spell(arcane_torrent_chi)
+        if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+    }
 }
 
 AddFunction BrewmasterDefaultOffensiveCooldowns

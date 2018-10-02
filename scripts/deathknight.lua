@@ -114,7 +114,10 @@ AddFunction BloodInterruptActions
 
 AddFunction BloodDispelActions
 {
-	if Spell(arcane_torrent_runicpower) and target.HasDebuffType(magic) Spell(arcane_torrent_runicpower)
+    if CheckBoxOn(opt_dispel) 
+    {
+        if Spell(arcane_torrent_runicpower) and target.HasDebuffType(magic) Spell(arcane_torrent_runicpower)
+    }
 }
 
 AddFunction BloodDefaultOffensiveCooldowns

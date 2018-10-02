@@ -139,10 +139,10 @@ AddFunction VengeanceInterruptActions
 
 AddFunction VengeanceDispelActions
 {
-    if target.HasDebuffType(magic) 
+    if CheckBoxOn(opt_dispel) 
     {
-        Spell(consume_magic)
-        Spell(arcane_torrent_dh)
+        if target.HasDebuffType(magic) Spell(consume_magic)
+        if Spell(arcane_torrent_dh) and target.HasDebuffType(magic) Spell(arcane_torrent_dh)
     }
 }
 
