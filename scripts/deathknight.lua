@@ -65,6 +65,7 @@ AddFunction BloodDefaultMainActions
 	# fillers
 	if BuffPresent(dancing_rune_weapon_buff) Spell(blood_boil)
 	if BuffPresent(crimson_scourge_buff) Spell(death_and_decay)
+    if TimeToRunes(3) < GCD() or BuffStacks(bone_shield_buff) > 6 Spell(heart_strike)
 	Spell(blood_boil)
 	Spell(rune_strike)
 }
