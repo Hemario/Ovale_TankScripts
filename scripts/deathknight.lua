@@ -144,7 +144,7 @@ AddIcon help=cd specialization=blood
 	BloodDefaultCdActions()
 }
 
-AddCheckBox(opt_deathknight_blood_offensive L(opt_deathknight_blood_offensive) default specialization=blood)
+AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default specialization=blood)
 AddIcon checkbox=opt_deathknight_blood_offensive size=small specialization=blood
 {
 	BloodDefaultOffensiveActions()

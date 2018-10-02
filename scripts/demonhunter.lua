@@ -172,7 +172,7 @@ AddIcon help=cd specialization=vengeance
 	VengeanceDefaultCdActions()
 }
 
-AddCheckBox(opt_demonhunter_vengeance_offensive L(opt_demonhunter_vengeance_offensive) default specialization=vengeance)
+AddCheckBox(opt_demonhunter_vengeance_offensive L(seperate_offensive_icon) default specialization=vengeance)
 AddIcon checkbox=opt_demonhunter_vengeance_offensive size=small specialization=vengeance
 {
     VengeanceDefaultOffensiveActions()

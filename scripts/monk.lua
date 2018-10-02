@@ -228,7 +228,7 @@ AddIcon help=cd specialization=brewmaster
 	BrewmasterDefaultCdActions()
 }
 
-AddCheckBox(opt_monk_bm_offensive L(opt_monk_bm_offensive) default specialization=brewmaster)
+AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default specialization=brewmaster)
 AddIcon checkbox=opt_monk_bm_offensive size=small specialization=brewmaster
 {
     BrewmasterDefaultOffensiveActions()

@@ -173,7 +173,7 @@ AddIcon help=cd specialization=guardian
 	GuardianDefaultCdActions()
 }
 
-AddCheckBox(opt_druid_guardian_offensive L(opt_druid_guardian_offensive) default specialization=guardian)
+AddCheckBox(opt_druid_guardian_offensive L(seperate_offensive_icon) default specialization=guardian)
 AddIcon checkbox=opt_druid_guardian_offensive size=small specialization=guardian
 {
     GuardianDefaultOffensiveActions()

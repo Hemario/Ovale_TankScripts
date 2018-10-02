@@ -149,7 +149,7 @@ AddIcon help=cd specialization=protection
 	ProtectionDefaultCdActions()
 }
 
-AddCheckBox(opt_warrior_protection_offensive L(opt_warrior_protection_offensive) default specialization=protection)
+AddCheckBox(opt_warrior_protection_offensive L(seperate_offensive_icon) default specialization=protection)
 AddIcon checkbox=opt_warrior_protection_offensive size=small specialization=protection
 {
     ProtectionDefaultOffensiveActions()
