@@ -1,9 +1,9 @@
 local __Scripts = LibStub:GetLibrary("ovale/Scripts")
 local OvaleScripts = __Scripts.OvaleScripts
 do
-	local name = "icyveins_deathknight_blood"
-	local desc = "[8.0.1] Icy-Veins: DeathKnight Blood"
-	local code = [[
+    local name = "icyveins_deathknight_blood"
+    local desc = "[8.0.1] Icy-Veins: DeathKnight Blood"
+    local code = [[
 
 Include(ovale_common)
 Include(ovale_deathknight_spells)
@@ -15,79 +15,79 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=bl
 
 AddFunction BloodDeathStrikeHealing
 {
-	if (IncomingDamage(5) / 4 > MaxHealth() / 100 * 7) IncomingDamage(5) / 4
-	MaxHealth() / 100 * 7
+    if (IncomingDamage(5) / 4 > MaxHealth() / 100 * 7) IncomingDamage(5) / 4
+    MaxHealth() / 100 * 7
 }
 
 AddFunction BloodDefaultShortCDActions
 {
-	if CheckBoxOn(opt_melee_range) and not target.InRange(death_strike) Texture(misc_arrowlup help=L(not_in_melee_range))
-	if not BuffPresent(rune_tap_buff) Spell(rune_tap)
+    if CheckBoxOn(opt_melee_range) and not target.InRange(death_strike) Texture(misc_arrowlup help=L(not_in_melee_range))
+    if not BuffPresent(rune_tap_buff) Spell(rune_tap)
 }
 
 AddFunction BloodHealMe
 {
-	unless(DebuffPresent(healing_immunity_debuff)) 
-	{
-		if (HealthPercent() <= 70) 
+    unless(DebuffPresent(healing_immunity_debuff)) 
+    {
+        if (HealthPercent() <= 70) 
         {
             if ((HealthPercent() <= 50) or (BloodDeathStrikeHealing() <= HealthMissing())) Spell(death_strike)
             if (HealthPercent() < 35) UseHealthPotions()
         } 
-	}
+    }
 }
 
 AddFunction BloodDefaultMainActions
 {
-	# Heal
-	BloodHealMe()
-	# keep marrowrend up
-	if InCombat() and BuffExpires(bone_shield_buff 3) Spell(marrowrend)
-	# AoE
-	if (Enemies() >= 3 and RunicPower() >= 90) Spell(bonestorm)
-	if (Enemies() >= 3) Spell(consumption)
-	# Death Strike
-	if (BuffPresent(blood_shield_buff) and BuffExpires(blood_shield_buff 3)) Spell(death_strike)
-	if (RunicPowerDeficit() <= 20) Spell(death_strike)
-	# Mark of Blood
-	if (target.BuffExpires(mark_of_blood_debuff) and target.IsTargetingPlayer()) Spell(mark_of_blood)
-	# Blooddrinker
-	if not BuffPresent(dancing_rune_weapon_buff) Spell(blooddrinker)
-	# Blood boil
-	if (SpellCharges(blood_boil) == SpellMaxCharges(blood_boil)) Spell(blood_boil)
-	if (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) Spell(blood_boil)
-	# Marrowrend (279502 = trait Bones of the Damned)
-	if (BuffStacks(bone_shield_buff) <= 7-HasAzeriteTrait(279502)-3*BuffPresent(dancing_rune_weapon_buff)) Spell(marrowrend)
-	# rune strike
-	if (SpellCharges(rune_strike) == SpellMaxCharges(rune_strike) and Rune() <= 3) Spell(rune_strike)
-	# dump runes
-	if Rune() >= 3 and Enemies() >= 3 Spell(death_and_decay)
-	if Rune() >= 3 or RunicPower() < 45 Spell(heart_strike)
-	# fillers
-	if BuffPresent(dancing_rune_weapon_buff) Spell(blood_boil)
-	if BuffPresent(crimson_scourge_buff) Spell(death_and_decay)
+    # Heal
+    BloodHealMe()
+    # keep marrowrend up
+    if InCombat() and BuffExpires(bone_shield_buff 3) Spell(marrowrend)
+    # AoE
+    if (Enemies() >= 3 and RunicPower() >= 90) Spell(bonestorm)
+    if (Enemies() >= 3) Spell(consumption)
+    # Death Strike
+    if (BuffPresent(blood_shield_buff) and BuffExpires(blood_shield_buff 3)) Spell(death_strike)
+    if (RunicPowerDeficit() <= 20) Spell(death_strike)
+    # Mark of Blood
+    if (target.BuffExpires(mark_of_blood_debuff) and target.IsTargetingPlayer()) Spell(mark_of_blood)
+    # Blooddrinker
+    if not BuffPresent(dancing_rune_weapon_buff) Spell(blooddrinker)
+    # Blood boil
+    if (SpellCharges(blood_boil) == SpellMaxCharges(blood_boil)) Spell(blood_boil)
+    if (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) Spell(blood_boil)
+    # Marrowrend (279502 = trait Bones of the Damned)
+    if (BuffStacks(bone_shield_buff) <= 7-HasAzeriteTrait(279502)-3*BuffPresent(dancing_rune_weapon_buff)) Spell(marrowrend)
+    # rune strike
+    if (SpellCharges(rune_strike) == SpellMaxCharges(rune_strike) and Rune() <= 3) Spell(rune_strike)
+    # dump runes
+    if Rune() >= 3 and Enemies() >= 3 Spell(death_and_decay)
+    if Rune() >= 3 or RunicPower() < 45 Spell(heart_strike)
+    # fillers
+    if BuffPresent(dancing_rune_weapon_buff) Spell(blood_boil)
+    if BuffPresent(crimson_scourge_buff) Spell(death_and_decay)
     if TimeToRunes(3) < GCD() or BuffStacks(bone_shield_buff) > 6 Spell(heart_strike)
-	Spell(blood_boil)
-	Spell(rune_strike)
+    Spell(blood_boil)
+    Spell(rune_strike)
 }
 
 AddFunction BloodDefaultCdActions
 {
-	if not CheckBoxOn(opt_deathknight_blood_offensive) { BloodDefaultOffensiveActions() }
+    if not CheckBoxOn(opt_deathknight_blood_offensive) { BloodDefaultOffensiveActions() }
 
-	if IncomingDamage(1.5 magic=1) > 0 spell(antimagic_shell)
-	Spell(consumption)
-	if (BuffStacks(bone_shield_buff) >= 6) Spell(tombstone)
-	Item(Trinket0Slot usable=1 text=13)
-	Item(Trinket1Slot usable=1 text=14)
-	Spell(vampiric_blood)
-	Spell(icebound_fortitude)
-	if CheckBoxOn(opt_use_consumables) 
-	{
-		Item(steelskin_potion usable=1)
-		Item(battle_potion_of_stamina usable=1)
-	}
-	UseRacialSurvivalActions()
+    if IncomingDamage(1.5 magic=1) > 0 spell(antimagic_shell)
+    Spell(consumption)
+    if (BuffStacks(bone_shield_buff) >= 6) Spell(tombstone)
+    Item(Trinket0Slot usable=1 text=13)
+    Item(Trinket1Slot usable=1 text=14)
+    Spell(vampiric_blood)
+    Spell(icebound_fortitude)
+    if CheckBoxOn(opt_use_consumables) 
+    {
+        Item(steelskin_potion usable=1)
+        Item(battle_potion_of_stamina usable=1)
+    }
+    UseRacialSurvivalActions()
 }
 
 AddFunction BloodDefaultOffensiveActions
@@ -99,17 +99,17 @@ AddFunction BloodDefaultOffensiveActions
 
 AddFunction BloodInterruptActions
 {
-	if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
-	{
-		if target.InRange(mind_freeze) and target.IsInterruptible() Spell(mind_freeze)
-		if not target.Classification(worldboss) 
+    if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
+    {
+        if target.InRange(mind_freeze) and target.IsInterruptible() Spell(mind_freeze)
+        if not target.Classification(worldboss) 
         {
             if target.InRange(asphyxiate_blood) Spell(asphyxiate_blood)
             if target.InRange(death_grip) Spell(death_grip)
             if target.Distance(less 15) Spell(gorefiends_grasp)
             if target.Distance(less 5) Spell(war_stomp)
         }
-	}
+    }
 }
 
 AddFunction BloodDispelActions
@@ -122,37 +122,37 @@ AddFunction BloodDispelActions
 
 AddFunction BloodDefaultOffensiveCooldowns
 {
-	Spell(dancing_rune_weapon)
+    Spell(dancing_rune_weapon)
 }
 
 AddCheckBox(opt_deathknight_blood_aoe L(AOE) default specialization=blood)
 
 AddIcon help=shortcd specialization=blood
 {
-	BloodDefaultShortCDActions()
+    BloodDefaultShortCDActions()
 }
 
 AddIcon enemies=1 help=main specialization=blood
 {
-	BloodDefaultMainActions()
+    BloodDefaultMainActions()
 }
 
 AddIcon checkbox=opt_deathknight_blood_aoe help=aoe specialization=blood
 {
-	BloodDefaultMainActions()
+    BloodDefaultMainActions()
 }
 
 AddIcon help=cd specialization=blood
 {
-	#if not InCombat() ProtectionPrecombatCdActions()
-	BloodDefaultCdActions()
+    #if not InCombat() ProtectionPrecombatCdActions()
+    BloodDefaultCdActions()
 }
 
 AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default specialization=blood)
 AddIcon checkbox=opt_deathknight_blood_offensive size=small specialization=blood
 {
-	BloodDefaultOffensiveActions()
+    BloodDefaultOffensiveActions()
 }
 ]]
-	OvaleScripts:RegisterScript("DEATHKNIGHT", "blood", name, desc, code, "script")
+    OvaleScripts:RegisterScript("DEATHKNIGHT", "blood", name, desc, code, "script")
 end
