@@ -79,7 +79,7 @@ AddFunction GuardianDefaultAoEActions
 {
     GuardianHealMeMain()
     if not Stance(druid_bear_form) Spell(bear_form)
-    if Enemies() >= 4 and HealthPercent() <= 80 Spell(lunar_beam)
+    if Speed() == 0 and Enemies() >= 4 Spell(lunar_beam)
     
     if not BuffExpires(incarnation_guardian_of_ursoc_buff) 
     {
