@@ -72,7 +72,7 @@ AddFunction VengeanceDefaultMainActions
     if (VengeanceInfernalStrike()) Spell(infernal_strike)
     
     # fiery demise
-    if (not target.DebuffExpires(fiery_demise_debuff))
+    if (Talent(charred_flesh_talent) and not target.DebuffExpires(fiery_brand_debuff))
     {
         if (SoulFragments() >= 4) Spell(spirit_bomb)
         Spell(immolation_aura)
