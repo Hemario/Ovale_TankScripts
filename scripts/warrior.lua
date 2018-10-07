@@ -51,6 +51,7 @@ AddFunction ProtectionDefaultShortCDActions
 AddFunction ProtectionDefaultMainActions
 {
     if not BuffPresent(battle_shout_buff) Spell(battle_shout)
+    if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(shield_slam)
     Spell(dragon_roar)
     Spell(thunder_clap)
@@ -71,6 +72,7 @@ AddFunction ProtectionDefaultAoEActions
     if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
     Spell(shield_slam)
     if Enemies() >= 3 Spell(shockwave)
+    if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(arcane_pulse)
     Spell(lights_judgment)
     Spell(devastate)
@@ -83,8 +85,8 @@ AddFunction ProtectionDefaultCdActions
     if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection_buff) Spell(spell_reflection)
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
-    Spell(demoralizing_shout)
-    Spell(last_stand)
+    if not Talent(booming_voice_talent) Spell(demoralizing_shout)
+    if not (Talent(bolster_talent) and (BuffPresent(shield_block_buff) or Spell(shield_block))) Spell(last_stand)
     Spell(shield_wall)
     if CheckBoxOn(opt_use_consumables) 
     {
@@ -129,8 +131,7 @@ AddFunction ProtectionDispelActions
 
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
-    Spell(avatar)
-    if (Talent(booming_voice_talent) and RageDeficit() >= 60) Spell(demoralizing_shout)
+    if RageDeficit() >= 20 Spell(avatar)
 }
 
 AddIcon help=shortcd specialization=protection
