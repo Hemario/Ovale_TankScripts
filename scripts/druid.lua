@@ -60,7 +60,7 @@ AddFunction GuardianDefaultMainActions
     GuardianHealMeMain()
     if not Stance(druid_bear_form) Spell(bear_form)
 
-    if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0))) Spell(maul)
+    if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
     if (target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
     if (target.DebuffStacks(thrash_bear_debuff) < 3 or (Talent(earthwarden_talent) and BuffStacks(earthwarden_buff)<3)) Spell(thrash_bear)
     if (BuffRefreshable(pulverize_buff)) Spell(pulverize)
@@ -89,7 +89,7 @@ AddFunction GuardianDefaultAoEActions
         Spell(thrash_bear)
     }
     
-    if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0))) Spell(maul)
+    if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
     if (DebuffCountOnAny(moonfire_debuff) < 2 and target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
     Spell(thrash_bear)
     if (Enemies() <= 2 and BuffRefreshable(pulverize_buff)) Spell(pulverize)
