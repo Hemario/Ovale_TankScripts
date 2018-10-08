@@ -83,6 +83,7 @@ AddFunction VengeanceDefaultMainActions
     }
     
     if (SoulFragments() >= 4) Spell(spirit_bomb)
+    if (SoulFragments() <= 3 and Talent(razor_spikes_talent) and BuffPresent(demon_spikes_buff)) Spell(fracture)
     if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) 
     {
         if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<20) Spell(soul_cleave)
