@@ -58,7 +58,7 @@ AddFunction VengeanceDefaultShortCDActions
     VengeanceHealMeShortCd()
     Spell(soul_barrier)
     
-    if (IncomingDamage(5 physical=1) > 0 and (BuffExpires(metamorphosis_veng_buff) or SpellCharges(demon_spikes) == SpellMaxCharges(demon_spikes) or Talent(razor_spikes_talent)))
+    if ((IncomingDamage(5 physical=1) > 0 and (BuffExpires(metamorphosis_veng_buff) or SpellCharges(demon_spikes) == SpellMaxCharges(demon_spikes))) or (Talent(razor_spikes_talent) and PainDeficit()<20))
     {
         if (BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) Spell(demon_spikes)
     }
@@ -83,7 +83,10 @@ AddFunction VengeanceDefaultMainActions
     }
     
     if (SoulFragments() >= 4) Spell(spirit_bomb)
-    if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) Spell(soul_cleave)
+    if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) 
+    {
+        if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<20) Spell(soul_cleave)
+    }
     if (PainDeficit() >= 10) Spell(immolation_aura)
     if (PainDeficit() >= 30) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
