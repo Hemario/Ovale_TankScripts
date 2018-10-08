@@ -86,6 +86,7 @@ AddFunction VengeanceDefaultMainActions
     if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) 
     {
         if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<20) Spell(soul_cleave)
+        if (Talent(void_reaver_talent) and target.DebuffExpires(void_reaver_debuff)) Spell(soul_cleave)
     }
     if (PainDeficit() >= 10) Spell(immolation_aura)
     if (PainDeficit() >= 30) Spell(felblade)
