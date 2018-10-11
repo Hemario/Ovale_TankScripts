@@ -21,18 +21,26 @@ AddFunction BloodDeathStrikeHealing
 
 AddFunction BloodDefaultShortCDActions
 {
+    BloodHealMeShortCd()
     if CheckBoxOn(opt_melee_range) and not target.InRange(death_strike) Texture(misc_arrowlup help=L(not_in_melee_range))
     if not BuffPresent(rune_tap_buff) Spell(rune_tap)
 }
 
-AddFunction BloodHealMe
+AddFunction BloodHealMeShortCd
 {
     unless(DebuffPresent(healing_immunity_debuff)) 
     {
-        if (HealthPercent() <= 70) 
+        if (HealthPercent() < 35) UseHealthPotions()
+    }
+}
+
+AddFunction BloodHealMeMain
+{
+    unless(DebuffPresent(healing_immunity_debuff)) 
+    {
+        if (HealthPercent() <= 75) 
         {
             if ((HealthPercent() <= 50) or (BloodDeathStrikeHealing() <= HealthMissing())) Spell(death_strike)
-            if (HealthPercent() < 35) UseHealthPotions()
         } 
     }
 }
@@ -40,7 +48,7 @@ AddFunction BloodHealMe
 AddFunction BloodDefaultMainActions
 {
     # Heal
-    BloodHealMe()
+    BloodHealMeMain()
     # keep marrowrend up
     if InCombat() and BuffExpires(bone_shield_buff 3) Spell(marrowrend)
     # AoE
