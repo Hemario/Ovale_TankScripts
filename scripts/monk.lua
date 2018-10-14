@@ -119,12 +119,12 @@ AddFunction BrewmasterBlackoutComboMainActions
         {
             Spell(blackout_strike)
             if target.DebuffPresent(keg_smash) Spell(breath_of_fire)
-            if BuffRefreshable(rushing_jade_wind_buff) 
             Spell(chi_burst)
             Spell(chi_wave)
             Spell(rushing_jade_wind)
             Spell(arcane_pulse)
         }
+        if BuffRefreshable(rushing_jade_wind_buff) Spell(rushing_jade_wind)
     }
 }
 
