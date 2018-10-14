@@ -1,5 +1,5 @@
 ## Interface: 80000
-## Version: 801.10
+## Version: 801.11
 ## Title: Ovale Tank Scripts
 ## Notes: Custom Ovale scripts based on Icy-Veins guide
 ## Author: Hemario
