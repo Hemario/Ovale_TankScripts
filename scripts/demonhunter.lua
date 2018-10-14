@@ -58,7 +58,7 @@ AddFunction VengeanceDefaultShortCDActions
     VengeanceHealMeShortCd()
     Spell(soul_barrier)
     
-    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis_veng_buff)) or (Talent(razor_spikes_talent) and PainDeficit()<20))
+    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) or (Talent(razor_spikes_talent) and PainDeficit()<20))
     {
         if (BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) 
         {
