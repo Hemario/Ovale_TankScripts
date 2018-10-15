@@ -62,7 +62,7 @@ AddFunction VengeanceDefaultShortCDActions
     {
         if (BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) 
         {
-            if (SpellFullRecharge(demon_spikes_buff) > 3) Spell(demon_spikes text=max)
+            if (SpellFullRecharge(demon_spikes_buff) < 3) Spell(demon_spikes text=max)
             Spell(demon_spikes)
         }
     }
