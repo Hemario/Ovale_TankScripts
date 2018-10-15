@@ -58,7 +58,7 @@ AddFunction VengeanceDefaultShortCDActions
     VengeanceHealMeShortCd()
     Spell(soul_barrier)
     
-    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) or (Talent(razor_spikes_talent) and PainDeficit()<20))
+    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff) and target.DebuffExpires(fiery_demise_debuff)) or (Talent(razor_spikes_talent) and PainDeficit()<20))
     {
         if (BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) 
         {
@@ -76,7 +76,7 @@ AddFunction VengeanceDefaultMainActions
     if (VengeanceInfernalStrike()) Spell(infernal_strike)
     
     # fiery demise
-    if (Talent(charred_flesh_talent) and not target.DebuffExpires(fiery_brand_debuff))
+    if (not target.DebuffExpires(fiery_demise_debuff))
     {
         if (SoulFragments() >= 4) Spell(spirit_bomb)
         Spell(immolation_aura)
