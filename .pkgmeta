@@ -7,7 +7,4 @@ externals:
   
 enable-nolib-creation: no
 
-required-dependencies:
- Ovale
- 
 manual-changelog: CHANGELOG.txt
