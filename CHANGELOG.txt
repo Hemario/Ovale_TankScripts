@@ -1,0 +1,103 @@
+801.11
+------
+DH:
+* burning alive fixes
+* don't use DS when fiery brand is on the target
+* inidicate when at max charges for demon spikes
+
+MONK:
+* we don't want to keep BoS on cd too long
+
+801.10
+------
+DH:
+* charred flesh no longer applies a different debuff (as in legion) so we're checking just for fiery brand debuff now
+* support for void reaver talent
+* support for razor spikes talent
+* indicate when sitting on max DS
+
+DK:
+* show healing potions in short cd icon
+
+DRUID:
+* cast lunar strike only when standing still
+* don't suggest moonfire when incarnated
+* support for earthwarden talent
+* suggest maul more when playing solo
+* avoid capping rage and spend it on maul
+* don't let thrash fall off
+* indicate when ironfur is free to use
+
+MONK:
+* we really want to KS on cd
+* min ISB duration set to 3 from 5
+
+WARRIOR:
+* Demo shout in main rotation with booming voice
+* Avoid suggesting Last Stand if talented into Bolster if Shield
+* Block is already up or if it has charges available.
+* Don't cap rage when using Avatar, which generates 20 rage.
+
+801.9
+-----
+ALL TANKS:
+* implement dispel logic for all tanks (requires full buff/debuff scanning)
+
+801.8
+-----
+WARRIOR:
+* add arcane pulse
+
+801.7
+-----
+ALL TANKS:
+* added a small icon to show offensive cooldowns and interrupts (because gcd made it so that they were never shown)
+
+DK:
+* improved death strike usage
+* bonestorm usable at 90 RP instead of 100
+
+DH:
+* add sigil of flame refreshable check (no longer can have 2 buffs up)
+* meta isn't really an offensive cd anymore
+* fixed interrupts
+
+DRUID:
+* dump rage into maul when solo or not taking dmg and almost max rage
+
+MONK:
+* Guard to shortcd
+* Always KS on cooldown
+
+PALADIN:
+* Seraphim to offensive cd icon
+* delay AW for Seraphim when it is coming up
+
+WARRIOR:
+* dump rage into revenge when solo or not taking dmg and almost max rage
+
+801.6
+-----
+* Initial protection warrior script
+* DH tweaks
+
+801.5
+-----
+* Fix issue with missing lib.xml
+
+801.4
+-----
+* Paladin: LoH back to long cds
+
+801.3
+-----
+* temporary fix for Ovale replace problem
+
+801.2
+-----
+* work on paladin script
+* initial blood DK script
+
+801.1
+-----
+* Initial extraction from Ovale into Ovale_TankScripts
