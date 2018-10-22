@@ -1,3 +1,7 @@
+801.12
+------
+* fix issue with Curse package manager
+
 801.11
 ------
 DH:
