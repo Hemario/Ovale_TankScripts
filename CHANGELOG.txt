@@ -1,5 +1,7 @@
 801.13
 ------
+WARRIOR:
+* fix spell id for ravager
 
 801.12
 ------

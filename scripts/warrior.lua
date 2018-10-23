@@ -64,7 +64,7 @@ AddFunction ProtectionDefaultMainActions
 AddFunction ProtectionDefaultAoEActions
 {
     if not BuffPresent(battle_shout_buff) Spell(battle_shout)
-    Spell(ravager)
+    Spell(ravager_prot)
     Spell(dragon_roar)
     if (Talent(best_served_cold_talent) and Enemies()>= 2) Spell(revenge)
     Spell(thunder_clap)
