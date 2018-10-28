@@ -47,7 +47,7 @@ AddFunction GuardianGetInMeleeRange
 AddFunction GuardianDefaultShortCDActions
 {
     GuardianHealMeShortCd()
-    if IncomingDamage(5 physical=1) 
+    if (IncomingDamage(5 physical=1) and (BuffExpires(ironfur 1) or RageDeficit() <= 20))
     {
         if PowerCost(ironfur)<=0 Spell(ironfur text=free) Spell(ironfur)
     }

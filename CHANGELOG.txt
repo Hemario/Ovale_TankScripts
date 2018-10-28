@@ -1,5 +1,8 @@
 801.13
 ------
+DRUID:
+* prevent suggesting ironfur when already up, unless close to capping rage
+
 WARRIOR:
 * fix spell id for ravager
 
