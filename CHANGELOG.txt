@@ -3,6 +3,9 @@
 DRUID:
 * prevent suggesting ironfur when already up, unless close to capping rage
 
+MONK:
+* Attempt to purify more often (based on available charges)
+
 WARRIOR:
 * fix spell id for ravager
 
