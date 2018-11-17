@@ -13,6 +13,11 @@ AddCheckBox(opt_dispel L(dispel) default specialization=blood)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=blood)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=blood)
 
+AddFunction BloodPoolingForBoneStorm
+{
+    Talent(bonestorm_talent) and SpellCooldown(bonestorm) < 3 and Enemies()>=3 and RunicPower() < 100
+}
+
 AddFunction BloodDeathStrikeHealing
 {
     if (IncomingDamage(5) / 4 > MaxHealth() / 100 * 7) IncomingDamage(5) / 4
@@ -40,7 +45,9 @@ AddFunction BloodHealMeMain
     {
         if (HealthPercent() <= 75) 
         {
-            if ((HealthPercent() <= 50) or (BloodDeathStrikeHealing() <= HealthMissing())) Spell(death_strike)
+            if (Enemies() >= 3 and RunicPower() >= 70) Spell(bonestorm)
+            if (not BloodPoolingForBoneStorm() and BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike)
+            if (HealthPercent() <= 50) Spell(death_strike)
         } 
     }
 }
@@ -52,17 +59,17 @@ AddFunction BloodDefaultMainActions
     # keep marrowrend up
     if InCombat() and BuffExpires(bone_shield_buff 3) Spell(marrowrend)
     # AoE
-    if (Enemies() >= 3 and RunicPower() >= 90) Spell(bonestorm)
+    if (Enemies() >= 3 and RunicPower() >= 100) Spell(bonestorm)
     if (Enemies() >= 3) Spell(consumption)
     # Death Strike
     if (BuffPresent(blood_shield_buff) and BuffExpires(blood_shield_buff 3)) Spell(death_strike)
-    if (RunicPowerDeficit() <= 20) Spell(death_strike)
+    if (not BloodPoolingForBoneStorm() and RunicPowerDeficit() <= 20) Spell(death_strike)
     # Mark of Blood
     if (target.BuffExpires(mark_of_blood_debuff) and target.IsTargetingPlayer()) Spell(mark_of_blood)
     # Blooddrinker
     if not BuffPresent(dancing_rune_weapon_buff) Spell(blooddrinker)
     # Blood boil
-    if (SpellCharges(blood_boil) == SpellMaxCharges(blood_boil)) Spell(blood_boil)
+    if (Charges(blood_boil count=0) >= 1.8) Spell(blood_boil)
     if (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) Spell(blood_boil)
     # Marrowrend (279502 = trait Bones of the Damned)
     if (BuffStacks(bone_shield_buff) <= 7-HasAzeriteTrait(279502)-3*BuffPresent(dancing_rune_weapon_buff)) Spell(marrowrend)
@@ -70,7 +77,7 @@ AddFunction BloodDefaultMainActions
     if (SpellCharges(rune_strike) == SpellMaxCharges(rune_strike) and Rune() <= 3) Spell(rune_strike)
     # dump runes
     if Rune() >= 3 and Enemies() >= 3 Spell(death_and_decay)
-    if Rune() >= 3 or RunicPower() < 45 Spell(heart_strike)
+    if TimeToRunes(3) < GCD() or RunicPower() < 45 Spell(heart_strike)
     # fillers
     if BuffPresent(dancing_rune_weapon_buff) Spell(blood_boil)
     if BuffPresent(crimson_scourge_buff) Spell(death_and_decay)

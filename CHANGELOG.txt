@@ -1,5 +1,8 @@
 801.13
 ------
+DK:
+* Pool RP when bonestorm is about to come of cd
+
 DRUID:
 * prevent suggesting ironfur when already up, unless close to capping rage
 
