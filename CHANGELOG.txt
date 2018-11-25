@@ -1,5 +1,7 @@
 801.14
 ------
+DH:
+* Can stack Sigil of Flame
 
 801.13
 ------

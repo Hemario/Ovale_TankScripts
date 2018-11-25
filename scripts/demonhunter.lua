@@ -40,7 +40,7 @@ AddFunction VengeanceInfernalStrike
 
 AddFunction VengeanceSigilOfFlame
 {
-    (not SigilCharging(flame) and target.DebuffRemaining(sigil_of_flame_debuff) <= 1.8+2-Talent(quickened_sigils_talent))
+    True()
 }
 
 AddFunction VengeanceRangeCheck
