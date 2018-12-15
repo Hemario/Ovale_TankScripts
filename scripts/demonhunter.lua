@@ -40,7 +40,7 @@ AddFunction VengeanceInfernalStrike
 
 AddFunction VengeanceSigilOfFlame
 {
-    True()
+    target.TimeToDie() > 2-Talent(quickened_sigils_talent)+GCDRemaining()
 }
 
 AddFunction VengeanceRangeCheck
