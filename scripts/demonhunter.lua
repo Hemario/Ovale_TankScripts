@@ -86,9 +86,9 @@ AddFunction VengeanceDefaultMainActions
         Spell(fel_eruption)
     }
     
-    if (SoulFragments() >= 4) Spell(spirit_bomb)
+    if (SoulFragments() >= 5-Talent(fracture_talent) or (not Talent(fracture_talent) and not target.DebuffExpires(frailty_debuff))) Spell(spirit_bomb)
     if (SoulFragments() <= 3 and Talent(razor_spikes_talent) and BuffPresent(demon_spikes_buff)) Spell(fracture)
-    if (not Talent(spirit_bomb_talent) or (Talent (spirit_bomb_talent) and SoulFragments() == 0)) 
+    if (not Talent(spirit_bomb_talent) or SoulFragments() == 0)
     {
         if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<20) Spell(soul_cleave)
         if (Talent(void_reaver_talent) and target.DebuffExpires(void_reaver_debuff)) Spell(soul_cleave)
@@ -99,6 +99,8 @@ AddFunction VengeanceDefaultMainActions
     Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
     if (not Talent(fracture_talent) and PainDeficit() >= 10) Spell(shear)
+    if (Enemies() >= 2) Spell(throw_glaive_veng)
+    if (not Talent(fracture_talent)) Spell(shear)
     Spell(throw_glaive_veng)
 }
 

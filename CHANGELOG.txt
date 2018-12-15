@@ -4,6 +4,7 @@ DH:
 * Can stack Sigil of Flame
 * Cast Sigil of Flames when target lives to see the first tick
 * try to prevent wasting DS by not casting it when it's up
+* some optimisations for Feed the Demon talent
 
 801.13
 ------
