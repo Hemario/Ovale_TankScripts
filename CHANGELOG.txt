@@ -2,6 +2,7 @@
 ------
 DH:
 * Can stack Sigil of Flame
+* try to prevent wasting DS by not casting it when it's up
 
 801.13
 ------
