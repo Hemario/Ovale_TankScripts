@@ -6,6 +6,9 @@ DH:
 * try to prevent wasting DS by not casting it when it's up
 * some optimisations for Feed the Demon talent
 
+Druid:
+* Incapacitating Roar got removed
+
 801.13
 ------
 DK:
