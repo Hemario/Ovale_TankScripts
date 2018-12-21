@@ -36,6 +36,7 @@ AddFunction ProtectionDefaultShortCDActions
 {
     ProtectionHealMe()
     if IncomingDamage(5 physical=1)
+        and not BuffPresent(shield_block_buff)
         and (not Talent(bolster_talent) or not BuffPresent(last_stand_buff)) 
         and (BuffRemaining(shield_block_buff) <= 2*BaseDuration(shield_block_buff))
     {

@@ -3,6 +3,9 @@
 DH:
 * without facture, spirit bomb at 5 stacks or when it's not up
 
+WARRIOR:
+* try to prevent wasting shield block by not casting it when it's up
+
 810.14
 ------
 ALL:
