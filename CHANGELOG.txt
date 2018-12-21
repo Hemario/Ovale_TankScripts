@@ -1,3 +1,8 @@
+810.15
+------
+DH:
+* without facture, spirit bomb at 5 stacks or when it's not up
+
 810.14
 ------
 ALL:

@@ -86,7 +86,7 @@ AddFunction VengeanceDefaultMainActions
         Spell(fel_eruption)
     }
     
-    if (SoulFragments() >= 5-Talent(fracture_talent) or (not Talent(fracture_talent) and not target.DebuffExpires(frailty_debuff))) Spell(spirit_bomb)
+    if (SoulFragments() >= 5-Talent(fracture_talent) or (not Talent(fracture_talent) and target.DebuffExpires(frailty_debuff))) Spell(spirit_bomb)
     if (SoulFragments() <= 3 and Talent(razor_spikes_talent) and BuffPresent(demon_spikes_buff)) Spell(fracture)
     if (not Talent(spirit_bomb_talent) or SoulFragments() == 0)
     {
