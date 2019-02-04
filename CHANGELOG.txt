@@ -1,3 +1,8 @@
+810.16
+------
+DH:
+* fracture when soul barrier is up to generate more souls in order to refresh the shield
+
 810.15
 ------
 DH:
