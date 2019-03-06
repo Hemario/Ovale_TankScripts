@@ -97,6 +97,7 @@ AddFunction BrewmasterDefaultMainActions
     if Talent(blackout_combo_talent) BrewmasterBlackoutComboMainActions()
     unless Talent(blackout_combo_talent) 
     {
+        if (target.DebuffPresent(keg_smash) and not target.DebuffPresent(breath_of_fire_debuff)) Spell(breath_of_fire)
         Spell(keg_smash)
         Spell(blackout_strike)
         if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)

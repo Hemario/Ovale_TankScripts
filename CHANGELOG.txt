@@ -3,6 +3,9 @@
 DRUID:
 * Be a little less strict when trying to maintain earthwarden (from less then 3 to at least 1)
 
+MONK:
+* Apply BoF debuff ASAP in single target situation
+
 PALADIN:
 * Add a SpellKnown(rebuke) condition for range check for low level paladins
 
