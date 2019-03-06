@@ -1,5 +1,8 @@
 810.17
 ------
+DRUID:
+* Be a little less strict when trying to maintain earthwarden (from less then 3 to at least 1)
+
 PALADIN:
 * Add a SpellKnown(rebuke) condition for range check for low level paladins
 

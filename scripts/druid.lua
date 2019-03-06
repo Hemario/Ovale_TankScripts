@@ -88,7 +88,7 @@ AddFunction GuardianDefaultAoEActions
     if not BuffExpires(incarnation_guardian_of_ursoc_buff) 
     {
         if (BuffRefreshable(pulverize_buff)) Spell(pulverize)
-        if ((target.DebuffStacks(thrash_bear_debuff) < 3) or (target.DebuffRefreshable(thrash_bear_debuff)) or (Talent(earthwarden_talent) and BuffStacks(earthwarden_buff)<3)) Spell(thrash_bear)
+        if ((target.DebuffStacks(thrash_bear_debuff) < 3) or (target.DebuffRefreshable(thrash_bear_debuff)) or (Talent(earthwarden_talent) and BuffStacks(earthwarden_buff)<=1)) Spell(thrash_bear)
         if (Enemies() <= 3) Spell(mangle)
         Spell(thrash_bear)
     }
