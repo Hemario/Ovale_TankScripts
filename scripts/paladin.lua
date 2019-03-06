@@ -34,7 +34,7 @@ AddFunction ProtectionCooldownTreshold
 
 AddFunction ProtectionGetInMeleeRange
 {
-    if CheckBoxOn(opt_melee_range) and not target.InRange(rebuke) Texture(misc_arrowlup help=L(not_in_melee_range))
+    if CheckBoxOn(opt_melee_range) and SpellKnown(rebuke) and not target.InRange(rebuke) Texture(misc_arrowlup help=L(not_in_melee_range))
 }
 
 AddFunction ProtectionDefaultShortCDActions

@@ -1,5 +1,7 @@
 810.17
 ------
+PALADIN:
+* Add a SpellKnown(rebuke) condition for range check for low level paladins
 
 810.16
 ------
