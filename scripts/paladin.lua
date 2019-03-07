@@ -115,9 +115,9 @@ AddFunction ProtectionDefaultOffensiveActions
 
 AddFunction ProtectionInterruptActions
 {
-    if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.IsInterruptible()
+    if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
     {
-        if target.InRange(rebuke) Spell(rebuke)
+        if target.InRange(rebuke) and target.IsInterruptible() Spell(rebuke)
         if not target.Classification(worldboss)
         {
             if target.InRange(hammer_of_justice) Spell(hammer_of_justice)

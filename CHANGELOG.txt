@@ -8,6 +8,7 @@ MONK:
 
 PALADIN:
 * Add a SpellKnown(rebuke) condition for range check for low level paladins
+* enable Interrupt actions when Casting() and not only when IsInterruptible()
 
 810.16
 ------
