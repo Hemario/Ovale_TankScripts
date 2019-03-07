@@ -32,7 +32,7 @@ DH:
 * Can stack Sigil of Flame
 * Cast Sigil of Flames only when target lives to see the first tick
 * try to prevent wasting DS by not casting it when it's up
-* some optimisations for Feed the Demon talent
+* some optimizations for Feed the Demon talent
 
 Druid:
 * Incapacitating Roar got removed
@@ -60,7 +60,7 @@ WARRIOR:
 DH:
 * burning alive fixes
 * don't use DS when fiery brand is on the target
-* inidicate when at max charges for demon spikes
+* indicate when at max charges for demon spikes
 
 MONK:
 * we don't want to keep BoS on cd too long
