@@ -1,4 +1,4 @@
-810.17
+815.17
 ------
 DRUID:
 * Be a little less strict when trying to maintain earthwarden (from less then 3 to at least 1)
