@@ -1,3 +1,6 @@
+DRUID:
+* replace swipe_bear with swipe
+
 815.17
 ------
 DRUID:
