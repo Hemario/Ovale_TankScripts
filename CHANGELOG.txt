@@ -6,6 +6,9 @@ ALL:
 DRUID:
 * replace swipe_bear with swipe
 
+MONK:
+* Add RJW as fallback, when there is nothing else to cast
+
 815.17
 ------
 DRUID:
