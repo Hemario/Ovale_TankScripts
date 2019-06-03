@@ -10,6 +10,9 @@ MONK:
 * Add RJW as fallback, when there is nothing else to cast
 * Only suggest TP when KS is on cooldown
 
+WARRIOR:
+* don't recommend charge for huge bosses when already in melee range
+
 815.17
 ------
 DRUID:

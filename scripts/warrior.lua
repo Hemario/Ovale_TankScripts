@@ -24,11 +24,11 @@ AddFunction ProtectionHealMe
 
 AddFunction ProtectionGetInMeleeRange
 {
-    if CheckBoxOn(opt_melee_range) and not InFlightToTarget(intercept) and not InFlightToTarget(heroic_leap)
+    if CheckBoxOn(opt_melee_range) and not InFlightToTarget(intercept) and not InFlightToTarget(heroic_leap) and not target.InRange(pummel)
     {
         if target.InRange(intercept) Spell(intercept)
         if SpellCharges(intercept) == 0 and target.Distance(atLeast 8) and target.Distance(atMost 40) Spell(heroic_leap)
-        if not target.InRange(pummel) Texture(misc_arrowlup help=L(not_in_melee_range))
+        Texture(misc_arrowlup help=L(not_in_melee_range))
     }
 }
 
