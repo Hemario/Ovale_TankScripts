@@ -13,6 +13,7 @@ MONK:
 WARRIOR:
 * don't recommend charge for huge bosses when already in melee range
 * don't shockwave as part of the rotation
+* demo shout is important
 
 815.17
 ------

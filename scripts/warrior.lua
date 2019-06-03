@@ -64,6 +64,7 @@ AddFunction ProtectionDefaultMainActions
 AddFunction ProtectionDefaultAoEActions
 {
     if not BuffPresent(battle_shout_buff) Spell(battle_shout)
+    if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(ravager_prot)
     Spell(dragon_roar)
     if (Talent(best_served_cold_talent) and Enemies()>= 2) Spell(revenge)
@@ -71,7 +72,6 @@ AddFunction ProtectionDefaultAoEActions
     Spell(revenge)
     if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
     Spell(shield_slam)
-    if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(arcane_pulse)
     Spell(lights_judgment)
     Spell(devastate)
