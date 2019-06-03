@@ -102,8 +102,8 @@ AddFunction BrewmasterDefaultMainActions
         Spell(blackout_strike)
         if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
         if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
-        if ((Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm) or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
-        Spell(chi_burst)
+        # cooldown.keg_smash.remains>gcd&(energy+(energy.regen*(cooldown.keg_smash.remains+gcd)))>=65
+		if ((SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
 		Spell(chi_burst)
         Spell(chi_wave)
         Spell(rushing_jade_wind)

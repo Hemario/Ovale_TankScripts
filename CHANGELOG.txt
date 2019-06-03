@@ -8,6 +8,7 @@ DRUID:
 
 MONK:
 * Add RJW as fallback, when there is nothing else to cast
+* Only suggest TP when KS is on cooldown
 
 815.17
 ------
