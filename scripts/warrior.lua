@@ -71,7 +71,6 @@ AddFunction ProtectionDefaultAoEActions
     Spell(revenge)
     if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
     Spell(shield_slam)
-    if Enemies() >= 3 Spell(shockwave)
     if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(arcane_pulse)
     Spell(lights_judgment)

@@ -12,6 +12,7 @@ MONK:
 
 WARRIOR:
 * don't recommend charge for huge bosses when already in melee range
+* don't shockwave as part of the rotation
 
 815.17
 ------
