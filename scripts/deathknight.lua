@@ -99,8 +99,8 @@ AddFunction BloodDefaultCdActions
     Spell(icebound_fortitude)
     if CheckBoxOn(opt_use_consumables) 
     {
-        Item(steelskin_potion usable=1)
-        Item(battle_potion_of_stamina usable=1)
+        Item(item_steelskin_potion usable=1)
+        Item(item_battle_potion_of_stamina usable=1)
     }
     UseRacialSurvivalActions()
 }
