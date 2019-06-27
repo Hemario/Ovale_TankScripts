@@ -2,6 +2,7 @@
 ------
 ALL:
 * Update toc
+* Update script names to reflect patch 8.2.0 (and replace Icy-Veins with Ovale_TankScripts)
 
 DRUID: 
 * replace swipe to swipe_bear again (different id's after 8.2.0)
