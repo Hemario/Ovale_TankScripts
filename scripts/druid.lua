@@ -71,7 +71,7 @@ AddFunction GuardianDefaultMainActions
     Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
     if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(maul)
-    Spell(swipe)
+    Spell(swipe_bear)
 }
 
 #
@@ -99,7 +99,7 @@ AddFunction GuardianDefaultAoEActions
     if (Enemies() <= 4) Spell(mangle)
     if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
-    Spell(swipe)
+    Spell(swipe_bear)
 }
 
 AddFunction GuardianDefaultCdActions 

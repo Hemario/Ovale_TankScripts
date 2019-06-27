@@ -2,6 +2,10 @@
 ------
 ALL:
 * Update toc
+
+DRUID: 
+* replace swipe to swipe_bear again (different id's after 8.2.0)
+
 815.18
 ------
 ALL:
