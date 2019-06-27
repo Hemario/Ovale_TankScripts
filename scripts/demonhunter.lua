@@ -5,6 +5,7 @@ do
     local desc = "[8.2.0] Ovale_TankScripts: DemonHunter Vengeance"
     local code = [[
 Include(ovale_common)
+Include(ovale_tankscripts_common)
 Include(ovale_demonhunter_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=vengeance)
@@ -110,6 +111,9 @@ AddFunction VengeanceDefaultCdActions
     
     Item(Trinket0Slot text=13 usable=1)
     Item(Trinket1Slot text=14 usable=1)
+    
+    AzeriteEssenceDefensiveCooldowns()
+    
     if (BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) 
     {
         Spell(fiery_brand)
@@ -127,6 +131,7 @@ AddFunction VengeanceDefaultOffensiveActions
 {
     VengeanceInterruptActions()
     VengeanceDispelActions()
+    AzeriteEssenceOffensiveCooldowns()
     VengeanceDefaultOffensiveCooldowns()
 }
 

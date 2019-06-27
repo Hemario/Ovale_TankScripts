@@ -5,6 +5,7 @@ do
     local desc = "[8.2.0] Ovale_TankScripts: Druid Guardian"
     local code = [[
 Include(ovale_common)
+Include(ovale_tankscripts_common)
 Include(ovale_druid_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=guardian)
@@ -62,6 +63,9 @@ AddFunction GuardianDefaultMainActions
 {
     GuardianHealMeMain()
     if not Stance(druid_bear_form) Spell(bear_form)
+    
+    AzeriteEssenceMain()
+    
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
 
     if (target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
@@ -82,6 +86,9 @@ AddFunction GuardianDefaultAoEActions
 {
     GuardianHealMeMain()
     if not Stance(druid_bear_form) Spell(bear_form)
+    
+    AzeriteEssenceMain()
+    
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
     if Speed() == 0 and Enemies() >= 4 Spell(lunar_beam)
     
@@ -108,6 +115,8 @@ AddFunction GuardianDefaultCdActions
     
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
+    
+    AzeriteEssenceDefensiveCooldowns()
 
     if BuffExpires(bristling_fur_buff) and BuffExpires(survival_instincts_buff) and BuffExpires(barkskin_buff) and BuffExpires(potion_buff)
     {
@@ -127,6 +136,7 @@ AddFunction GuardianDefaultOffensiveActions
 {
     GuardianInterruptActions()
     GuardianDispelActions()
+    AzeriteEssenceOffensiveCooldowns()
     GuardianDefaultOffensiveCooldowns()
 }
 

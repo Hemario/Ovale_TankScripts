@@ -5,6 +5,7 @@ do
     local desc = "[8.2.0] Ovale_TankScripts: Warrior Protection"
     local code = [[
 Include(ovale_common)
+Include(ovale_tankscripts_common)
 Include(ovale_warrior_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
@@ -84,6 +85,9 @@ AddFunction ProtectionDefaultCdActions
     if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection_buff) Spell(spell_reflection)
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
+    
+    AzeriteEssenceDefensiveCooldowns()
+    
     if not Talent(booming_voice_talent) Spell(demoralizing_shout)
     if not (Talent(bolster_talent) and (BuffPresent(shield_block_buff) or Spell(shield_block))) Spell(last_stand)
     Spell(shield_wall)
@@ -99,6 +103,7 @@ AddFunction ProtectionDefaultOffensiveActions
 {
     ProtectionInterruptActions()
     ProtectionDispelActions()
+    AzeriteEssenceOffensiveCooldowns()
     ProtectionDefaultOffensiveCooldowns()
 }
 

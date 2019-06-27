@@ -4,8 +4,8 @@ do
     local name = "ovale_tankscripts_deathknight_blood"
     local desc = "[8.2.0] Ovale_TankScripts: DeathKnight Blood"
     local code = [[
-
 Include(ovale_common)
+Include(ovale_tankscripts_common)
 Include(ovale_deathknight_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=blood)
@@ -95,6 +95,9 @@ AddFunction BloodDefaultCdActions
     if (BuffStacks(bone_shield_buff) >= 6) Spell(tombstone)
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
+    
+    AzeriteEssenceDefensiveCooldowns()
+    
     Spell(vampiric_blood)
     Spell(icebound_fortitude)
     if CheckBoxOn(opt_use_consumables) 
@@ -109,6 +112,7 @@ AddFunction BloodDefaultOffensiveActions
 {
     BloodInterruptActions()
     BloodDispelActions()
+    AzeriteEssenceOffensiveCooldowns()
     BloodDefaultOffensiveCooldowns()
 }
 

@@ -5,6 +5,7 @@ do
     local desc = "[8.2.0] Ovale_TankScripts: Paladin Protection"
     local code = [[
 Include(ovale_common)
+Include(ovale_tankscripts_common)
 Include(ovale_paladin_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
@@ -87,8 +88,11 @@ AddFunction ProtectionDefaultCdActions
     if not CheckBoxOn(opt_paladin_protection_offensive) { ProtectionDefaultOffensiveActions() }
     
     if not DebuffPresent(forbearance_debuff) and HealthPercent() <= 15 Spell(lay_on_hands)
+    
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
+    
+    AzeriteEssenceDefensiveCooldowns()
     
     if ProtectionCooldownTreshold() 
     {
@@ -110,6 +114,7 @@ AddFunction ProtectionDefaultOffensiveActions
 {
     ProtectionInterruptActions()
     ProtectionDispelActions()
+    AzeriteEssenceOffensiveCooldowns()
     ProtectionDefaultOffensiveCooldowns()
 }
 

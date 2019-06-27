@@ -5,6 +5,7 @@ do
     local desc = "[8.2.0] Ovale_TankScripts: Monk Brewmaster"
     local code = [[
 Include(ovale_common)
+Include(ovale_tankscripts_common)
 Include(ovale_monk_spells)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=brewmaster)
@@ -148,6 +149,9 @@ AddFunction BrewmasterDefaultCdActions
     
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
+    
+    AzeriteEssenceDefensiveCooldowns()
+    
     Spell(fortifying_brew)
     Spell(dampen_harm)
     
@@ -166,6 +170,7 @@ AddFunction BrewmasterDefaultOffensiveActions
 {
     BrewmasterInterruptActions()
     BrewmasterDispelActions()
+    AzeriteEssenceOffensiveCooldowns()
     BrewmasterDefaultOffensiveCooldowns()
 }
 
