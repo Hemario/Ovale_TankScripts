@@ -1,7 +1,7 @@
 local __Scripts = LibStub:GetLibrary("ovale/Scripts")
 local OvaleScripts = __Scripts.OvaleScripts
 do
-    local name = "icyveins_warrior_protection"
+    local name = "ovale_tankscripts_warrior_protection"
     local desc = "[8.2.0] Ovale_TankScripts: Warrior Protection"
     local code = [[
 Include(ovale_common)

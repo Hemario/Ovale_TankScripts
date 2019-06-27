@@ -1,7 +1,7 @@
 local __Scripts = LibStub:GetLibrary("ovale/Scripts")
 local OvaleScripts = __Scripts.OvaleScripts
 do
-    local name = "icyveins_druid_guardian"
+    local name = "ovale_tankscripts_druid_guardian"
     local desc = "[8.2.0] Ovale_TankScripts: Druid Guardian"
     local code = [[
 Include(ovale_common)
