@@ -8,6 +8,7 @@ Include(ovale_common)
 
 AddFunction AzeriteEssenceMain
 {
+    Spell(concentrated_flame_essence)
 }
 
 AddFunction AzeriteEssenceOffensiveCooldowns
