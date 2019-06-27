@@ -158,7 +158,7 @@ AddFunction GuardianDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if (player.HasDebuffType(poison curse) and (not InCombat() or not Stance(druid_bear_form))) Spell(remove_corruption)
+        if (player.HasDebuffType(poison curse)) Spell(remove_corruption)
         if (target.HasDebuffType(enrage)) Spell(soothe)
     }
 }
