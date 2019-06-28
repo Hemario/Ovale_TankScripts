@@ -56,6 +56,9 @@ AddFunction BloodDefaultMainActions
 {
     # Heal
     BloodHealMeMain()
+    
+    AzeriteEssenceMain()
+    
     # keep marrowrend up
     if InCombat() and BuffExpires(bone_shield_buff 3) Spell(marrowrend)
     # AoE

@@ -65,6 +65,7 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
+    AzeriteEssenceMain()
     if target.IsInterruptible() Spell(avengers_shield)
     Spell(judgment_prot)
     if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
@@ -75,6 +76,7 @@ AddFunction ProtectionDefaultMainActions
 
 AddFunction ProtectionDefaultAoEActions
 {
+    AzeriteEssenceMain()
     Spell(avengers_shield)
     if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(judgment_prot)

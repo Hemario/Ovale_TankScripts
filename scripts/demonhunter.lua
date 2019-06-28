@@ -76,6 +76,8 @@ AddFunction VengeanceDefaultMainActions
     VengeanceHealMeMain()
     if (VengeanceInfernalStrike()) Spell(infernal_strike)
     
+    AzeriteEssenceMain()
+    
     # fiery demise
     if (not target.DebuffExpires(fiery_demise_debuff))
     {

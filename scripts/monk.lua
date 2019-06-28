@@ -94,6 +94,8 @@ AddFunction BrewmasterDefaultShortCDActions
 AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
+    
+    AzeriteEssenceMain()
         
     if Talent(blackout_combo_talent) BrewmasterBlackoutComboMainActions()
     unless Talent(blackout_combo_talent) 
@@ -131,6 +133,9 @@ AddFunction BrewmasterBlackoutComboMainActions
 AddFunction BrewmasterDefaultAoEActions
 {
     BrewmasterHealMeMain()
+    
+    AzeriteEssenceMain()
+    
     Spell(keg_smash)
     if (Talent(blackout_combo_talent) and not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
     if (target.DebuffPresent(keg_smash) and not BuffPresent(blackout_combo_buff)) Spell(breath_of_fire)
