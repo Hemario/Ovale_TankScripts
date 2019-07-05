@@ -13,6 +13,11 @@ DRUID:
 * replace swipe to swipe_bear again (different id's after 8.2.0)
 * we can remove corruption in bear form now, so no longer need to check if we're not.
 
+PALADIN: 
+* swap AW and Seraphim
+* can use bubble when solo
+* swap aegis of light
+
 820.19
 ------
 ALL:

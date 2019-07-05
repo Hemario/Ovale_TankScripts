@@ -101,13 +101,13 @@ AddFunction ProtectionDefaultCdActions
         Spell(divine_protection)
         Spell(ardent_defender)
         Spell(guardian_of_ancient_kings)
-        Spell(aegis_of_light)
         if (Talent(final_stand_talent) or not UnitInParty()) Spell(divine_shield)
         if (CheckBoxOn(opt_use_consumables)) 
         {
             Item(item_steelskin_potion usable=1)
             Item(item_battle_potion_of_stamina usable=1)
         }
+        Spell(aegis_of_light)
         UseRacialSurvivalActions()
     }
 }
