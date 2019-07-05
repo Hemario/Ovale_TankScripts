@@ -54,6 +54,12 @@ AddFunction VengeanceRangeCheck
     }
 }
 
+AddFunction VengeancePowerGainShear
+{
+    if (Talent(fracture_talent)) 0-PowerCost(fracture) 
+    0-PowerCost(shear)
+}
+
 AddFunction VengeanceDefaultShortCDActions
 {
     VengeanceHealMeShortCd()
@@ -92,7 +98,7 @@ AddFunction VengeanceDefaultMainActions
     if (SoulFragments() >= 5-Talent(fracture_talent) or (not Talent(fracture_talent) and target.DebuffExpires(frailty_debuff))) Spell(spirit_bomb)
     if (not Talent(spirit_bomb_talent) or SoulFragments() == 0)
     {
-        if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<20) Spell(soul_cleave)
+        if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<VengeancePowerGainShear()) Spell(soul_cleave)
         if (Talent(void_reaver_talent) and target.DebuffExpires(void_reaver_debuff)) Spell(soul_cleave)
     }
     if (SoulFragments() <= 3 and ((Talent(razor_spikes_talent) and BuffPresent(demon_spikes_buff)) or BuffPresent(soul_barrier))) Spell(fracture)
@@ -101,7 +107,7 @@ AddFunction VengeanceDefaultMainActions
     if (SoulFragments() <= 3) Spell(fracture)
     Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
-    if (not Talent(fracture_talent) and PainDeficit() >= 10) Spell(shear)
+    if (not Talent(fracture_talent) and PainDeficit() >= VengeancePowerGainShear()) Spell(shear)
     if (Enemies() >= 2) Spell(throw_glaive_veng)
     if (not Talent(fracture_talent)) Spell(shear)
     Spell(throw_glaive_veng)

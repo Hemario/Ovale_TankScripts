@@ -5,6 +5,9 @@ ALL:
 * Add Template for Azerite essences
 * Add concentrated_flame_essence to AzeriteEssenceMain()
 
+DH:
+* Add function to calculate power gain from Shear/Fracture so it's easier to check to not overcap (shear/fracture now gains additional pain when in meta)
+
 DRUID: 
 * replace swipe to swipe_bear again (different id's after 8.2.0)
 * we can remove corruption in bear form now, so no longer need to check if we're not.
