@@ -18,6 +18,7 @@ PALADIN:
 * can use bubble when solo
 * swap aegis of light
 * AOE rotation - HOTS when consecration is up (or with blessed hammer)
+* use consecration when in range
 
 820.19
 ------

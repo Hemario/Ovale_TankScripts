@@ -68,7 +68,7 @@ AddFunction ProtectionDefaultMainActions
     AzeriteEssenceMain()
     if target.IsInterruptible() Spell(avengers_shield)
     Spell(judgment_prot)
-    if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
+    if (Speed() == 0 or target.InRange(rebuke)) and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(avengers_shield)
     Spell(hammer_of_the_righteous)
     Spell(consecration)
@@ -78,7 +78,7 @@ AddFunction ProtectionDefaultAoEActions
 {
     AzeriteEssenceMain()
     Spell(avengers_shield)
-    if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
+    if (Speed() == 0 or target.InRange(rebuke)) and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(judgment_prot)
     if (Talent(blessed_hammer_talent) or BuffPresent(consecration_buff)) Spell(hammer_of_the_righteous)
     Spell(consecration)
