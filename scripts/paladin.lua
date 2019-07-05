@@ -80,8 +80,9 @@ AddFunction ProtectionDefaultAoEActions
     Spell(avengers_shield)
     if Speed() == 0 and not BuffPresent(consecration_buff) Spell(consecration)
     Spell(judgment_prot)
-    Spell(hammer_of_the_righteous)
+    if (Talent(blessed_hammer_talent) or BuffPresent(consecration_buff)) Spell(hammer_of_the_righteous)
     Spell(consecration)
+    Spell(hammer_of_the_righteous)
     Spell(lights_judgment)
 }
 

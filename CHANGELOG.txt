@@ -17,6 +17,7 @@ PALADIN:
 * swap AW and Seraphim
 * can use bubble when solo
 * swap aegis of light
+* AOE rotation - HOTS when consecration is up (or with blessed hammer)
 
 820.19
 ------
