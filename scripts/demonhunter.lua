@@ -95,6 +95,15 @@ AddFunction VengeanceDefaultMainActions
         Spell(fel_eruption)
     }
     
+    # during meta we want to spirit bomb at 3 soul fragments 
+    # Frac > Bomb > Frac > Bomb > Soul Cleave > repeat
+    if (BuffPresent(metamorphosis_veng_buff)) 
+    {
+        if(SoulFragments() >= 3) Spell(spirit_bomb)
+        if(PainDeficit()<VengeancePowerGainShear()) Spell(soul_cleave)
+        Spell(fracture)
+    }
+    
     if (SoulFragments() >= 5-Talent(fracture_talent) or (not Talent(fracture_talent) and target.DebuffExpires(frailty_debuff))) Spell(spirit_bomb)
     if (not Talent(spirit_bomb_talent) or SoulFragments() == 0)
     {
