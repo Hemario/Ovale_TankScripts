@@ -22,6 +22,7 @@ PALADIN:
 * AOE rotation - HOTS when consecration is up (or with blessed hammer)
 * use consecration when in range
 * Add memory_of_lucid_dreams_essence to PaladinAzeriteEssenceDefensiveCooldowns() (when stacks of sotr <= 2)
+* Dump sotr when Bastion of light is about to come of cooldown
 
 820.19
 ------

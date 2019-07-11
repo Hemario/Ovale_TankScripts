@@ -57,8 +57,8 @@ AddFunction ProtectionDefaultShortCDActions
             and (not HasAzeriteTrait(inner_light_trait) or not BuffPresent(shield_of_the_righteous_buff))
         {
             # Dumping SotR charges
-            if (Talent(bastion_of_light_talent) and SpellCooldown(bastion_of_light) == 0) Spell(shield_of_the_righteous)
             if (SpellCharges(shield_of_the_righteous count=0) >= 1.8 and (not Talent(seraphim_talent) or SpellFullRecharge(shield_of_the_righteous) < SpellCooldown(seraphim))) Spell(shield_of_the_righteous)
+            if (Talent(bastion_of_light_talent) and SpellCooldown(bastion_of_light) <= 4) Spell(shield_of_the_righteous)
         }
     }
 }
