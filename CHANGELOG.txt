@@ -21,6 +21,7 @@ PALADIN:
 * swap aegis of light
 * AOE rotation - HOTS when consecration is up (or with blessed hammer)
 * use consecration when in range
+* Add memory_of_lucid_dreams_essence to PaladinAzeriteEssenceDefensiveCooldowns() (when stacks of sotr <= 2)
 
 820.19
 ------
