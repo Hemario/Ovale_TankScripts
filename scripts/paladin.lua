@@ -30,7 +30,7 @@ AddFunction ProtectionHasProtectiveCooldown
 
 AddFunction ProtectionCooldownTreshold
 {
-    HealthPercent() <= 100 and not ProtectionHasProtectiveCooldown()
+    not ProtectionHasProtectiveCooldown()
 }
 
 AddFunction ProtectionGetInMeleeRange
