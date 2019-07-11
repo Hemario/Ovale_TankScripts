@@ -4,6 +4,7 @@ ALL:
 * Update script names to reflect patch 8.2.0 (and replace Icy-Veins with Ovale_TankScripts)
 * Add Template for Azerite essences
 * Add concentrated_flame_essence to AzeriteEssenceMain()
+* Add worldvein_resonance_essence to AzeriteEssenceOffensiveCooldowns()
 
 DH:
 * Add function to calculate power gain from Shear/Fracture so it's easier to check to not overcap (shear/fracture now gains additional pain when in meta)
