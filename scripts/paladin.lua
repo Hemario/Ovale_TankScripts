@@ -154,7 +154,7 @@ AddFunction ProtectionDefaultOffensiveCooldowns
 
 AddFunction PaladinAzeriteEssenceDefensiveCooldowns
 {
-    if (Charges(shield_of_the_righteous) <= 2) Spell(memory_of_lucid_dreams_essence)
+    if (Charges(shield_of_the_righteous count=0) < 2) Spell(memory_of_lucid_dreams_essence)
 }
 
 AddIcon help=shortcd specialization=protection
