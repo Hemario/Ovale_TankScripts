@@ -19,6 +19,7 @@ DRUID:
 MONK:
 * Arcane torrent first, detox after
 * Check if we have black_ox_brew as a short circuit for the next checks
+* Implement Peak of Serenity proposed rotation for ST and AOE (there no longer is a different rotation for BoC)
 
 PALADIN: 
 * swap AW and Seraphim

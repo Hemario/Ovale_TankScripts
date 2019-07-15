@@ -96,38 +96,19 @@ AddFunction BrewmasterDefaultMainActions
     BrewmasterHealMeMain()
     
     AzeriteEssenceMain()
-        
-    if Talent(blackout_combo_talent) BrewmasterBlackoutComboMainActions()
-    unless Talent(blackout_combo_talent) 
-    {
-        if (target.DebuffPresent(keg_smash) and not target.DebuffPresent(breath_of_fire_debuff)) Spell(breath_of_fire)
-        Spell(keg_smash)
-        Spell(blackout_strike)
-        if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
-        if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
-        # cooldown.keg_smash.remains>gcd&(energy+(energy.regen*(cooldown.keg_smash.remains+gcd)))>=65
-		if ((SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
-		Spell(chi_burst)
-        Spell(chi_wave)
-        Spell(rushing_jade_wind)
-		Spell(arcane_pulse)
-    }
-}
-
-AddFunction BrewmasterBlackoutComboMainActions
-{
-    if(BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
-    unless (BuffPresent(blackout_combo_buff)) 
-    {
-        Spell(blackout_strike)
-        Spell(keg_smash)
-        if target.DebuffPresent(keg_smash) Spell(breath_of_fire)
-        if BuffRefreshable(rushing_jade_wind_buff) Spell(rushing_jade_wind)
-        Spell(chi_burst)
-        Spell(chi_wave)
-        Spell(rushing_jade_wind)
-        Spell(arcane_pulse)
-    }
+    
+    if (not InCombat()) Spell(keg_smash)
+    if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
+    Spell(blackout_strike)
+    Spell(keg_smash)
+    Spell(breath_of_fire)
+    if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
+    if (Energy()+EnergyRegenRate()*GCDRemaining() >= 100) Spell(tiger_palm)
+    if (not BuffPresent(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
+    Spell(chi_burst)
+    Spell(chi_wave)
+    if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
+    Spell(rushing_jade_wind)
 }
 
 AddFunction BrewmasterDefaultAoEActions
@@ -136,16 +117,20 @@ AddFunction BrewmasterDefaultAoEActions
     
     AzeriteEssenceMain()
     
-    Spell(keg_smash)
-    if (Talent(blackout_combo_talent) and not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
-    if (target.DebuffPresent(keg_smash) and not BuffPresent(blackout_combo_buff)) Spell(breath_of_fire)
-    if (BuffRefreshable(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
-    Spell(chi_burst)
-    Spell(chi_wave)
-    if ((Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm) or (Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(tiger_palm)
-    if (not BuffPresent(blackout_combo_buff)) Spell(blackout_strike)
-    Spell(rushing_jade_wind)
-    Spell(arcane_pulse)
+    if(Enemies() < 3) BrewmasterDefaultMainActions()
+    unless(Enemies() < 3) 
+    {
+        Spell(keg_smash)
+        Spell(breath_of_fire)
+        if (not BuffPresent(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
+        Spell(chi_burst)
+        if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
+        Spell(blackout_strike)
+        Spell(chi_wave)
+        if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
+        Spell(rushing_jade_wind)
+        Spell(arcane_pulse)
+    }
 }
 
 AddFunction BrewmasterDefaultCdActions 
