@@ -18,7 +18,7 @@ AddFunction AzeriteEssenceOffensiveCooldowns
 
 AddFunction AzeriteEssenceDefensiveCooldowns
 {
-    if not UnitClass(paladin) Spell(memory_of_lucid_dreams_essence)
+    if (not UnitClass(paladin)) Spell(memory_of_lucid_dreams_essence)
 }
 
 ]]
