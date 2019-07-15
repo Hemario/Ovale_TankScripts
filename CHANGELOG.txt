@@ -25,6 +25,7 @@ PALADIN:
 * Add memory_of_lucid_dreams_essence to PaladinAzeriteEssenceDefensiveCooldowns() (when stacks of sotr <= 2)
 * Dump sotr when Bastion of light is about to come of cooldown
 * Stop banking sotr charges, we want to be using them
+* Arcane torrent first, cleanse after
 
 820.19
 ------
