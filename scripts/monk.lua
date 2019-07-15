@@ -198,8 +198,8 @@ AddFunction BrewmasterDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if player.HasDebuffType(poison disease) Spell(detox)
         if Spell(arcane_torrent_chi) and target.HasDebuffType(magic) Spell(arcane_torrent_chi)
+        if player.HasDebuffType(poison disease) Spell(detox)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
     }
 }

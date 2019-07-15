@@ -16,6 +16,9 @@ DRUID:
 * we can remove corruption in bear form now, so no longer need to check if we're not.
 * Soothe first, dispel after
 
+MONK:
+* Arcane torrent first, detox after
+
 PALADIN: 
 * swap AW and Seraphim
 * can use bubble when solo
