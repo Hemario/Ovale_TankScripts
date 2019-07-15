@@ -53,7 +53,7 @@ AddFunction BrewmasterDefaultShortCDActions
     # keep stagger below 100% (70% when in a party, 30% when BOB is up)
     if (StaggerPercentage() >= 100 or (StaggerPercentage() >= 70 and not UnitInRaid()) or (StaggerPercentage() >= 30 and Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(purifying_brew)
     # use black_ox_brew when at 0 charges and low energy (or in an emergency)
-    if (SpellCharges(ironskin_brew count=0) <= 0.75)
+    if (Spell(black_ox_brew) and SpellCharges(ironskin_brew count=0) <= 0.75)
     {
         #black_ox_brew,if=incoming_damage_1500ms&stagger.heavy&cooldown.brews.charges_fractional<=0.75
         if IncomingDamage(1.5) > 0 and DebuffPresent(heavy_stagger_debuff) Spell(black_ox_brew)

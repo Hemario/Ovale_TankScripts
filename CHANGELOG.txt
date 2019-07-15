@@ -18,6 +18,7 @@ DRUID:
 
 MONK:
 * Arcane torrent first, detox after
+* Check if we have black_ox_brew as a short circuit for the next checks
 
 PALADIN: 
 * swap AW and Seraphim
