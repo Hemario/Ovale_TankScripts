@@ -158,8 +158,8 @@ AddFunction GuardianDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if (player.HasDebuffType(poison curse)) Spell(remove_corruption)
         if (target.HasDebuffType(enrage)) Spell(soothe)
+        if (player.HasDebuffType(poison curse)) Spell(remove_corruption)
     }
 }
 
