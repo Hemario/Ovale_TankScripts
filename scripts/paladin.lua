@@ -95,7 +95,6 @@ AddFunction ProtectionDefaultCdActions
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
     
-    PaladinAzeriteEssenceDefensiveCooldowns()
     AzeriteEssenceDefensiveCooldowns()
     
     if ProtectionCooldownTreshold() 
@@ -150,11 +149,6 @@ AddFunction ProtectionDefaultOffensiveCooldowns
 {
     if (Charges(shield_of_the_righteous) >= 2) Spell(seraphim)
     if (not Talent(seraphim_talent) or SpellCooldown(seraphim) <= 4 or BuffPresent(seraphim)) Spell(avenging_wrath)
-}
-
-AddFunction PaladinAzeriteEssenceDefensiveCooldowns
-{
-    if (Charges(shield_of_the_righteous count=0) < 2) Spell(memory_of_lucid_dreams_essence)
 }
 
 AddIcon help=shortcd specialization=protection
