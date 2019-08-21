@@ -1,5 +1,7 @@
 820.21
 ------
+* Update to new Ovale interfaces
+
 ALL:
 * concentrated_flame_burn_debuff doesn't stack so we need to check if it's refreshable
 * Add anima_of_death_essence

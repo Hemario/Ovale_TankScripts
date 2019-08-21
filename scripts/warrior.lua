@@ -1,5 +1,5 @@
-local __Scripts = LibStub:GetLibrary("ovale/Scripts")
-local OvaleScripts = __Scripts.OvaleScripts
+local ovale = LibStub:GetLibrary("ovale")
+local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_warrior_protection"
     local desc = "[8.2.0] Ovale_TankScripts: Warrior Protection"
