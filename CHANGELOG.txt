@@ -7,6 +7,9 @@ ALL:
 DH:
 * Update rotation to reflect guide on Icy-Veins (prioritize fracture over SC)
 
+MONK: 
+* Optimize RJW uptime
+
 820.20
 ------
 ALL:

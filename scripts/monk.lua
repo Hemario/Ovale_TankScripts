@@ -104,7 +104,7 @@ AddFunction BrewmasterDefaultMainActions
     Spell(breath_of_fire)
     if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
     if (Energy()+EnergyRegenRate()*GCDRemaining() >= 100) Spell(tiger_palm)
-    if (not BuffPresent(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
+    if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
     Spell(chi_burst)
     Spell(chi_wave)
     if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
@@ -122,7 +122,7 @@ AddFunction BrewmasterDefaultAoEActions
     {
         Spell(keg_smash)
         Spell(breath_of_fire)
-        if (not BuffPresent(rushing_jade_wind_buff)) Spell(rushing_jade_wind)
+        if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
         Spell(chi_burst)
         if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
         Spell(blackout_strike)
