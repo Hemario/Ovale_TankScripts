@@ -14,6 +14,7 @@ AddFunction AzeriteEssenceMain
 AddFunction AzeriteEssenceOffensiveCooldowns
 {
     if BuffStacks(lifeblood_buff) < 4 Spell(worldvein_resonance_essence)
+    Spell(anima_of_death_essence)
 }
 
 AddFunction AzeriteEssenceDefensiveCooldowns

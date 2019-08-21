@@ -2,6 +2,7 @@
 ------
 ALL:
 * concentrated_flame_burn_debuff doesn't stack so we need to check if it's refreshable
+* Add anima_of_death_essence
 
 820.20
 ------
