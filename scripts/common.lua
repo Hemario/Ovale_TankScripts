@@ -8,7 +8,7 @@ Include(ovale_common)
 
 AddFunction AzeriteEssenceMain
 {
-    Spell(concentrated_flame_essence)
+    if target.DebuffExpires(concentrated_flame_burn_debuff) Spell(concentrated_flame_essence)
 }
 
 AddFunction AzeriteEssenceOffensiveCooldowns

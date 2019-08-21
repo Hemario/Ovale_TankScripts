@@ -1,5 +1,7 @@
 820.21
 ------
+ALL:
+* concentrated_flame_burn_debuff doesn't stack so we need to check if it's refreshable
 
 820.20
 ------
