@@ -4,6 +4,9 @@ ALL:
 * concentrated_flame_burn_debuff doesn't stack so we need to check if it's refreshable
 * Add anima_of_death_essence
 
+DH:
+* Update rotation to reflect guide on Icy-Veins (prioritize fracture over SC)
+
 820.20
 ------
 ALL:

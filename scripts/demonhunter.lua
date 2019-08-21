@@ -95,27 +95,13 @@ AddFunction VengeanceDefaultMainActions
         Spell(fel_eruption)
     }
     
-    # during meta we want to spirit bomb at 3 soul fragments 
-    # Frac > Bomb > Frac > Bomb > Soul Cleave > repeat
-    if (BuffPresent(metamorphosis_veng_buff)) 
-    {
-        if(SoulFragments() >= 3) Spell(spirit_bomb)
-        if(PainDeficit()<VengeancePowerGainShear()) Spell(soul_cleave)
-        Spell(fracture)
-    }
-    
-    if (SoulFragments() >= 5-Talent(fracture_talent) or (not Talent(fracture_talent) and target.DebuffExpires(frailty_debuff))) Spell(spirit_bomb)
-    if (not Talent(spirit_bomb_talent) or SoulFragments() == 0)
-    {
-        if (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<VengeancePowerGainShear()) Spell(soul_cleave)
-        if (Talent(void_reaver_talent) and target.DebuffExpires(void_reaver_debuff)) Spell(soul_cleave)
-    }
-    if (SoulFragments() <= 3 and ((Talent(razor_spikes_talent) and BuffPresent(demon_spikes_buff)) or BuffPresent(soul_barrier))) Spell(fracture)
+    if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis_veng_buff) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
+    if (Talent(fracture_talent) and (Charges(fracture) >= 2 or PainDeficit() >= VengeancePowerGainShear() or BuffPresent(metamorphosis_veng_buff))) Spell(fracture)
     if (PainDeficit() >= 10) Spell(immolation_aura)
-    if (PainDeficit() >= 30) Spell(felblade)
-    if (SoulFragments() <= 3) Spell(fracture)
-    Spell(fel_devastation)
+    if ((not Talent(spirit_bomb_talent) or SoulFragments() == 0) and (Pain()>=60 or (Talent(void_reaver_talent) and target.DebuffExpires(void_reaver_debuff)) or HealthPercent()<=75)) Spell(soul_cleave)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
+    if (PainDeficit() >= 30) Spell(felblade)
+    if (Talent(fracture_talent)) Spell(fracture)
     if (not Talent(fracture_talent) and PainDeficit() >= VengeancePowerGainShear()) Spell(shear)
     if (Enemies() >= 2) Spell(throw_glaive_veng)
     if (not Talent(fracture_talent)) Spell(shear)
