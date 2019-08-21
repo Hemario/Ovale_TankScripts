@@ -97,8 +97,8 @@ AddFunction BrewmasterDefaultMainActions
     
     AzeriteEssenceMain()
     
-    if (not InCombat()) Spell(keg_smash)
     if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
+    if (Enemies() > 1) Spell(keg_smash)
     Spell(blackout_strike)
     Spell(keg_smash)
     Spell(breath_of_fire)

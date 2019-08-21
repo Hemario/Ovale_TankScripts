@@ -9,6 +9,7 @@ DH:
 
 MONK: 
 * Optimize RJW uptime
+* Prioritze KS on cleave, BoS on single target
 
 820.20
 ------
