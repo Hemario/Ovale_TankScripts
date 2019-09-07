@@ -1,3 +1,8 @@
+820.22
+------
+DRUID:
+* Fix for #10 - moonfire_debuff is replaced with moonfire
+
 820.21
 ------
 * Update to new Ovale interfaces

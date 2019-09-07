@@ -68,7 +68,7 @@ AddFunction GuardianDefaultMainActions
     
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
 
-    if (target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
+    if (target.DebuffRefreshable(moonfire)) Spell(moonfire)
     if ((target.DebuffStacks(thrash_bear_debuff) < 3) or (target.DebuffRefreshable(thrash_bear_debuff)) or (Talent(earthwarden_talent) and BuffStacks(earthwarden_buff)<3)) Spell(thrash_bear)
     if (BuffRefreshable(pulverize_buff)) Spell(pulverize)
     Spell(mangle)
@@ -100,11 +100,11 @@ AddFunction GuardianDefaultAoEActions
         Spell(thrash_bear)
     }
     
-    if (DebuffCountOnAny(moonfire_debuff) < 2 and target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
+    if (DebuffCountOnAny(moonfire) < 2 and target.DebuffRefreshable(moonfire)) Spell(moonfire)
     Spell(thrash_bear)
     if (Enemies() <= 2 and BuffRefreshable(pulverize_buff)) Spell(pulverize)
     if (Enemies() <= 4) Spell(mangle)
-    if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
+    if (DebuffCountOnAny(moonfire) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
     Spell(swipe_bear)
 }
