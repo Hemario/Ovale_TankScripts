@@ -87,10 +87,10 @@ AddFunction VengeanceDefaultMainActions
     # fiery demise
     if (not target.DebuffExpires(fiery_demise_debuff))
     {
-        if (SoulFragments() >= 4) Spell(spirit_bomb)
         Spell(immolation_aura)
-        if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
         Spell(fel_devastation)
+        if (CheckBoxOn(opt_infernal_strike)) Spell(infernal_strike)
+        if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
         Spell(felblade)
         Spell(fel_eruption)
     }

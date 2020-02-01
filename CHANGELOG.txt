@@ -1,5 +1,8 @@
 820.23
 ------
+DH:
+* optimize DH rotation again
+
 PALADIN:
 * Fireblood before cleanse
 
