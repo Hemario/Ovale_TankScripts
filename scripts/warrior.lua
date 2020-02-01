@@ -51,7 +51,6 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
-    if not BuffPresent(battle_shout_buff) Spell(battle_shout)
     AzeriteEssenceMain()
     if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(shield_slam)
@@ -65,7 +64,6 @@ AddFunction ProtectionDefaultMainActions
 
 AddFunction ProtectionDefaultAoEActions
 {
-    if not BuffPresent(battle_shout_buff) Spell(battle_shout)
     AzeriteEssenceMain()
     if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(ravager_prot)

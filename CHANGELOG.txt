@@ -1,5 +1,7 @@
 820.23
 ------
+WARRIOR:
+* Don't propose battle shout, get a weak aura instead
 
 820.22
 ------
