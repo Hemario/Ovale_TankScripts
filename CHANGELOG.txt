@@ -1,5 +1,8 @@
 820.23
 ------
+PALADIN:
+* Fireblood before cleanse
+
 WARRIOR:
 * Don't propose battle shout, get a weak aura instead
 

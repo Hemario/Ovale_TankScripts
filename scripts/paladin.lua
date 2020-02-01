@@ -140,8 +140,8 @@ AddFunction ProtectionDispelActions
     if CheckBoxOn(opt_dispel) 
     {
         if Spell(arcane_torrent_holy) and target.HasDebuffType(magic) Spell(arcane_torrent_holy)
-        if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
     }
 }
 
