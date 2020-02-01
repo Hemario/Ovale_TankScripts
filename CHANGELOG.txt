@@ -1,7 +1,8 @@
 820.23
 ------
 DH:
-* optimize DH rotation again
+* Fiery Demise optimizations
+* optimize DPS rotation
 
 PALADIN:
 * Fireblood before cleanse
