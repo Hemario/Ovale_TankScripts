@@ -4,6 +4,7 @@ local OvaleScripts = __Scripts.OvaleScriptsClass
 
 local baseGetDefaultScriptName = OvaleScripts.GetDefaultScriptName
 OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
+    --print("Ovale_TankScripts GetDefaultScriptName")
     if false
         or (className == "DEATHKNIGHT" and specialization == "blood") 
         or (className == "DEMONHUNTER" and specialization == "vengeance") 

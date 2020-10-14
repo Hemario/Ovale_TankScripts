@@ -8,6 +8,8 @@ Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_monk_spells)
 
+Define(hot_trub 202126)
+
 AddCheckBox(opt_interrupt L(interrupt) default specialization=brewmaster)
 AddCheckBox(opt_dispel L(dispel) default specialization=brewmaster)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=brewmaster)
@@ -76,6 +78,8 @@ AddFunction BrewmasterDefaultShortCDActions
         # always bank 1 charge
         unless (SpellCharges(ironskin_brew) <= 1)
         {
+            # Purify with hot trub
+            if (StaggerPercentage() >= 30 and SpellKnown(hot_trub)) Spell(purifying_brew) 
             # keep ISB rolling
             if BuffRemaining(ironskin_brew_buff) < DebuffRemaining(any_stagger_debuff) and BuffExpires(blackout_combo_buff) Spell(ironskin_brew)
             # Purify lower stagger amounts when we can
@@ -84,8 +88,8 @@ AddFunction BrewmasterDefaultShortCDActions
             # never be at (almost) max charges 
             unless (SpellFullRecharge(ironskin_brew) > 3)
             {
-                if (BuffRemaining(ironskin_brew_buff) < 2*BaseDuration(ironskin_brew_buff) and BuffExpires(blackout_combo_buff)) Spell(ironskin_brew text=max)
-                if (StaggerPercentage() > 30 or Talent(special_delivery_talent)) Spell(purifying_brew text=max)
+                if (StaggerPercentage() >= 30 or Talent(special_delivery_talent) or SpellKnown(hot_trub)) Spell(purifying_brew text=max)
+                if (BuffRemaining(ironskin_brew_buff) < 2*BaseDuration(ironskin_brew_buff)-2 and BuffExpires(blackout_combo_buff)) Spell(ironskin_brew text=max)
             }
         }
     }
@@ -95,27 +99,28 @@ AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
     
-    AzeriteEssenceMain()
-    
     if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
-    if (Enemies() > 1) Spell(keg_smash)
+    if (Enemies() > 1 or not InCombat()) Spell(keg_smash)
     Spell(blackout_strike)
     Spell(keg_smash)
-    Spell(breath_of_fire)
-    if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
-    if (Energy()+EnergyRegenRate()*GCDRemaining() >= 100) Spell(tiger_palm)
-    if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
-    Spell(chi_burst)
-    Spell(chi_wave)
-    if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
-    Spell(rushing_jade_wind)
+    
+    if (PreviousGCDSpell(blackout_strike) or PreviousGCDSpell(blackout_strike count=2)) 
+    {
+        AzeriteEssenceMain()
+        if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
+        if (Energy()+EnergyRegenRate()*GCDRemaining() >= 100) Spell(tiger_palm)
+        if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
+        Spell(chi_burst)
+        Spell(chi_wave)
+        if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
+        Spell(rushing_jade_wind)
+        Spell(breath_of_fire)
+    }
 }
 
 AddFunction BrewmasterDefaultAoEActions
 {
     BrewmasterHealMeMain()
-    
-    AzeriteEssenceMain()
     
     if(Enemies() < 3) BrewmasterDefaultMainActions()
     unless(Enemies() < 3) 
@@ -125,6 +130,7 @@ AddFunction BrewmasterDefaultAoEActions
         if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
         Spell(chi_burst)
         if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
+        AzeriteEssenceMain()
         Spell(blackout_strike)
         Spell(chi_wave)
         if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)

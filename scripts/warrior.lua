@@ -70,12 +70,16 @@ AddFunction ProtectionDefaultAoEActions
     Spell(dragon_roar)
     if (Talent(best_served_cold_talent) and Enemies()>= 2) Spell(revenge)
     Spell(thunder_clap)
-    Spell(revenge)
-    if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
-    Spell(shield_slam)
-    Spell(arcane_pulse)
-    Spell(lights_judgment)
-    Spell(devastate)
+    if (PreviousGCDSpell(thunder_clap) or not Talent(unstoppable_force_talent) or not BuffPresent(avatar_buff) or PreviousGCDSpell(ignore_pain))
+    {
+        if BuffPresent(revenge_buff) Spell(revenge)
+        if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
+        Spell(shield_slam)
+        Spell(arcane_pulse)
+        Spell(lights_judgment)
+        if BuffPresent(ignore_pain) or RageDeficit() <= 10 Spell(revenge)
+        Spell(devastate)
+    }
 }
 
 AddFunction ProtectionDefaultCdActions 
