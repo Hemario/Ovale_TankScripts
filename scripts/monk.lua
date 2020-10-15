@@ -86,6 +86,7 @@ AddFunction BrewmasterDefaultMainActions
         Spell(chi_wave)
     }
     if (BuffRemaining(rushing_jade_wind)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
+    AzeriteEssenceMain()
     if (Enemies()>1 and Energy()>70) Spell(spinning_crane_kick)
     if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
     Spell(chi_burst)
