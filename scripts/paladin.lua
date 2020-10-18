@@ -2,11 +2,38 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_paladin_protection"
-    local desc = "[8.2.0] Ovale_TankScripts: Paladin Protection"
+    local desc = "[9.0.1] Ovale_TankScripts: Paladin Protection"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_paladin_spells)
+
+Define(ardent_defender 31950)
+    SpellInfo(ardent_defender cd=120)
+    SpellInfo(divine_shield add_cd=-36 talent=unbreakable_spirit_talent)
+Define(avengers_shield 31935)
+    SpellInfo(avengers_shield holypower=-1)
+Define(blessed_hammer 204019)
+    SpellInfo(blessed_hammer cd=6 charges=3)
+Define(blessed_hammer_talent 3) 
+Define(cleanse_toxins 213644)
+    SpellInfo(cleanse_toxins cd=8)
+Define(consecration_buff 188370)
+Define(consecration_prot 26573)
+    SpellInfo(consecration_prot cd=4)
+Define(final_stand_talent 21)
+Define(guardian_of_ancient_kings 86659)
+    SpellInfo(guardian_of_ancient_kings cd=300)
+Define(judgment_prot 275779)
+    SpellInfo(judgment_prot holypower=-1)
+Define(judgment_prot_debuff 197277)
+    SpellAddTargetDebuff(judgment_prot judgment_prot_debuff=1)
+    SpellAddTargetDebuff(shield_of_the_righteous judgment_prot_debuff=0)
+Define(hammer_of_the_righteous 53595)
+    SpellInfo(hammer_of_the_righteous charges=2 cd=6)
+    SpellInfo(hammer_of_the_righteous replaced_by=blessed_hammer talent=blessed_hammer_talent)
+Define(shining_light_buff 327510)
+    SpellInfo(shining_light_buff duration=15)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
 AddCheckBox(opt_dispel L(dispel) default specialization=protection)
@@ -18,19 +45,8 @@ AddFunction PaladinHealMe
 {
     unless(DebuffPresent(healing_immunity_debuff)) 
     {
-        if (HealthPercent() <= 50) Spell(light_of_the_protector)
-        if (HealthPercent() < 35) UseHealthPotions()
+        if (HealthPercent() <= 50) Spell(word_of_glory)
     }
-}
-
-AddFunction ProtectionHasProtectiveCooldown
-{
-    BuffPresent(aegis_of_light_buff) or BuffPresent(ardent_defender_buff) or BuffPresent(guardian_of_ancient_kings_buff) or BuffPresent(divine_shield_buff) or BuffPresent(potion_buff)
-}
-
-AddFunction ProtectionCooldownTreshold
-{
-    not ProtectionHasProtectiveCooldown()
 }
 
 AddFunction ProtectionGetInMeleeRange
@@ -41,49 +57,29 @@ AddFunction ProtectionGetInMeleeRange
 AddFunction ProtectionDefaultShortCDActions
 {
     PaladinHealMe()
-    #bastion_of_light,if=talent.bastion_of_light.enabled&action.shield_of_the_righteous.charges<1
-    if Charges(shield_of_the_righteous count=0) < 0.8 Spell(bastion_of_light)
-
     ProtectionGetInMeleeRange()
     
-    if (BuffRemaining(shield_of_the_righteous_buff) < 2*BaseDuration(shield_of_the_righteous_buff)) 
-    {
-        #max sotr charges
-        if (SpellCharges(shield_of_the_righteous count=0) >= SpellMaxCharges(shield_of_the_righteous)-0.2) Spell(shield_of_the_righteous text=max)
-        
-        if not ProtectionHasProtectiveCooldown() 
-            and BuffPresent(avengers_valor_buff) 
-            and (IncomingDamage(5 physical=1) > 0 or (IncomingDamage(5) > 0 and Talent(holy_shield_talent)))
-            and (not HasAzeriteTrait(inner_light_trait) or not BuffPresent(shield_of_the_righteous_buff))
-        {
-            # Dumping SotR charges
-            if (SpellCharges(shield_of_the_righteous count=0) >= 0.8 and (not Talent(seraphim_talent) or SpellFullRecharge(shield_of_the_righteous) < SpellCooldown(seraphim))) Spell(shield_of_the_righteous)
-            if (Talent(bastion_of_light_talent) and SpellCooldown(bastion_of_light) <= 4) Spell(shield_of_the_righteous)
-        }
-    }
+    if (BuffRemaining(shield_of_the_righteous_buff) < 2*BaseDuration(shield_of_the_righteous_buff)) Spell(shield_of_the_righteous)
+    if (HealthPercent() <= 20 and (BuffPresent(shining_light_buff) or BuffPresent(divine_purpose))) Spell(word_of_glory)
+    if (HolyPower()>=5) Spell(word_of_glory)
 }
 
 AddFunction ProtectionDefaultMainActions
 {
-    AzeriteEssenceMain()
-    if target.IsInterruptible() Spell(avengers_shield)
-    Spell(judgment_prot)
-    if (Speed() == 0 or target.InRange(rebuke)) and not BuffPresent(consecration_buff) Spell(consecration)
+    if (((Speed() == 0 and InCombat()) or target.InRange(rebuke)) and not BuffPresent(consecration_buff)) Spell(consecration_prot)
+    if (target.IsInterruptible() or Enemies()>=3) Spell(avengers_shield)
+    if not target.DebuffPresent(judgment_prot_debuff) Spell(judgment_prot)
+    Spell(hammer_of_wrath)
     Spell(avengers_shield)
     Spell(hammer_of_the_righteous)
-    Spell(consecration)
+    AzeriteEssenceMain()
+    Spell(consecration_prot)
+    Spell(judgment_prot)
 }
 
 AddFunction ProtectionDefaultAoEActions
 {
-    AzeriteEssenceMain()
-    Spell(avengers_shield)
-    if (Speed() == 0 or target.InRange(rebuke)) and not BuffPresent(consecration_buff) Spell(consecration)
-    Spell(judgment_prot)
-    if (Talent(blessed_hammer_talent) or BuffPresent(consecration_buff)) Spell(hammer_of_the_righteous)
-    Spell(consecration)
-    Spell(hammer_of_the_righteous)
-    Spell(lights_judgment)
+    ProtectionDefaultMainActions()
 }
 
 AddFunction ProtectionDefaultCdActions
@@ -97,19 +93,13 @@ AddFunction ProtectionDefaultCdActions
     
     AzeriteEssenceDefensiveCooldowns()
     
-    if ProtectionCooldownTreshold() 
+    Spell(ardent_defender)
+    Spell(guardian_of_ancient_kings)
+    if (Talent(final_stand_talent) or not UnitInParty()) Spell(divine_shield)
+    if (CheckBoxOn(opt_use_consumables)) 
     {
-        Spell(divine_protection)
-        Spell(ardent_defender)
-        Spell(guardian_of_ancient_kings)
-        if (Talent(final_stand_talent) or not UnitInParty()) Spell(divine_shield)
-        if (CheckBoxOn(opt_use_consumables)) 
-        {
-            Item(item_steelskin_potion usable=1)
-            Item(item_battle_potion_of_stamina usable=1)
-        }
-        Spell(aegis_of_light)
-        UseRacialSurvivalActions()
+        Item(item_steelskin_potion usable=1)
+        Item(item_battle_potion_of_stamina usable=1)
     }
 }
 
@@ -139,7 +129,7 @@ AddFunction ProtectionDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if Spell(arcane_torrent_holy) and target.HasDebuffType(magic) Spell(arcane_torrent_holy)
+        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
         if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
     }
