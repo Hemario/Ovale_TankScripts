@@ -138,8 +138,8 @@ AddFunction BrewmasterInterruptActions
         if not target.Classification(worldboss) 
         {
             if target.Distance(less 5) Spell(leg_sweep)
-            if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.Distance(less 5) Spell(war_stomp)
+            if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.InRange(paralysis) Spell(paralysis)
         }
     }
