@@ -8,6 +8,13 @@ Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_monk_spells)
 
+Define(blackout_combo_buff 228563)
+    SpellInfo(blackout_combo_buff duration=15)
+    SpellAddBuff(blackout_kick blackout_combo_buff=1)
+    SpellAddBuff(breath_of_fire blackout_combo_buff=0)
+    SpellAddBuff(celestial_brew blackout_combo_buff=0)
+    SpellAddBuff(keg_smash blackout_combo_buff=0)
+    SpellAddBuff(tiger_palm blackout_combo_buff=0)
 Define(fortifying_brew 115203)
     SpellInfo(fortifying_brew cd=300 duration=15 gcd=0 offgcd=1)
 Define(hot_trub 202126)
@@ -55,7 +62,7 @@ AddFunction BrewmasterDefaultShortCDActions
     # keep purifying brew on cooldown
     if (SpellCharges(purifying_brew count=0)>1.8) Spell(purifying_brew)
     # use celestial_brew on cooldown
-    Spell(celestial_brew)
+    if BuffExpires(blackout_combo_buff) Spell(celestial_brew)
     # use black_ox_brew when at 0 charges and low energy (or in an emergency)
     if (Spell(black_ox_brew) and SpellCharges(purifying_brew count=0) <= 0.5)
     {
@@ -77,9 +84,9 @@ AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
     
-    Spell(keg_smash)
-    Spell(blackout_kick)
-    if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
+    if BuffExpires(blackout_combo_buff) or UnitInParty() or UnitInRaid() Spell(keg_smash)
+    if BuffExpires(blackout_combo_buff) Spell(blackout_kick)
+    if BuffExpires(blackout_combo_buff) or Enemies()>1 Spell(breath_of_fire)
     if (Enemies()>1) 
     {
         Spell(chi_burst)
@@ -87,7 +94,7 @@ AddFunction BrewmasterDefaultMainActions
     }
     if (BuffRemaining(rushing_jade_wind)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
     AzeriteEssenceMain()
-    if (Enemies()>1 and Energy()>70) Spell(spinning_crane_kick)
+    if (Enemies()>1 and PowerCost(keg_smash)+PowerCost(spinning_crane_kick)) Spell(spinning_crane_kick)
     if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
     Spell(chi_burst)
     Spell(chi_wave)
