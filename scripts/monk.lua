@@ -2,13 +2,24 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_monk_brewmaster"
-    local desc = "[8.2.0] Ovale_TankScripts: Monk Brewmaster"
+    local desc = "[9.0.1] Ovale_TankScripts: Monk Brewmaster"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_monk_spells)
 
+Define(blackout_combo_buff 228563)
+    SpellInfo(blackout_combo_buff duration=15)
+    SpellAddBuff(blackout_kick blackout_combo_buff=1)
+    SpellAddBuff(breath_of_fire blackout_combo_buff=0)
+    SpellAddBuff(celestial_brew blackout_combo_buff=0)
+    SpellAddBuff(keg_smash blackout_combo_buff=0)
+    SpellAddBuff(tiger_palm blackout_combo_buff=0)
+Define(fortifying_brew 115203)
+    SpellInfo(fortifying_brew cd=300 duration=15 gcd=0 offgcd=1)
 Define(hot_trub 202126)
+Define(zen_meditation 115176)
+	SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1 duration=8)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=brewmaster)
 AddCheckBox(opt_dispel L(dispel) default specialization=brewmaster)
@@ -26,7 +37,6 @@ AddFunction BrewmasterHealMeShortCd
             Spell(expel_harm)
         }
         if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
-        if (HealthPercent() < 35) UseHealthPotions()
     }
 }
 
@@ -49,13 +59,12 @@ AddFunction BrewmasterRangeCheck
 
 AddFunction BrewmasterDefaultShortCDActions
 {
-    # keep ISB up always when taking dmg
-    if ((BaseDuration(light_stagger_debuff)-DebuffRemaining(any_stagger_debuff)<3 or target.IsTargetingPlayer()) and BuffExpires(ironskin_brew_buff 3) and BuffExpires(blackout_combo_buff)) Spell(ironskin_brew text=min)
-    
-    # keep stagger below 100% (70% when in a party, 30% when BOB is up)
-    if (StaggerPercentage() >= 100 or (StaggerPercentage() >= 70 and not UnitInRaid()) or (StaggerPercentage() >= 30 and Talent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) <= 0)) Spell(purifying_brew)
+    # keep purifying brew on cooldown
+    if (SpellCharges(purifying_brew count=0)>1.8) Spell(purifying_brew)
+    # use celestial_brew on cooldown
+    if BuffExpires(blackout_combo_buff) Spell(celestial_brew)
     # use black_ox_brew when at 0 charges and low energy (or in an emergency)
-    if (Spell(black_ox_brew) and SpellCharges(ironskin_brew count=0) <= 0.75)
+    if (Spell(black_ox_brew) and SpellCharges(purifying_brew count=0) <= 0.5)
     {
         #black_ox_brew,if=incoming_damage_1500ms&stagger.heavy&cooldown.brews.charges_fractional<=0.75
         if IncomingDamage(1.5) > 0 and DebuffPresent(heavy_stagger_debuff) Spell(black_ox_brew)
@@ -65,78 +74,37 @@ AddFunction BrewmasterDefaultShortCDActions
     
     # heal me
     BrewmasterHealMeShortCd()
-    # Guard
-    Spell(guard)
+    # Purify on red stagger
+    if (StaggerPercentage() > 100) Spell(purifying_brew)
     # range check
     BrewmasterRangeCheck()
-
-    unless StaggerPercentage() > 100
-    {
-        # purify heavy stagger when we have enough ISB
-        if (StaggerPercentage() >= 60 and (BuffRemaining(ironskin_brew_buff) >= 2*BaseDuration(ironskin_brew_buff))) Spell(purifying_brew)
-
-        # always bank 1 charge
-        unless (SpellCharges(ironskin_brew) <= 1)
-        {
-            # Purify with hot trub
-            if (StaggerPercentage() >= 30 and SpellKnown(hot_trub)) Spell(purifying_brew) 
-            # keep ISB rolling
-            if BuffRemaining(ironskin_brew_buff) < DebuffRemaining(any_stagger_debuff) and BuffExpires(blackout_combo_buff) Spell(ironskin_brew)
-            # Purify lower stagger amounts when we can
-            if (StaggerPercentage() >= 70 - (SpellCharges(ironskin_brew count=0)-2) * 15) Spell(purifying_brew)
-            
-            # never be at (almost) max charges 
-            unless (SpellFullRecharge(ironskin_brew) > 3)
-            {
-                if (StaggerPercentage() >= 30 or Talent(special_delivery_talent) or SpellKnown(hot_trub)) Spell(purifying_brew text=max)
-                if (BuffRemaining(ironskin_brew_buff) < 2*BaseDuration(ironskin_brew_buff)-2 and BuffExpires(blackout_combo_buff)) Spell(ironskin_brew text=max)
-            }
-        }
-    }
 }
 
 AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
     
-    if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
-    if (Enemies() > 1 or not InCombat()) Spell(keg_smash)
-    Spell(blackout_strike)
-    Spell(keg_smash)
-    
-    if (PreviousGCDSpell(blackout_strike) or PreviousGCDSpell(blackout_strike count=2)) 
+    if BuffExpires(blackout_combo_buff) or UnitInParty() or UnitInRaid() Spell(keg_smash)
+    if BuffExpires(blackout_combo_buff) Spell(blackout_kick)
+    if BuffExpires(blackout_combo_buff) or Enemies()>1 Spell(breath_of_fire)
+    if (Enemies()>1) 
     {
-        AzeriteEssenceMain()
-        if (target.DebuffPresent(keg_smash)) Spell(breath_of_fire)
-        if (Energy()+EnergyRegenRate()*GCDRemaining() >= 100) Spell(tiger_palm)
-        if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
         Spell(chi_burst)
         Spell(chi_wave)
-        if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
-        Spell(rushing_jade_wind)
-        Spell(breath_of_fire)
     }
+    if (BuffRemaining(rushing_jade_wind)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
+    AzeriteEssenceMain()
+    if (Enemies()>1 and PowerCost(keg_smash)+PowerCost(spinning_crane_kick)) Spell(spinning_crane_kick)
+    if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
+    Spell(chi_burst)
+    Spell(chi_wave)
+    Spell(rushing_jade_wind)
+    Spell(breath_of_fire)
 }
 
 AddFunction BrewmasterDefaultAoEActions
 {
-    BrewmasterHealMeMain()
-    
-    if(Enemies() < 3) BrewmasterDefaultMainActions()
-    unless(Enemies() < 3) 
-    {
-        Spell(keg_smash)
-        Spell(breath_of_fire)
-        if (BuffRemaining(rushing_jade_wind_buff)<GCD()+GCDRemaining()) Spell(rushing_jade_wind)
-        Spell(chi_burst)
-        if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
-        AzeriteEssenceMain()
-        Spell(blackout_strike)
-        Spell(chi_wave)
-        if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) Spell(tiger_palm)
-        Spell(rushing_jade_wind)
-        Spell(arcane_pulse)
-    }
+    BrewmasterDefaultMainActions()
 }
 
 AddFunction BrewmasterDefaultCdActions 
@@ -159,7 +127,6 @@ AddFunction BrewmasterDefaultCdActions
     }
     
     Spell(zen_meditation)
-    UseRacialSurvivalActions()
 }
 
 AddFunction BrewmasterDefaultOffensiveActions
@@ -178,8 +145,8 @@ AddFunction BrewmasterInterruptActions
         if not target.Classification(worldboss) 
         {
             if target.Distance(less 5) Spell(leg_sweep)
-            if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.Distance(less 5) Spell(war_stomp)
+            if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.InRange(paralysis) Spell(paralysis)
         }
     }
@@ -189,7 +156,7 @@ AddFunction BrewmasterDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if Spell(arcane_torrent_chi) and target.HasDebuffType(magic) Spell(arcane_torrent_chi)
+        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if player.HasDebuffType(poison disease) Spell(detox)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
     }
@@ -197,7 +164,8 @@ AddFunction BrewmasterDispelActions
 
 AddFunction BrewmasterDefaultOffensiveCooldowns
 {
-    if not PetPresent(name=Niuzao) Spell(invoke_niuzao_the_black_ox)
+    if target.HealthPercent() <= 15 Spell(touch_of_death)
+    Spell(invoke_niuzao_the_black_ox_0)
 }
 
 AddIcon help=shortcd specialization=brewmaster
