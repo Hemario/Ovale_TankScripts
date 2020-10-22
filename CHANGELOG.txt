@@ -1,3 +1,13 @@
+901.25
+------
+MONK:
+* fix touch of death
+* fix invoke Niuzao
+
+901.24
+------
+Initial SL release for MONK and PALADIN
+
 820.23
 ------
 DH:
