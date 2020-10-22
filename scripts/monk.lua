@@ -165,7 +165,7 @@ AddFunction BrewmasterDispelActions
 AddFunction BrewmasterDefaultOffensiveCooldowns
 {
     if target.HealthPercent() <= 15 Spell(touch_of_death)
-    Spell(invoke_niuzao_the_black_ox_0)
+    Spell(invoke_niuzao_the_black_ox)
 }
 
 AddIcon help=shortcd specialization=brewmaster
