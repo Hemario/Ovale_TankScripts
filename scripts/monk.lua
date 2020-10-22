@@ -17,7 +17,7 @@ Define(blackout_combo_buff 228563)
     SpellAddBuff(tiger_palm blackout_combo_buff=0)
 Define(fortifying_brew 115203)
     SpellInfo(fortifying_brew cd=300 duration=15 gcd=0 offgcd=1)
-Define(hot_trub 202126)
+Define(touch_of_death_brm 322109)
 Define(zen_meditation 115176)
 	SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1 duration=8)
 
@@ -164,7 +164,7 @@ AddFunction BrewmasterDispelActions
 
 AddFunction BrewmasterDefaultOffensiveCooldowns
 {
-    if target.HealthPercent() <= 15 Spell(touch_of_death)
+    if target.HealthPercent() <= 15 Spell(touch_of_death_brm)
     Spell(invoke_niuzao_the_black_ox)
 }
 
