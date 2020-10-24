@@ -61,8 +61,7 @@ AddFunction ProtectionDefaultShortCDActions
     ProtectionGetInMeleeRange()
     
     if (BuffRemaining(shield_of_the_righteous_buff) < 2*BaseDuration(shield_of_the_righteous_buff)) Spell(shield_of_the_righteous)
-    if (HealthPercent() <= 20 and (BuffPresent(shining_light_buff) or BuffPresent(divine_purpose))) Spell(word_of_glory)
-    if (HolyPower()>=5) Spell(word_of_glory)
+    if (HealthPercent() <= 50+HolyPower()*5) Spell(word_of_glory)
 }
 
 AddFunction ProtectionDefaultMainActions
