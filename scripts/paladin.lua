@@ -138,8 +138,8 @@ AddFunction ProtectionDispelActions
 
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
-    if (Charges(shield_of_the_righteous) >= 2) Spell(seraphim)
-    if (not Talent(seraphim_talent) or SpellCooldown(seraphim) <= 4 or BuffPresent(seraphim)) Spell(avenging_wrath)
+    if not player.BuffPresent(avenging_wrath) Spell(avenging_wrath)
+    Spell(seraphim)
 }
 
 AddIcon help=shortcd specialization=protection
