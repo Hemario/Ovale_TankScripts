@@ -34,6 +34,7 @@ Define(hammer_of_the_righteous 53595)
     SpellInfo(hammer_of_the_righteous replaced_by=blessed_hammer talent=blessed_hammer_talent)
 Define(shining_light_buff 327510)
     SpellInfo(shining_light_buff duration=15)
+    SpellRequire(word_of_glory holypower_percent 0=buff,shining_light_buff)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
 AddCheckBox(opt_dispel L(dispel) default specialization=protection)
