@@ -62,6 +62,7 @@ AddFunction ProtectionDefaultShortCDActions
     
     if (BuffRemaining(shield_of_the_righteous_buff) < 2*BaseDuration(shield_of_the_righteous_buff)) Spell(shield_of_the_righteous)
     if (HealthPercent() <= 50+HolyPower()*5) Spell(word_of_glory)
+    if (HealthPercent() >= 90 and HolyPower()>=5) Spell(shield_of_the_righteous)
 }
 
 AddFunction ProtectionDefaultMainActions
