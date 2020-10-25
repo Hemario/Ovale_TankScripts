@@ -16,6 +16,7 @@ Define(blackout_combo_buff 228563)
     SpellAddBuff(keg_smash blackout_combo_buff=0)
     SpellAddBuff(tiger_palm blackout_combo_buff=0)
 Define(blackout_combo_talent 21)
+Define(expel_harm 322101)
 Define(fortifying_brew 115203)
     SpellInfo(fortifying_brew cd=300 duration=15 gcd=0 offgcd=1)
 Define(touch_of_death_brm 322109)
@@ -35,7 +36,6 @@ AddFunction BrewmasterHealMeShortCd
         if (HealthPercent() < 35) 
         {
             Spell(healing_elixir)
-            Spell(expel_harm)
         }
         if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
     }
@@ -45,6 +45,10 @@ AddFunction BrewmasterHealMeMain
 {
     unless(DebuffPresent(healing_immunity_debuff)) 
     {
+        if (HealthPercent() < 50)
+        {
+            Spell(expel_harm)
+        }
     }
 }
 
@@ -87,13 +91,16 @@ AddFunction BrewmasterDefaultMainActions
     
     if (Enemies()>1 or not InCombat()) Spell(keg_smash)
     if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
+    if (SpellCount(expel_harm)>4) Spell(expel_harm)
     if (BuffExpires(blackout_combo_buff)) Spell(blackout_kick)
     Spell(keg_smash)
     AzeriteEssenceMain()
+    if (SpellCount(expel_harm)>=3) Spell(expel_harm)
     if (not BuffPresent(rushing_jade_wind)) Spell(rushing_jade_wind)
     Spell(breath_of_fire)
     Spell(chi_burst)
     Spell(chi_wave)
+    if (SpellCount(expel_harm)>=2) Spell(expel_harm)
     if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) 
     {
         if (Enemies()>= 3) Spell(spinning_crane_kick)
