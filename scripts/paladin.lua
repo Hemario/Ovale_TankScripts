@@ -20,7 +20,7 @@ Define(cleanse_toxins 213644)
     SpellInfo(cleanse_toxins cd=8)
 Define(consecration_buff 188370)
 Define(consecration_prot 26573)
-    SpellInfo(consecration_prot cd=4)
+    SpellInfo(consecration_prot cd=4 totem=1 buff_totem=consecration_buff)
 Define(final_stand_talent 21)
 Define(guardian_of_ancient_kings 86659)
     SpellInfo(guardian_of_ancient_kings cd=300)
@@ -67,7 +67,7 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
-    if (((Speed() == 0 and InCombat()) or target.InRange(rebuke)) and not BuffPresent(consecration_buff)) Spell(consecration_prot)
+    if (((Speed() == 0 and InCombat()) or target.InRange(rebuke)) and not TotemPresent(consecration_prot)) Spell(consecration_prot)
     if (target.IsInterruptible() or Enemies()>=3) Spell(avengers_shield)
     if not target.DebuffPresent(judgment_prot_debuff) Spell(judgment_prot)
     Spell(hammer_of_wrath)
