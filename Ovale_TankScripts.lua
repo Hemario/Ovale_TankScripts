@@ -8,7 +8,7 @@ OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
     if false
         --or (className == "DEATHKNIGHT" and specialization == "blood") 
         --or (className == "DEMONHUNTER" and specialization == "vengeance") 
-        --or (className == "DRUID" and specialization == "guardian")
+        or (className == "DRUID" and specialization == "guardian")
         or (className == "MONK" and specialization == "brewmaster") 
         or (className == "PALADIN" and specialization == "protection")
         --or (className == "WARRIOR" and specialization == "protection")

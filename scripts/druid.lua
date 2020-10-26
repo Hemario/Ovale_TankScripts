@@ -2,11 +2,40 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_druid_guardian"
-    local desc = "[8.2.0] Ovale_TankScripts: Druid Guardian"
+    local desc = "[9.0.1] Ovale_TankScripts: Druid Guardian"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_druid_spells)
+
+Define(bristling_fur 155835)
+    SpellInfo(bristling_fur cd=40)
+Define(earthwarden_talent 16)
+Define(earthwarden_buff 203975)
+Define(frenzied_regeneration 22842)
+    SpellInfo(frenzied_regeneration max_charges=2 charge_cd=29)
+    SpellAddBuff(frenzied_regeneration frenzied_regeneration_buff=1)
+    SpellRequire(frenzied_regeneration unusable 1=stance,!druid_bear_form)
+Define(frenzied_regeneration_buff 22842)
+    SpellInfo(frenzied_regeneration_buff duration=3)
+Define(galactic_guardian_buff 213708)
+    SpellAddBuff(moonfire galactic_guardian_buff=0)
+Define(moonfire_debuff 164812)
+    SpellAddTargetDebuff(moonfire moonfire_debuff=1)
+Define(regrowth 8936)
+Define(renewal 108238)
+Define(remove_corruption 2782)
+    SpellInfo(remove_corruption cd=8)
+Define(rejuvination 774)
+    SpellInfo(rejuvination duration=16)
+Define(soothe 2908)
+    SpellInfo(soothe cd=10)
+Define(survival_instincts 61336)
+    SpellInfo(survival_instincts max_charges=2 charge_cd=140)
+    SpellRequire(survival_instincts unusable 1=buff,survival_instincts)
+Define(swiftmend 18562)
+Define(swipe_bear 213771)
+Define(wild_growth 48438)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=guardian)
 AddCheckBox(opt_dispel L(dispel) default specialization=guardian)
@@ -16,29 +45,26 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=gu
 
 AddFunction GuardianHealMeShortCd
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
+    if BuffExpires(frenzied_regeneration_buff) and HealthPercent() <= 50+(SpellCharges(frenzied_regeneration)-1)*18
     {
-        if BuffExpires(frenzied_regeneration_buff) and HealthPercent() <= 70 
-        {
-            if (SpellCharges(frenzied_regeneration)>=2 or HealthPercent() <= 50) Spell(frenzied_regeneration)
-        }
-        
-        if HealthPercent() < 35 UseHealthPotions()
+        Spell(frenzied_regeneration)
     }
 }
 
 AddFunction GuardianHealMeMain
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
+    if HealthPercent() <= 80 and not InCombat() 
     {
-        if HealthPercent() <= 50 Spell(lunar_beam)
-        if HealthPercent() <= 80 and not InCombat() Spell(regrowth)
+        if UnitInParty() Spell(wild_growth)
+        if BuffPresent(regrowth) or BuffPresent(rejuvination) Spell(swiftmend)
+        if BuffRefreshable(rejuvination) Spell(rejuvination)
+        Spell(regrowth)
     }
 }
 
 AddFunction GuardianGetInMeleeRange
 {
-    if CheckBoxOn(opt_melee_range) and (Stance(druid_bear_form) and not target.InRange(mangle) or { Stance(druid_cat_form) or Stance(druid_claws_of_shirvallah) } and not target.InRange(shred))
+    if CheckBoxOn(opt_melee_range) and ((Stance(druid_bear_form) and not target.InRange(mangle)) or (Stance(druid_cat_form) and not target.InRange(shred)))
     {
         if target.InRange(wild_charge) Spell(wild_charge)
         Texture(misc_arrowlup help=L(not_in_melee_range))
@@ -53,6 +79,8 @@ AddFunction GuardianDefaultShortCDActions
         Spell(ironfur)
     }
     GuardianGetInMeleeRange()
+    if IncomingDamage(5) > 0 Spell(bristling_fur)
+    Spell(pulverize)
 }
 
 #
@@ -64,16 +92,14 @@ AddFunction GuardianDefaultMainActions
     GuardianHealMeMain()
     if not Stance(druid_bear_form) Spell(bear_form)
     
-    AzeriteEssenceMain()
-    
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
 
-    if (target.DebuffRefreshable(moonfire)) Spell(moonfire)
+    if (target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
     if ((target.DebuffStacks(thrash_bear_debuff) < 3) or (target.DebuffRefreshable(thrash_bear_debuff)) or (Talent(earthwarden_talent) and BuffStacks(earthwarden_buff)<3)) Spell(thrash_bear)
-    if (BuffRefreshable(pulverize_buff)) Spell(pulverize)
     Spell(mangle)
     Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
+    AzeriteEssenceMain()
     if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(maul)
     Spell(swipe_bear)
 }
@@ -87,24 +113,20 @@ AddFunction GuardianDefaultAoEActions
     GuardianHealMeMain()
     if not Stance(druid_bear_form) Spell(bear_form)
     
-    AzeriteEssenceMain()
-    
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
-    if Speed() == 0 and Enemies() >= 4 Spell(lunar_beam)
     
-    if not BuffExpires(incarnation_guardian_of_ursoc_buff) 
+    if not BuffExpires(incarnation_guardian_of_ursoc) 
     {
-        if (BuffRefreshable(pulverize_buff)) Spell(pulverize)
         if ((target.DebuffStacks(thrash_bear_debuff) < 3) or (target.DebuffRefreshable(thrash_bear_debuff)) or (Talent(earthwarden_talent) and BuffStacks(earthwarden_buff)<=1)) Spell(thrash_bear)
         if (Enemies() <= 3) Spell(mangle)
         Spell(thrash_bear)
     }
     
-    if (DebuffCountOnAny(moonfire) < 2 and target.DebuffRefreshable(moonfire)) Spell(moonfire)
+    if (DebuffCountOnAny(moonfire_debuff) < 2 and target.DebuffRefreshable(moonfire_debuff)) Spell(moonfire)
     Spell(thrash_bear)
-    if (Enemies() <= 2 and BuffRefreshable(pulverize_buff)) Spell(pulverize)
     if (Enemies() <= 4) Spell(mangle)
-    if (DebuffCountOnAny(moonfire) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
+    if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
+    AzeriteEssenceMain()
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
     Spell(swipe_bear)
 }
@@ -118,17 +140,15 @@ AddFunction GuardianDefaultCdActions
     
     AzeriteEssenceDefensiveCooldowns()
 
-    if BuffExpires(bristling_fur_buff) and BuffExpires(survival_instincts_buff) and BuffExpires(barkskin_buff) and BuffExpires(potion_buff)
+    if HealthPercent() <= 50 Spell(renewal)
+    if Talent(incarnation_guardian_of_ursoc_talent) and not BuffPresent(incarnation_guardian_of_ursoc) Spell(incarnation_guardian_of_ursoc)
+    Spell(barkskin)
+    Spell(survival_instincts)
+    if CheckBoxOn(opt_use_consumables) 
     {
-        Spell(bristling_fur)
-        Spell(barkskin)
-        Spell(survival_instincts)
-        if CheckBoxOn(opt_use_consumables) 
-        {
-            Item(item_battle_potion_of_agility usable=1)
-            Item(item_steelskin_potion usable=1)
-            Item(item_battle_potion_of_stamina usable=1)
-        }
+        Item(item_battle_potion_of_agility usable=1)
+        Item(item_steelskin_potion usable=1)
+        Item(item_battle_potion_of_stamina usable=1)
     }
 }
 
@@ -148,6 +168,7 @@ AddFunction GuardianInterruptActions
         if not target.Classification(worldboss)
         {
             Spell(mighty_bash)
+            if target.distance(less 10) spell(incapacitating_roar)
             if target.Distance(less 8) Spell(war_stomp)
             if target.Distance(less 15) Spell(typhoon)
         }
@@ -165,7 +186,7 @@ AddFunction GuardianDispelActions
 
 AddFunction GuardianDefaultOffensiveCooldowns
 {
-    Spell(incarnation_guardian_of_ursoc)
+    if not Talent(incarnation_guardian_of_ursoc_talent) Spell(berserk)
 }
 
 AddIcon help=shortcd specialization=guardian
