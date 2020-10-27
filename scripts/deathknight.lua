@@ -108,10 +108,7 @@ Define(hemostasis_buff 273947)
 Define(lifeblood_buff 295137)
 
 # Items
-Define(item_abyssal_healing_potion 169451)
 Define(item_battle_potion_of_stamina 163225)
-Define(item_coastal_healing_potion 152494)
-Define(item_healthstone 5512)
 Define(item_steelskin_potion 152557)
 Define(item_superior_battle_potion_of_stamina 168499)
 Define(item_superior_steelskin_potion 168501)
@@ -120,13 +117,6 @@ AddCheckBox(opt_interrupt L(interrupt) default specialization=blood)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=blood)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=blood)
 AddCheckBox(opt_mythic_plus_rotation L(mythic_plus_rotation) specialization=blood)
-
-AddFunction UseHealthPotions
-{
-	Item(item_healthstone usable=1)
-	Item(item_abyssal_healing_potion usable=1)
-	Item(item_coastal_healing_potion usable=1)
-}
 
 AddFunction BloodPoolingForBoneStorm
 {
@@ -164,23 +154,17 @@ AddFunction BloodDefaultShortCdActions
 
 AddFunction BloodHealMeShortCd
 {
-	unless(DebuffPresent(healing_immunity_debuff)) 
-	{
-		if (HealthPercent() < 35) UseHealthPotions()
-	}
+	if (HealthPercent() < 35) UseHealthPotions()
 }
 
 AddFunction BloodHealMeMain
 {
-	unless DebuffPresent(healing_immunity_debuff)
-	{
-		if (HealthPercent() <= 75) 
-		{
-			if (Enemies() >= 3 and RunicPower() >= 70) Spell(bonestorm)
-			if (not BloodPoolingForBoneStorm() and BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike)
-			if (HealthPercent() <= 50) Spell(death_strike)
-		} 
-	}
+    if (HealthPercent() <= 75) 
+    {
+        if (Enemies() >= 3 and RunicPower() >= 70) Spell(bonestorm)
+        if (not BloodPoolingForBoneStorm() and BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike)
+        if (HealthPercent() <= 50) Spell(death_strike)
+    } 
 }
 
 AddFunction BloodDefaultMainActions

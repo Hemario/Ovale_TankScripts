@@ -16,21 +16,15 @@ AddCheckBox(opt_infernal_strike SpellName(infernal_strike) default specializatio
 
 AddFunction VengeanceHealMeShortCd
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
-    {
-         if (HealthPercent() < 35) UseHealthPotions()
-    }
+    if (HealthPercent() < 35) UseHealthPotions()
 }
 AddFunction VengeanceHealMeMain
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
+    if (HealthPercent() < 70) Spell(fel_devastation)
+    if (HealthPercent() < 50) 
     {
-        if (HealthPercent() < 70) Spell(fel_devastation)
-        if (HealthPercent() < 50) 
-        {
-            if (SoulFragments() >= 4 and Enemies()>=3) Spell(spirit_bomb)
-            Spell(soul_cleave)
-        }
+        if (SoulFragments() >= 4 and Enemies()>=3) Spell(spirit_bomb)
+        Spell(soul_cleave)
     }
 }
 

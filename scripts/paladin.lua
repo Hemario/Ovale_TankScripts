@@ -44,10 +44,8 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=pr
 
 AddFunction PaladinHealMe
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
-    {
-        if (HealthPercent() <= 50) Spell(word_of_glory)
-    }
+    if (HealthPercent() <= 50) Spell(word_of_glory)
+    if (HealthPercent() < 35) UseHealthPotions()
 }
 
 AddFunction ProtectionGetInMeleeRange

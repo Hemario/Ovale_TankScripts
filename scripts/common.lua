@@ -47,6 +47,17 @@ AddFunction AzeriteEssenceDefensiveCooldowns
     Spell(memory_of_lucid_dreams_essence)
 }
 
+Define(item_abyssal_healing_potion 169451)
+Define(item_coastal_healing_potion 152494)
+Define(item_healthstone 5512)
+
+AddFunction UseHealthPotions
+{
+	Item(item_healthstone usable=1)
+	Item(item_abyssal_healing_potion usable=1)
+	Item(item_coastal_healing_potion usable=1)
+}
+
 ]]
     OvaleScripts:RegisterScript(nil, nil, name, desc, code, "include")
 end

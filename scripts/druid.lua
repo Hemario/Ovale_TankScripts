@@ -43,6 +43,7 @@ AddFunction GuardianHealMeShortCd
     {
         Spell(frenzied_regeneration)
     }
+    if (HealthPercent() < 35) UseHealthPotions()
 }
 
 AddFunction GuardianHealMeMain

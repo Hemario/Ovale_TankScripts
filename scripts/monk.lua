@@ -31,24 +31,19 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=br
 
 AddFunction BrewmasterHealMeShortCd
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
+    if (HealthPercent() < 35) 
     {
-        if (HealthPercent() < 35) 
-        {
-            Spell(healing_elixir)
-        }
-        if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
+        Spell(healing_elixir)
     }
+    if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
+    if (HealthPercent() < 35) UseHealthPotions()
 }
 
 AddFunction BrewmasterHealMeMain
 {
-    unless(DebuffPresent(healing_immunity_debuff)) 
+    if (HealthPercent() < 50)
     {
-        if (HealthPercent() < 50)
-        {
-            Spell(expel_harm)
-        }
+        Spell(expel_harm)
     }
 }
 
