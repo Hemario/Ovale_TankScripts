@@ -2,11 +2,24 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_demonhunter_vengeance"
-    local desc = "[8.2.0] Ovale_TankScripts: DemonHunter Vengeance"
+    local desc = "[9.0.1] Ovale_TankScripts: DemonHunter Vengeance"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_demonhunter_spells)
+
+Define(demonic_talent 17)
+Define(fel_devastation 212084)
+    SpellInfo(fel_devastation cd=60 fury=50)
+Define(fiery_brand_debuff 207771)
+    SpellInfo(fiery_brand_debuff duration=8)
+    SpellAddTargetDebuff(fiery_brand fiery_brand_debuff=1)
+Define(immolation_aura 258920)
+    SpellInfo(immolation_aura cd=15)
+Define(infernal_strike 189110)
+Define(soul_barrier 263648)
+    SpellInfo(soul_barrier cd=30)
+Define(void_reaver_talent 16)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=vengeance)
 AddCheckBox(opt_dispel L(dispel) default specialization=vengeance)
@@ -40,7 +53,7 @@ AddFunction VengeanceSigilOfFlame
 
 AddFunction VengeanceRangeCheck
 {
-    if (CheckBoxOn(opt_melee_range) and not target.InRange(shear))
+    if (CheckBoxOn(opt_melee_range) and not target.InRange(soul_cleave))
     {
         if (target.InRange(felblade)) Spell(felblade)
         if (CheckBoxOn(opt_infernal_strike) and (target.Distance(more 5) and (target.Distance() < 30+10*Talent(abyssal_strike_talent)))) Spell(infernal_strike text=range)
@@ -48,18 +61,12 @@ AddFunction VengeanceRangeCheck
     }
 }
 
-AddFunction VengeancePowerGainShear
-{
-    if (Talent(fracture_talent)) 0-PowerCost(fracture) 
-    0-PowerCost(shear)
-}
-
 AddFunction VengeanceDefaultShortCDActions
 {
     VengeanceHealMeShortCd()
     Spell(soul_barrier)
     
-    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff) and target.DebuffExpires(fiery_demise_debuff) and BuffExpires(demon_spikes_buff)) or (Talent(razor_spikes_talent) and PainDeficit()<20))
+    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis) and target.DebuffExpires(fiery_brand_debuff)))
     {
         if (BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) 
         {
@@ -79,32 +86,18 @@ AddFunction VengeanceDefaultMainActions
     
     AzeriteEssenceMain()
     
-    # fiery demise
-    if (not target.DebuffExpires(fiery_demise_debuff))
-    {
-        Spell(immolation_aura)
-        Spell(fel_devastation)
-        if (CheckBoxOn(opt_infernal_strike)) Spell(infernal_strike)
-        if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
-        Spell(felblade)
-        Spell(fel_eruption)
-    }
-    
-    if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis_veng_buff) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
-    if (BuffPresent(metamorphosis_veng_buff) and Talent(fracture_talent)) Spell(fracture)
-    if ((not Talent(spirit_bomb_talent) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb)) and (
-        (not Talent(razor_spikes_talent) or BuffPresent(demon_spikes_buff) or PainDeficit()<20 or BuffPresent(metamorphosis_veng_buff)) or 
-        (Talent(void_reaver_talent) and target.DebuffExpires(void_reaver_debuff)) or 
-        (HealthPercent()<=75))) Spell(soul_cleave)
-    if (PainDeficit() >= 10) Spell(immolation_aura)
-    if (PainDeficit() >= 30) Spell(felblade)
+    if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
+    if (BuffPresent(metamorphosis) and Talent(fracture_talent)) Spell(fracture)
+    if ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb)) Spell(soul_cleave)
+    if (FuryDeficit() >= 10) Spell(immolation_aura)
+    if (FuryDeficit() >= 30) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
     Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
-    if (not Talent(fracture_talent) and PainDeficit() >= 10) Spell(shear)
-    if (Enemies() >= 2) Spell(throw_glaive_veng)
+    if (not Talent(fracture_talent) and FuryDeficit() >= 10) Spell(shear)
+    if (Enemies() >= 2) Spell(throw_glaive)
     if (not Talent(fracture_talent)) Spell(shear)
-    Spell(throw_glaive_veng)
+    Spell(throw_glaive)
 }
 
 AddFunction VengeanceDefaultCdActions
@@ -116,16 +109,14 @@ AddFunction VengeanceDefaultCdActions
     
     AzeriteEssenceDefensiveCooldowns()
     
-    if (BuffExpires(metamorphosis_veng_buff) and target.DebuffExpires(fiery_brand_debuff)) 
+    if (Talent(demonic_talent)) Spell(fel_devastation)
+    Spell(fiery_brand)
+    Spell(metamorphosis)
+    if CheckBoxOn(opt_use_consumables) 
     {
-        Spell(fiery_brand)
-        Spell(metamorphosis_veng)
-        if CheckBoxOn(opt_use_consumables) 
-        {
-            Item(item_battle_potion_of_agility usable=1)
-            Item(item_steelskin_potion usable=1)
-            Item(item_battle_potion_of_stamina usable=1)
-        }
+        Item(item_battle_potion_of_agility usable=1)
+        Item(item_steelskin_potion usable=1)
+        Item(item_battle_potion_of_stamina usable=1)
     }
 }
 
@@ -160,7 +151,7 @@ AddFunction VengeanceDispelActions
     if CheckBoxOn(opt_dispel) 
     {
         if target.HasDebuffType(magic) Spell(consume_magic)
-        if Spell(arcane_torrent_dh) and target.HasDebuffType(magic) Spell(arcane_torrent_dh)
+        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
     }
 }
 
