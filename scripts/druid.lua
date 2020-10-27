@@ -12,12 +12,6 @@ Define(bristling_fur 155835)
     SpellInfo(bristling_fur cd=40)
 Define(earthwarden_talent 16)
 Define(earthwarden_buff 203975)
-Define(frenzied_regeneration 22842)
-    SpellInfo(frenzied_regeneration max_charges=2 charge_cd=29)
-    SpellAddBuff(frenzied_regeneration frenzied_regeneration_buff=1)
-    SpellRequire(frenzied_regeneration unusable 1=stance,!druid_bear_form)
-Define(frenzied_regeneration_buff 22842)
-    SpellInfo(frenzied_regeneration_buff duration=3)
 Define(galactic_guardian_buff 213708)
     SpellAddBuff(moonfire galactic_guardian_buff=0)
 Define(moonfire_debuff 164812)
@@ -45,7 +39,7 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=gu
 
 AddFunction GuardianHealMeShortCd
 {
-    if BuffExpires(frenzied_regeneration_buff) and HealthPercent() <= 50+(SpellCharges(frenzied_regeneration)-1)*18
+    if BuffExpires(frenzied_regeneration) and HealthPercent() <= 50+(SpellCharges(frenzied_regeneration)-1)*18
     {
         Spell(frenzied_regeneration)
     }
