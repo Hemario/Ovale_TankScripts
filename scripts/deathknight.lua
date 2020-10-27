@@ -323,8 +323,7 @@ AddCheckBox(opt_deathknight_blood_aoe L(AOE) default specialization=blood)
 
 AddIcon help=shortcd specialization=blood
 {
-	# InCombat() always returns false is bugged in Ovale 9.0.4.
-	#if not InCombat() BloodPrecombatShortCdActions()
+	if not InCombat() BloodPrecombatShortCdActions()
 	BloodDefaultShortCdActions()
 }
 
