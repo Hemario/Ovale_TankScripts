@@ -86,6 +86,7 @@ AddFunction VengeanceDefaultMainActions
     
     AzeriteEssenceMain()
     
+    if (Talent(demonic_talent) and target.TimeToDie() >=8) Spell(fel_devastation)
     if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
     if (BuffPresent(metamorphosis) and Talent(fracture_talent)) Spell(fracture)
     if ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb)) Spell(soul_cleave)
