@@ -56,7 +56,7 @@ AddFunction VengeanceRangeCheck
     if (CheckBoxOn(opt_melee_range) and not target.InRange(soul_cleave))
     {
         if (target.InRange(felblade)) Spell(felblade)
-        if (CheckBoxOn(opt_infernal_strike) and (target.Distance(more 5) and (target.Distance() < 30+10*Talent(abyssal_strike_talent)))) Spell(infernal_strike text=range)
+        if (CheckBoxOn(opt_infernal_strike) and (target.Distance(more 5) and target.Distance(atMost 30))) Spell(infernal_strike text=range)
         Texture(misc_arrowlup help=L(not_in_melee_range))
     }
 }
