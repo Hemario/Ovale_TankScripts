@@ -11,7 +11,7 @@ OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
         or (className == "DRUID" and specialization == "guardian")
         or (className == "MONK" and specialization == "brewmaster") 
         or (className == "PALADIN" and specialization == "protection")
-        --or (className == "WARRIOR" and specialization == "protection")
+        or (className == "WARRIOR" and specialization == "protection")
     then
         return format("ovale_tankscripts_%s_%s", string.lower(className), specialization)
     else
