@@ -123,7 +123,6 @@ AddFunction ProtectionDefaultCdActions
 {
     if not CheckBoxOn(opt_warrior_protection_offensive) { ProtectionDefaultOffensiveActions() }
     
-    if IncomingDamage(1.5 magic=1) > 0 and not BuffPresent(spell_reflection) Spell(spell_reflection)
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
     
@@ -152,7 +151,11 @@ AddFunction ProtectionInterruptActions
 {
     if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
     {
-        if target.InRange(pummel) and target.IsInterruptible() Spell(pummel)
+        if target.IsInterruptible() 
+        {
+            if target.InRange(pummel) Spell(pummel)
+            if target.IsTargetingPlayer() Spell(spell_reflection)
+        }
         if not target.Classification(worldboss) 
         {
             if target.InRange(storm_bolt) Spell(storm_bolt)
