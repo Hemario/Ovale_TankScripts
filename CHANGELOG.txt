@@ -1,3 +1,8 @@
+901.26
+------
+Initial SL release for DRUID, WARRIOR, DEATH KNIGHT (thanks to @ultijlam) and DEMON HUNTER.
+All tanks are now represented.
+
 901.25
 ------
 MONK:
