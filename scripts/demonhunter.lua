@@ -39,8 +39,13 @@ AddFunction VengeanceHealMeMain
     if (HealthPercent() < 50) 
     {
         if (SoulFragments() >= 4 and Enemies()>=3) Spell(spirit_bomb)
-        Spell(soul_cleave)
+        if (not VengeancePoolingForDemonic()) Spell(soul_cleave)
     }
+}
+
+AddFunction VengeancePoolingForDemonic
+{
+    Talent(demonic_talent) and SpellCooldown(fel_devastation)<3 and Fury()<50
 }
 
 AddFunction VengeanceInfernalStrike
@@ -94,7 +99,7 @@ AddFunction VengeanceDefaultMainActions
     
     if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
     if (BuffPresent(metamorphosis) and Talent(fracture_talent)) Spell(fracture)
-    if ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb)) Spell(soul_cleave)
+    if (not VengeancePoolingForDemonic() and ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb))) Spell(soul_cleave)
     if (FuryDeficit() >= 10) Spell(immolation_aura)
     if (FuryDeficit() >= 30) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
