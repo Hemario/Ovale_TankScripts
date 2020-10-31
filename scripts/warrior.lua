@@ -162,7 +162,7 @@ AddFunction ProtectionInterruptActions
             if target.Distance(less 10) Spell(shockwave)
             if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.Distance(less 5) Spell(war_stomp)
-            if target.InRange(intimidating_shout) Spell(intimidating_shout)
+            if target.Distance(atleast 8) Spell(intimidating_shout)
         }
     }
 }
