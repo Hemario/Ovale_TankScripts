@@ -9,6 +9,8 @@ Include(ovale_tankscripts_common)
 Include(ovale_demonhunter_spells)
 
 Define(demonic_talent 17)
+Define(demon_spikes_buff 203819)
+    SpellInfo(demon_spikes duration=6)
 Define(fel_devastation 212084)
     SpellInfo(fel_devastation cd=60 fury=50)
 Define(fiery_brand_debuff 207771)
@@ -66,15 +68,19 @@ AddFunction VengeanceDefaultShortCDActions
     VengeanceHealMeShortCd()
     Spell(soul_barrier)
     
-    if ((IncomingDamage(5 physical=1) > 0 and BuffExpires(metamorphosis) and target.DebuffExpires(fiery_brand_debuff)))
+    if (target.DebuffExpires(fiery_brand_debuff))
     {
-        if (BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) 
+        if (IncomingDamage(5 physical=1) > 0 and BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff) and BuffExpires(metamorphosis)) Spell(demon_spikes)
+        if (not BuffPresent(demon_spikes_buff) and SpellCharges(demon_spikes)<=0)
         {
-            if (SpellFullRecharge(demon_spikes) < 3) Spell(demon_spikes text=max)
-            Spell(demon_spikes)
+            if (Talent(demonic_talent)) Spell(fel_devastation)
+            if (BuffExpires(metamorphosis)) 
+            {
+                Spell(soul_barrier)
+                Spell(fiery_brand)
+            }
         }
     }
-    
     VengeanceRangeCheck()
 }
 
@@ -86,7 +92,6 @@ AddFunction VengeanceDefaultMainActions
     
     AzeriteEssenceMain()
     
-    if (Talent(demonic_talent) and target.TimeToDie() >=8) Spell(fel_devastation)
     if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
     if (BuffPresent(metamorphosis) and Talent(fracture_talent)) Spell(fracture)
     if ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb)) Spell(soul_cleave)
@@ -110,8 +115,6 @@ AddFunction VengeanceDefaultCdActions
     
     AzeriteEssenceDefensiveCooldowns()
     
-    if (Talent(demonic_talent)) Spell(fel_devastation)
-    Spell(fiery_brand)
     Spell(metamorphosis)
     if CheckBoxOn(opt_use_consumables) 
     {
