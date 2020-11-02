@@ -22,6 +22,8 @@ Define(ignore_pain 190456)
 Define(impending_victory 202168)
     SpellInfo(impending_victory cd=30 rage=10)
 Define(impending_victory_talent 15)
+Define(intimidating_shout 5246)
+    SpellInfo(intimidating_shout cd=90 duration=8)
 Define(last_stand 12975)
     SpellInfo(last_stand duration=15 cd=180)
 Define(rallying_cry 97462)
@@ -162,7 +164,7 @@ AddFunction ProtectionInterruptActions
             if target.Distance(less 10) Spell(shockwave)
             if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.Distance(less 5) Spell(war_stomp)
-            if target.Distance(atleast 8) Spell(intimidating_shout)
+            if target.InRange(intimidating_shout) Spell(intimidating_shout)
         }
     }
 }
