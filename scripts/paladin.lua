@@ -8,7 +8,7 @@ Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_paladin_spells)
 
-Define(ardent_defender 31950)
+Define(ardent_defender 31850)
     SpellInfo(ardent_defender cd=120)
     SpellInfo(divine_shield add_cd=-36 talent=unbreakable_spirit_talent)
 Define(avengers_shield 31935)
