@@ -6,6 +6,10 @@ do
     local code = [[
 Include(ovale_common)
 
+### Trinkets
+Define(humming_black_dragonscale 174044)
+    ItemInfo(humming_black_dragonscale unusable=1)
+
 ###
 ### Essences
 ###
