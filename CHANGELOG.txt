@@ -1,3 +1,14 @@
+901.27
+------
+ALL:
+* Don't show Humming Black Dragonscale when equipped
+
+PALADIN:
+* Corrected id for Ardent Defender
+
+WARRIOR:
+* Range check for Intimidating Shout
+
 901.26
 ------
 Initial SL release for DRUID, WARRIOR, DEATH KNIGHT (thanks to @ultijlam) and DEMON HUNTER.
