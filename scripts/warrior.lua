@@ -104,10 +104,9 @@ AddFunction ProtectionDefaultMainActions
     Spell(dragon_roar)
     Spell(shield_slam)
     Spell(thunder_clap)
-    if BuffPresent(revenge_buff) Spell(revenge)
-    if not target.Classification(worldboss) Spell(storm_bolt)
-    #if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(revenge)
     if (RageDeficit() <= 20) Spell(execute)
+    if (BuffPresent(revenge_buff) or RageDeficit() <= 20) Spell(revenge)
+    if (not target.Classification(worldboss)) Spell(storm_bolt)
     Spell(devastate)
 }
 
@@ -121,7 +120,7 @@ AddFunction ProtectionDefaultAoEActions
     Spell(revenge)
     Spell(thunder_clap)
     Spell(shield_slam)
-    if not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent) Spell(shockwave)
+    if (not BuffPresent(shield_block_buff) and Enemies() >= 2+Talent(rumbling_earth_talent)) Spell(shockwave)
     Spell(devastate)
 }
 
