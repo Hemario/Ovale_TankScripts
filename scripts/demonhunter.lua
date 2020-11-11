@@ -75,8 +75,8 @@ AddFunction VengeanceDefaultShortCDActions
 
     if (IncomingDamage(5)>0 and target.DebuffExpires(fiery_brand_debuff) and BuffExpires(metamorphosis) and BuffExpires(soul_barrier)) 
     {
-        if (IncomingDamage(5 physical=1) > 0 and BuffRemaining(demon_spikes_buff)<2*BaseDuration(demon_spikes_buff)) Spell(demon_spikes)
-        if ((not BuffPresent(demon_spikes_buff) and SpellCharges(demon_spikes)<=0) or IncomingDamage(5 physical=1) <= 0)
+        if (IncomingDamage(5 physical=1) > 0 and BuffRemaining(demon_spikes_buff)<2) Spell(demon_spikes)
+        if (not BuffPresent(demon_spikes_buff) or IncomingDamage(5 physical=1) <= 0)
         {
             if (Talent(demonic_talent)) Spell(fel_devastation)
             Spell(soul_barrier)
