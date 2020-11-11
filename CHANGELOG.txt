@@ -1,3 +1,14 @@
+901.28
+------
+DEMON HUNTER:
+* Start pooling fury for Demonic earlier (5 seconds before FD comes off cooldown)
+* Only use demon spikes when about to drop off (and still taking physical damage)
+* Only use Fel Devastation in dps rotation without Demonic, with Demonic use it as a short cd
+
+WARRIOR:
+* Execute no longer shows up without being usable
+* Use shockwave on 3 mobs with rubmling earth talent
+
 901.27
 ------
 ALL:
