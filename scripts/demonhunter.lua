@@ -33,6 +33,7 @@ AddFunction VengeanceHealMeShortCd
 {
     if (HealthPercent() < 35) UseHealthPotions()
 }
+
 AddFunction VengeanceHealMeMain
 {
     if (HealthPercent() < 70) Spell(fel_devastation)
@@ -45,7 +46,7 @@ AddFunction VengeanceHealMeMain
 
 AddFunction VengeancePoolingForDemonic
 {
-    Talent(demonic_talent) and SpellCooldown(fel_devastation)<3 and Fury()<50
+    Talent(demonic_talent) and SpellCooldown(fel_devastation)<5 and Fury()<50
 }
 
 AddFunction VengeanceInfernalStrike
