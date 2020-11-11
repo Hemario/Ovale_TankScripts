@@ -100,7 +100,7 @@ AddFunction VengeanceDefaultMainActions
     if (FuryDeficit() >= 10) Spell(immolation_aura)
     if (FuryDeficit() >= 30) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
-    Spell(fel_devastation)
+    if (not Talent(demonic_talent)) Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
     if (not Talent(fracture_talent) and FuryDeficit() >= 10) Spell(shear)
     if (Enemies() >= 2) Spell(throw_glaive)
