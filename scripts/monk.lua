@@ -17,8 +17,8 @@ Define(blackout_combo_buff 228563)
     SpellAddBuff(tiger_palm blackout_combo_buff=0)
 Define(blackout_combo_talent 21)
 Define(expel_harm 322101)
-Define(fortifying_brew 115203)
-    SpellInfo(fortifying_brew cd=300 duration=15 gcd=0 offgcd=1)
+Define(fortifying_brew_brm 115203)
+    SpellInfo(fortifying_brew_brm cd=300 duration=15 gcd=0 offgcd=1)
 Define(touch_of_death_brm 322109)
 Define(zen_meditation 115176)
 	SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1 duration=8)
@@ -118,7 +118,7 @@ AddFunction BrewmasterDefaultCdActions
     
     AzeriteEssenceDefensiveCooldowns()
     
-    Spell(fortifying_brew)
+    Spell(fortifying_brew_brm)
     Spell(dampen_harm)
     
     if CheckBoxOn(opt_use_consumables) 
