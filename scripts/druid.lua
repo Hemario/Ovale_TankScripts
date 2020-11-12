@@ -29,6 +29,12 @@ Define(survival_instincts 61336)
     SpellRequire(survival_instincts unusable 1=buff,survival_instincts)
 Define(swiftmend 18562)
 Define(swipe_bear 213771)
+Define(swipe_cat 106785)
+    SpellInfo(swipe_cat energy=35 combopoints=-1 stance=druid_cat_form)
+Define(wild_charge_bear 16979)
+    SpellInfo(wild_charge_bear stance=druid_bear_form)
+Define(wild_charge_cat 49376)
+    SpellInfo(wild_charge_cat cd=15 stance=druid_cat_form)
 Define(wild_growth 48438)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=guardian)
@@ -61,7 +67,8 @@ AddFunction GuardianGetInMeleeRange
 {
     if CheckBoxOn(opt_melee_range) and ((Stance(druid_bear_form) and not target.InRange(mangle)) or (Stance(druid_cat_form) and not target.InRange(shred)))
     {
-        if target.InRange(wild_charge) Spell(wild_charge)
+        if target.InRange(wild_charge_bear) Spell(wild_charge_bear)
+        if target.InRange(wild_charge_cat) Spell(wild_charge_cat)
         Texture(misc_arrowlup help=L(not_in_melee_range))
     }
 }
@@ -78,6 +85,28 @@ AddFunction GuardianDefaultShortCDActions
     Spell(pulverize)
 }
 
+AddCheckBox(opt_druid_guardian_catweave L(cat_weaving) specialization=guardian)
+AddFunction GuardianCanCatweave
+{
+    CheckBoxOn(opt_druid_guardian_catweave) and Talent(feral_affinity_talent_guardian) and not (UnitInParty() and target.IsTargetingPlayer())
+}
+
+AddFunction GuardianCatweaveActions
+{
+    if ComboPoints() >= 5
+    {
+        # Rip at 5 CPs and Rip is either not ticking or will fall off before you can re-apply it. 
+        if (target.DebuffExpires(rip) or target.DebuffRefreshable(rip)) Spell(rip)
+        # Ferocious Bite at 5 CPs.
+        Spell(ferocious_bite)
+    }
+    # Rake if Rake is either not ticking or will fall off before you can re-apply it.
+    if (target.DebuffExpires(rake_debuff) or (target.DebuffRefreshable(rake_debuff) and target.DebuffPersistentMultiplier(rake_debuff) < PersistentMultiplier(rake_debuff))) Spell(rake)
+    # Generate CPs with fillers.
+    if Enemies() > 1 Spell(swipe_cat)
+    Spell(shred)
+}
+
 #
 # Single-Target
 #
@@ -85,6 +114,7 @@ AddFunction GuardianDefaultShortCDActions
 AddFunction GuardianDefaultMainActions
 {
     GuardianHealMeMain()
+    if GuardianCanCatweave() and Stance(druid_cat_form) GuardianCatweaveActions()
     if not Stance(druid_bear_form) Spell(bear_form)
     
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
@@ -96,6 +126,7 @@ AddFunction GuardianDefaultMainActions
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
     AzeriteEssenceMain()
     if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(maul)
+    if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
 }
 
@@ -106,6 +137,7 @@ AddFunction GuardianDefaultMainActions
 AddFunction GuardianDefaultAoEActions
 {
     GuardianHealMeMain()
+    if GuardianCanCatweave() and Stance(druid_cat_form) GuardianCatweaveActions()
     if not Stance(druid_bear_form) Spell(bear_form)
     
     if (RageDeficit() <= 20 and (IncomingDamage(5) == 0 or (SpellCharges(ironfur)==0 and SpellCharges(frenzied_regeneration) == 0) or not UnitInParty())) Spell(maul)
@@ -123,6 +155,7 @@ AddFunction GuardianDefaultAoEActions
     if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
     AzeriteEssenceMain()
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
+    if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
 }
 
@@ -181,7 +214,14 @@ AddFunction GuardianDispelActions
 
 AddFunction GuardianDefaultOffensiveCooldowns
 {
-    if not Talent(incarnation_guardian_of_ursoc_talent) Spell(berserk)
+    if Stance(druid_cat_form)
+    {
+        if GuardianCanCatweave() Spell(heart_of_the_wild)
+    }
+    if Stance(druid_bear_form)
+    {
+        if not Talent(incarnation_guardian_of_ursoc_talent) Spell(berserk)
+    }
 }
 
 AddIcon help=shortcd specialization=guardian
