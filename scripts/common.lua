@@ -62,6 +62,47 @@ AddFunction UseHealthPotions
 	Item(item_coastal_healing_potion usable=1)
 }
 
+AddFunction UseRacialHealActions
+{
+    Spell(bag_of_tricks)
+    if IncomingDamage(3) <= 0 Spell(regeneratin)
+    if not InCombat() Spell(cannibalize)
+    Spell(gift_of_the_naaru)
+}
+
+AddFunction UseRacialDamageActions
+{
+    Spell(bag_of_tricks)
+    Spell(lights_judgment)
+    Spell(arcane_pulse)
+}
+
+AddFunction UseRacialOffensiveActions
+{
+    Spell(ancestral_call)
+    Spell(berserking)
+    Spell(blood_fury)
+}
+
+AddFunction UseRacialInterruptActions
+{
+    if target.Distance(less 8) Spell(war_stomp)
+    if target.InRange(bull_rush) Spell(bull_rush)
+    if target.RemainingCastTime() > 1 and target.InRange(haymaker) Spell(haymaker)
+    if target.InRange(quaking_palm) Spell(quaking_palm)
+    if target.Distance(less 5) Spell(hyper_organic_light_originator)
+}
+
+AddFunction UseRacialDispelActions
+{
+    if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
+    if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+    if Spell(stoneform) and player.HasDebuffType(poison disease curse magic) Spell(stoneform)
+    if Spell(escape_artist) and player.HasLossOfControl(root) Spell(escape_artist)
+    if Spell(will_to_survive) and player.HasLossOfControl(stun_mechanic) Spell(will_to_survive)
+    if Spell(will_of_the_forsaken) and player.HasLossOfControl(fear charm stun) Spell(will_of_the_forsaken)
+}
+
 ]]
     OvaleScripts:RegisterScript(nil, nil, name, desc, code, "include")
 end

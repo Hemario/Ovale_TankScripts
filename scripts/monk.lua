@@ -37,6 +37,7 @@ AddFunction BrewmasterHealMeShortCd
     }
     if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
     if (HealthPercent() < 35) UseHealthPotions()
+    if (HealthPercent() < 35) UseRacialHealActions()
 }
 
 AddFunction BrewmasterHealMeMain
@@ -97,6 +98,7 @@ AddFunction BrewmasterDefaultMainActions
         if (not HasTalent(blackout_combo_talent)) Spell(tiger_palm)
     }
     Spell(rushing_jade_wind)
+    UseRacialDamageActions()
 }
 
 AddFunction BrewmasterDefaultAoEActions
@@ -130,6 +132,7 @@ AddFunction BrewmasterDefaultOffensiveActions
 {
     BrewmasterInterruptActions()
     BrewmasterDispelActions()
+    UseRacialOffensiveActions()
     AzeriteEssenceOffensiveCooldowns()
     BrewmasterDefaultOffensiveCooldowns()
 }
@@ -142,9 +145,8 @@ AddFunction BrewmasterInterruptActions
         if not target.Classification(worldboss) 
         {
             if target.Distance(less 5) Spell(leg_sweep)
-            if target.Distance(less 5) Spell(war_stomp)
-            if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.InRange(paralysis) Spell(paralysis)
+            UseRacialInterruptActions()
         }
     }
 }
@@ -153,9 +155,8 @@ AddFunction BrewmasterDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if player.HasDebuffType(poison disease) Spell(detox)
-        if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        UseRacialDispelActions()
     }
 }
 

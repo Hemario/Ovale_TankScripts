@@ -44,6 +44,7 @@ AddFunction GuardianHealMeShortCd
         Spell(frenzied_regeneration)
     }
     if (HealthPercent() < 35) UseHealthPotions()
+    if (HealthPercent() < 35) UseRacialHealActions()
 }
 
 AddFunction GuardianHealMeMain
@@ -96,6 +97,7 @@ AddFunction GuardianDefaultMainActions
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
     AzeriteEssenceMain()
     if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(maul)
+    UseRacialDamageActions()
     Spell(swipe_bear)
 }
 
@@ -123,6 +125,7 @@ AddFunction GuardianDefaultAoEActions
     if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
     AzeriteEssenceMain()
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
+    UseRacialDamageActions()
     Spell(swipe_bear)
 }
 
@@ -151,6 +154,7 @@ AddFunction GuardianDefaultOffensiveActions
 {
     GuardianInterruptActions()
     GuardianDispelActions()
+    UseRacialOffensiveActions()
     AzeriteEssenceOffensiveCooldowns()
     GuardianDefaultOffensiveCooldowns()
 }
@@ -164,8 +168,8 @@ AddFunction GuardianInterruptActions
         {
             Spell(mighty_bash)
             if target.distance(less 10) spell(incapacitating_roar)
-            if target.Distance(less 8) Spell(war_stomp)
             if target.Distance(less 15) Spell(typhoon)
+            UseRacialInterruptActions()
         }
     }
 }
@@ -176,6 +180,7 @@ AddFunction GuardianDispelActions
     {
         if (target.HasDebuffType(enrage)) Spell(soothe)
         if (player.HasDebuffType(poison curse)) Spell(remove_corruption)
+        UseRacialDispelActions()
     }
 }
 

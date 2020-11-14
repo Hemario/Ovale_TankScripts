@@ -114,6 +114,7 @@ Define(item_superior_battle_potion_of_stamina 168499)
 Define(item_superior_steelskin_potion 168501)
 
 AddCheckBox(opt_interrupt L(interrupt) default specialization=blood)
+AddCheckBox(opt_dispel L(dispel) default specialization=blood)
 AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=blood)
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=blood)
 AddCheckBox(opt_mythic_plus_rotation L(mythic_plus_rotation) specialization=blood)
@@ -155,6 +156,7 @@ AddFunction BloodDefaultShortCdActions
 AddFunction BloodHealMeShortCd
 {
 	if (HealthPercent() < 35) UseHealthPotions()
+    if (HealthPercent() < 35) UseRacialHealActions()
 }
 
 AddFunction BloodHealMeMain
@@ -204,7 +206,8 @@ AddFunction BloodDefaultMainActions
 	# fillers
 	if BuffPresent(dancing_rune_weapon_buff) Spell(blood_boil)
 	if BuffPresent(crimson_scourge_buff) Spell(death_and_decay)
-	Spell(blood_boil)
+	Spell(blood_boil
+    UseRacialDamageActions()
 }
 
 # Core Ability Priority List from "[8.3] Advanced Blood Death Knight M+ Guide" by Kyrasis-Stormreaver
@@ -295,6 +298,8 @@ AddFunction BloodDefaultCdActions
 AddFunction BloodDefaultOffensiveActions
 {
 	BloodInterruptActions()
+    BloodDispelActions()
+    UseRacialOffensiveActions()
 	AzeriteEssenceOffensiveCooldowns()
 	BloodDefaultOffensiveCooldowns()
 }
@@ -309,9 +314,17 @@ AddFunction BloodInterruptActions
 			if target.InRange(asphyxiate_blood) Spell(asphyxiate_blood)
 			if target.InRange(death_grip) Spell(death_grip)
 			if (target.Distance() < 15) Spell(gorefiends_grasp)
-			if (target.Distance() < 5) Spell(war_stomp)
+            UseRacialInterruptActions()
 		}
 	}
+}
+
+AddFunction BloodDispelActions
+{
+    if CheckBoxOn(opt_dispel) 
+    {
+        UseRacialDispelActions()
+    }
 }
 
 AddFunction BloodDefaultOffensiveCooldowns

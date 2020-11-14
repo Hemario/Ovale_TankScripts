@@ -46,6 +46,7 @@ AddFunction PaladinHealMe
 {
     if (HealthPercent() <= 50) Spell(word_of_glory)
     if (HealthPercent() < 35) UseHealthPotions()
+    if (HealthPercent() < 35) UseRacialHealActions()
 }
 
 AddFunction ProtectionGetInMeleeRange
@@ -74,6 +75,7 @@ AddFunction ProtectionDefaultMainActions
     AzeriteEssenceMain()
     Spell(consecration_prot)
     Spell(judgment_prot)
+    UseRacialDamageActions()
 }
 
 AddFunction ProtectionDefaultAoEActions
@@ -106,6 +108,7 @@ AddFunction ProtectionDefaultOffensiveActions
 {
     ProtectionInterruptActions()
     ProtectionDispelActions()
+    UseRacialOffensiveActions()
     AzeriteEssenceOffensiveCooldowns()
     ProtectionDefaultOffensiveCooldowns()
 }
@@ -119,7 +122,7 @@ AddFunction ProtectionInterruptActions
         {
             if target.InRange(hammer_of_justice) Spell(hammer_of_justice)
             if target.Distance(less 10) Spell(blinding_light)
-            if target.Distance(less 8) Spell(war_stomp)
+            UseRacialInterruptActions()
         }
     }
 }
@@ -128,9 +131,8 @@ AddFunction ProtectionDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
-        if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
         if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
+        UseRacialDispelActions()
     }
 }
 

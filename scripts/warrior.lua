@@ -68,6 +68,7 @@ AddFunction ProtectionHealMe
     if (HealthPercent() < 70) Spell(victory_rush)
     if (HealthPercent() < 85) Spell(impending_victory)
     if (HealthPercent() < 35) UseHealthPotions()
+    if (HealthPercent() < 35) UseRacialHealActions()
 }
 
 AddFunction ProtectionGetInMeleeRange
@@ -107,6 +108,7 @@ AddFunction ProtectionDefaultMainActions
     if (RageDeficit() <= 20) Spell(execute)
     if (BuffPresent(revenge_buff) or RageDeficit() <= 20) Spell(revenge)
     if (not target.Classification(worldboss)) Spell(storm_bolt)
+    UseRacialDamageActions()
     Spell(devastate)
 }
 
@@ -148,6 +150,7 @@ AddFunction ProtectionDefaultOffensiveActions
 {
     ProtectionInterruptActions()
     ProtectionDispelActions()
+    UseRacialOffensiveActions()
     AzeriteEssenceOffensiveCooldowns()
     ProtectionDefaultOffensiveCooldowns()
 }
@@ -165,9 +168,8 @@ AddFunction ProtectionInterruptActions
         {
             if target.InRange(storm_bolt) Spell(storm_bolt)
             if target.Distance(less 10) Spell(shockwave)
-            if target.InRange(quaking_palm) Spell(quaking_palm)
-            if target.Distance(less 5) Spell(war_stomp)
             if target.InRange(intimidating_shout) Spell(intimidating_shout)
+            UseRacialInterruptActions()
         }
     }
 }
@@ -176,8 +178,7 @@ AddFunction ProtectionDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
-        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
-        if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        UseRacialDispelActions()
     }
 }
 
