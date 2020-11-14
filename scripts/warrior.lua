@@ -178,6 +178,7 @@ AddFunction ProtectionDispelActions
 {
     if CheckBoxOn(opt_dispel) 
     {
+        if player.HasLossOfControl(fear) Spell(berserker_rage)
         UseRacialDispelActions()
     }
 }
