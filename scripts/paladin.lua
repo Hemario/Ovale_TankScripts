@@ -32,6 +32,7 @@ Define(judgment_prot_debuff 197277)
 Define(hammer_of_the_righteous 53595)
     SpellInfo(hammer_of_the_righteous charges=2 cd=6)
     SpellInfo(hammer_of_the_righteous replaced_by=blessed_hammer talent=blessed_hammer_talent)
+Define(sanctified_wrath_talent 19)
 Define(shining_light_buff 327510)
     SpellInfo(shining_light_buff duration=15)
     SpellRequire(word_of_glory holypower_percent 0=buff,shining_light_buff)
@@ -58,9 +59,11 @@ AddFunction ProtectionDefaultShortCDActions
     PaladinHealMe()
     ProtectionGetInMeleeRange()
     
-    if (BuffRemaining(shield_of_the_righteous_buff) < 2*BaseDuration(shield_of_the_righteous_buff)) Spell(shield_of_the_righteous)
-    if (HealthPercent() <= 50+HolyPower()*5) Spell(word_of_glory)
-    if (HealthPercent() >= 90 and HolyPower()>=5) Spell(shield_of_the_righteous)
+    if (IncomingDamage(5 physical=1)>0 and (BuffRemaining(shield_of_the_righteous) <= 2)) Spell(shield_of_the_righteous)
+    #actions.standard=shield_of_the_righteous,if=debuff.judgment.up&(debuff.vengeful_shock.up|!conduit.vengeful_shock.enabled)
+    if (target.DebuffPresent(judgment_prot_debuff)) Spell(shield_of_the_righteous)
+    #actions.standard+=/shield_of_the_righteous,if=holy_power=5|buff.holy_avenger.up|holy_power=4&talent.sanctified_wrath.enabled&buff.avenging_wrath.up
+    if (HolyPower()>=5 or BuffPresent(holy_avenger) or (Talent(sanctified_wrath_talent) and HolyPower()>=5-BuffPresent(avenging_wrath))) Spell(shield_of_the_righteous)
 }
 
 AddFunction ProtectionDefaultMainActions
