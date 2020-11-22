@@ -8,6 +8,8 @@ Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_paladin_spells)
 
+Define(arcane_torrent 155145)
+  SpellInfo(arcane_torrent cd=120 gcd=1 holy_power=-1)
 Define(ardent_defender 31850)
     SpellInfo(ardent_defender cd=120)
     SpellInfo(divine_shield add_cd=-36 talent=unbreakable_spirit_talent)
