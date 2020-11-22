@@ -1,3 +1,20 @@
+902.29
+------
+DRUID:
+* Preliminary support for catweaving (checkbox to enable, not enabled by default) - Thanks @ultijlam
+
+MONK:
+* Correct cooldown of fortifying Brew
+
+PALADIN:
+* Keep shield of righteous up when taking physical damage
+** if not, use only with judgment buff, or when capped on holypower, or to prevent overcapping due to holy avenger or sanctified wrath
+* Correct id for arcane torrent
+
+WARRIOR:
+* Use Ignore Pain when it's not up
+* Keep Shield block up when taking physical damage
+
 901.28
 ------
 DEMON HUNTER:
