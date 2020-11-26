@@ -9,11 +9,6 @@ Include(ovale_common)
 Define(humming_black_dragonscale 174044)
     ItemInfo(humming_black_dragonscale unusable=1)
 
-Define(fleshcraft 324631)
-    SpellInfo(fleshcraft cd=120)
-Define(phial_of_serenity 177278)
-    ItemInfo(phial_of_serenity cd=180)
-
 Define(item_abyssal_healing_potion 169451)
 Define(item_coastal_healing_potion 152494)
 Define(item_healthstone 5512)
@@ -25,9 +20,15 @@ AddFunction UseHealthPotions
 	Item(item_coastal_healing_potion usable=1)
 }
 
+Define(fleshcraft 324631)
+    SpellInfo(fleshcraft cd=120)
+Define(phial_of_serenity 177278)
+    ItemInfo(phial_of_serenity cd=180)
+
 AddFunction CovenantShortCDHealActions
 {
-    if not InCombat() Spell(fleshcraft)
+    if (not InCombat()) Spell(fleshcraft)
+    if (HealthPercent() <= 40) Item(phial_of_serenity usable=1)
 }
 
 AddFunction CovenantDispelActions
