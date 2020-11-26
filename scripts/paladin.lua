@@ -2,7 +2,7 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_paladin_protection"
-    local desc = "[9.0.1] Ovale_TankScripts: Paladin Protection"
+    local desc = "[9.0.2] Ovale_TankScripts: Paladin Protection"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
@@ -50,6 +50,7 @@ AddFunction PaladinHealMe
 {
     if (HealthPercent() <= 50) Spell(word_of_glory)
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction ProtectionGetInMeleeRange
@@ -63,21 +64,23 @@ AddFunction ProtectionDefaultShortCDActions
     ProtectionGetInMeleeRange()
     
     if (IncomingDamage(5 physical=1)>0 and (BuffRemaining(shield_of_the_righteous) <= 2)) Spell(shield_of_the_righteous)
-    #actions.standard=shield_of_the_righteous,if=debuff.judgment.up&(debuff.vengeful_shock.up|!conduit.vengeful_shock.enabled)
     if (target.DebuffPresent(judgment_prot_debuff)) Spell(shield_of_the_righteous)
-    #actions.standard+=/shield_of_the_righteous,if=holy_power=5|buff.holy_avenger.up|holy_power=4&talent.sanctified_wrath.enabled&buff.avenging_wrath.up
     if (HolyPower()>=5 or BuffPresent(holy_avenger) or (Talent(sanctified_wrath_talent) and HolyPower()>=5-BuffPresent(avenging_wrath))) Spell(shield_of_the_righteous)
+
+    #necrolord covenant ability perl, not worth it
+    #if (BuffPresent(vanquishers_hammer)) Spell(word_of_glory)
 }
 
 AddFunction ProtectionDefaultMainActions
 {
+    if (target.IsInterruptible()) Spell(avengers_shield)
     if (((Speed() == 0 and InCombat()) or target.InRange(rebuke)) and not TotemPresent(consecration_prot)) Spell(consecration_prot)
-    if (target.IsInterruptible() or Enemies()>=3) Spell(avengers_shield)
+    if (Enemies()>=3) Spell(avengers_shield)
+    Spell(vanquishers_hammer)
     if not target.DebuffPresent(judgment_prot_debuff) Spell(judgment_prot)
     Spell(hammer_of_wrath)
     Spell(avengers_shield)
     Spell(hammer_of_the_righteous)
-    AzeriteEssenceMain()
     Spell(consecration_prot)
     Spell(judgment_prot)
 }
@@ -118,6 +121,7 @@ AddFunction ProtectionInterruptActions
     if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
     {
         if target.InRange(rebuke) and target.IsInterruptible() Spell(rebuke)
+        if target.IsInterruptible() Spell(divine_toll)
         if not target.Classification(worldboss)
         {
             if target.InRange(hammer_of_justice) Spell(hammer_of_justice)
@@ -134,13 +138,16 @@ AddFunction ProtectionDispelActions
         if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
         if player.HasDebuffType(poison disease) Spell(cleanse_toxins)
+        CovenantDispelActions()
     }
 }
 
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
-    if not player.BuffPresent(avenging_wrath) Spell(avenging_wrath)
+    if (not player.BuffPresent(avenging_wrath)) Spell(avenging_wrath)
+    if (HolyPowerDeficit()>=Enemies() or HolyPower()<=0) Spell(divine_toll)
     Spell(seraphim)
+    Spell(ashen_hallow)
 }
 
 AddIcon help=shortcd enabled=(specialization(protection))
