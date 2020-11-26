@@ -9,14 +9,14 @@ Include(ovale_tankscripts_common)
 Include(ovale_paladin_spells)
 
 Define(arcane_torrent 155145)
-  SpellInfo(arcane_torrent cd=120 gcd=1 holypower=-1)
+    SpellInfo(arcane_torrent cd=120 gcd=1 holypower=-1)
 Define(ardent_defender 31850)
     SpellInfo(ardent_defender cd=120)
-    SpellInfo(divine_shield add_cd=-36 talent=unbreakable_spirit_talent)
+    SpellRequire(ardent_defender cd percent=70 enabled=(hastalent(unbreakable_spirit_talent)))
 Define(avengers_shield 31935)
     SpellInfo(avengers_shield holypower=-1)
 Define(blessed_hammer 204019)
-    SpellInfo(blessed_hammer cd=6 charges=3)
+    SpellInfo(blessed_hammer cd=6)
 Define(blessed_hammer_talent 3) 
 Define(cleanse_toxins 213644)
     SpellInfo(cleanse_toxins cd=8)
@@ -29,21 +29,22 @@ Define(guardian_of_ancient_kings 86659)
 Define(judgment_prot 275779)
     SpellInfo(judgment_prot holypower=-1)
 Define(judgment_prot_debuff 197277)
-    SpellAddTargetDebuff(judgment_prot judgment_prot_debuff=1)
-    SpellAddTargetDebuff(shield_of_the_righteous judgment_prot_debuff=0)
+    SpellAddTargetDebuff(judgment_prot judgment_prot_debuff add=1)
+    SpellAddTargetDebuff(shield_of_the_righteous judgment_prot_debuff set=0)
 Define(hammer_of_the_righteous 53595)
-    SpellInfo(hammer_of_the_righteous charges=2 cd=6)
-    SpellInfo(hammer_of_the_righteous replaced_by=blessed_hammer talent=blessed_hammer_talent)
+    SpellInfo(hammer_of_the_righteous cd=6)
+    SpellRequire(hammer_of_the_righteous replaced_by set=blessed_hammer enabled=(hastalent(blessed_hammer_talent)))
 Define(sanctified_wrath_talent 19)
 Define(shining_light_buff 327510)
     SpellInfo(shining_light_buff duration=15)
-    SpellRequire(word_of_glory holypower_percent 0=buff,shining_light_buff)
+    SpellRequire(word_of_glory holypower percent=0 enabled=(buffpresent(shining_light_buff)))
 
-AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
-AddCheckBox(opt_dispel L(dispel) default specialization=protection)
-AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
-AddCheckBox(opt_paladin_protection_aoe L(AOE) default specialization=protection)
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=protection)
+AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(protection)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(specialization(protection)))
+AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(specialization(protection)))
+AddCheckBox(opt_paladin_protection_aoe L(AOE) default enabled=(specialization(protection)))
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(specialization(protection)))
+AddCheckBox(opt_paladin_protection_offensive L(seperate_offensive_icon) default enabled=(specialization(protection)))
 
 AddFunction PaladinHealMe
 {
@@ -95,8 +96,6 @@ AddFunction ProtectionDefaultCdActions
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
     
-    AzeriteEssenceDefensiveCooldowns()
-    
     Spell(ardent_defender)
     Spell(guardian_of_ancient_kings)
     if (Talent(final_stand_talent) or not UnitInParty()) Spell(divine_shield)
@@ -111,7 +110,6 @@ AddFunction ProtectionDefaultOffensiveActions
 {
     ProtectionInterruptActions()
     ProtectionDispelActions()
-    AzeriteEssenceOffensiveCooldowns()
     ProtectionDefaultOffensiveCooldowns()
 }
 
@@ -145,29 +143,28 @@ AddFunction ProtectionDefaultOffensiveCooldowns
     Spell(seraphim)
 }
 
-AddIcon help=shortcd specialization=protection
+AddIcon help=shortcd enabled=(specialization(protection))
 {
     ProtectionDefaultShortCDActions()
 }
 
-AddIcon enemies=1 help=main specialization=protection
+AddIcon enemies=1 help=main enabled=(specialization(protection))
 {
     ProtectionDefaultMainActions()
 }
 
-AddIcon checkbox=opt_paladin_protection_aoe help=aoe specialization=protection
+AddIcon help=aoe enabled=(checkboxon(opt_paladin_protection_aoe) and specialization(protection))
 {
     ProtectionDefaultAoEActions()
 }
 
-AddIcon help=cd specialization=protection
+AddIcon help=cd enabled=(specialization(protection))
 {
     #if not InCombat() ProtectionPrecombatCdActions()
     ProtectionDefaultCdActions()
 }
 
-AddCheckBox(opt_paladin_protection_offensive L(seperate_offensive_icon) default specialization=protection)
-AddIcon checkbox=opt_paladin_protection_offensive size=small specialization=protection
+AddIcon help=smallcd size=small enabled=(checkboxon(opt_paladin_protection_offensive) and specialization(protection))
 {
     ProtectionDefaultOffensiveActions()
 }
