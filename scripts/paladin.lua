@@ -36,7 +36,7 @@ Define(hammer_of_the_righteous 53595)
     SpellRequire(hammer_of_the_righteous replaced_by set=blessed_hammer enabled=(hastalent(blessed_hammer_talent)))
 Define(sanctified_wrath_talent 19)
 Define(shining_light_buff 327510)
-    SpellInfo(shining_light_buff duration=15)
+    SpellInfo(shining_light_buff duration=30)
     SpellRequire(word_of_glory holypower percent=0 enabled=(buffpresent(shining_light_buff)))
 
 AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(protection)))
@@ -147,6 +147,7 @@ AddFunction ProtectionDefaultOffensiveCooldowns
     if (not player.BuffPresent(avenging_wrath)) Spell(avenging_wrath)
     if (HolyPowerDeficit()>=Enemies() or HolyPower()<=0) Spell(divine_toll)
     Spell(seraphim)
+    Spell(holy_avenger)
     Spell(ashen_hallow)
 }
 
