@@ -13,9 +13,9 @@ Define(bristling_fur 155835)
 Define(earthwarden_talent 16)
 Define(earthwarden_buff 203975)
 Define(galactic_guardian_buff 213708)
-    SpellAddBuff(moonfire galactic_guardian_buff=0)
+    SpellAddBuff(moonfire galactic_guardian_buff set=0)
 Define(moonfire_debuff 164812)
-    SpellAddTargetDebuff(moonfire moonfire_debuff=1)
+    SpellAddTargetDebuff(moonfire moonfire_debuff add=1)
 Define(regrowth 8936)
 Define(renewal 108238)
 Define(remove_corruption 2782)
@@ -25,23 +25,27 @@ Define(rejuvination 774)
 Define(soothe 2908)
     SpellInfo(soothe cd=10)
 Define(survival_instincts 61336)
-    SpellInfo(survival_instincts max_charges=2 charge_cd=140)
-    SpellRequire(survival_instincts unusable 1=buff,survival_instincts)
+    SpellInfo(survival_instincts charge_cd=140)
+    SpellRequire(survival_instincts unusable set=1 enabled=(buffpresent(survival_instincts)))
 Define(swiftmend 18562)
 Define(swipe_bear 213771)
 Define(swipe_cat 106785)
-    SpellInfo(swipe_cat energy=35 combopoints=-1 stance=druid_cat_form)
+    SpellInfo(swipe_cat energy=35 combopoints=-1)
+    SpellRequire(swipe_cat unusable set=1 enabled=(not stance(druid_cat_form)))
 Define(wild_charge_bear 16979)
-    SpellInfo(wild_charge_bear stance=druid_bear_form)
+    SpellRequire(wild_charge_bear unusable set=1 enabled=(not stance(druid_bear_form)))
 Define(wild_charge_cat 49376)
-    SpellInfo(wild_charge_cat cd=15 stance=druid_cat_form)
+    SpellInfo(wild_charge_cat cd=15)
+    SpellRequire(swipe_cat unusable set=1 enabled=(not stance(druid_cat_form)))
 Define(wild_growth 48438)
 
-AddCheckBox(opt_interrupt L(interrupt) default specialization=guardian)
-AddCheckBox(opt_dispel L(dispel) default specialization=guardian)
-AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=guardian)
-AddCheckBox(opt_druid_guardian_aoe L(AOE) default specialization=guardian)
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=guardian)
+AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(guardian)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(specialization(guardian)))
+AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(specialization(guardian)))
+AddCheckBox(opt_druid_guardian_aoe L(AOE) default enabled=(specialization(guardian)))
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(specialization(guardian)))
+AddCheckBox(opt_druid_guardian_offensive L(seperate_offensive_icon) default enabled=(specialization(guardian)))
+AddCheckBox(opt_druid_guardian_catweave L(cat_weaving) enabled=(specialization(guardian)))
 
 AddFunction GuardianHealMeShortCd
 {
@@ -50,6 +54,7 @@ AddFunction GuardianHealMeShortCd
         Spell(frenzied_regeneration)
     }
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction GuardianHealMeMain
@@ -85,7 +90,6 @@ AddFunction GuardianDefaultShortCDActions
     Spell(pulverize)
 }
 
-AddCheckBox(opt_druid_guardian_catweave L(cat_weaving) specialization=guardian)
 AddFunction GuardianCanCatweave
 {
     CheckBoxOn(opt_druid_guardian_catweave) and Talent(feral_affinity_talent_guardian) and not (UnitInParty() and target.IsTargetingPlayer())
@@ -124,7 +128,6 @@ AddFunction GuardianDefaultMainActions
     Spell(mangle)
     Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
-    AzeriteEssenceMain()
     if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(maul)
     if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
@@ -153,7 +156,6 @@ AddFunction GuardianDefaultAoEActions
     Spell(thrash_bear)
     if (Enemies() <= 4) Spell(mangle)
     if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
-    AzeriteEssenceMain()
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
     if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
@@ -166,8 +168,6 @@ AddFunction GuardianDefaultCdActions
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
     
-    AzeriteEssenceDefensiveCooldowns()
-
     if HealthPercent() <= 50 Spell(renewal)
     if Talent(incarnation_guardian_of_ursoc_talent) and not BuffPresent(incarnation_guardian_of_ursoc) Spell(incarnation_guardian_of_ursoc)
     Spell(barkskin)
@@ -184,7 +184,6 @@ AddFunction GuardianDefaultOffensiveActions
 {
     GuardianInterruptActions()
     GuardianDispelActions()
-    AzeriteEssenceOffensiveCooldowns()
     GuardianDefaultOffensiveCooldowns()
 }
 
@@ -209,6 +208,7 @@ AddFunction GuardianDispelActions
     {
         if (target.HasDebuffType(enrage)) Spell(soothe)
         if (player.HasDebuffType(poison curse)) Spell(remove_corruption)
+        CovenantDispelActions()
     }
 }
 
@@ -224,28 +224,27 @@ AddFunction GuardianDefaultOffensiveCooldowns
     }
 }
 
-AddIcon help=shortcd specialization=guardian
+AddIcon help=shortcd enabled=(specialization(guardian))
 {
     GuardianDefaultShortCDActions()
 }
 
-AddIcon enemies=1 help=main specialization=guardian
+AddIcon enemies=1 help=main enabled=(specialization(guardian))
 {
     GuardianDefaultMainActions()
 }
 
-AddIcon checkbox=opt_druid_guardian_aoe help=aoe specialization=guardian
+AddIcon help=aoe enabled=(checkboxon(opt_druid_guardian_aoe) and specialization(guardian))
 {
     GuardianDefaultAoEActions()
 }
 
-AddIcon help=cd specialization=guardian
+AddIcon help=cd enabled=(specialization(guardian))
 {
     GuardianDefaultCdActions()
 }
 
-AddCheckBox(opt_druid_guardian_offensive L(seperate_offensive_icon) default specialization=guardian)
-AddIcon checkbox=opt_druid_guardian_offensive size=small specialization=guardian
+AddIcon size=small enabled=(checkboxon(opt_druid_guardian_offensive) and specialization(guardian))
 {
     GuardianDefaultOffensiveActions()
 }
