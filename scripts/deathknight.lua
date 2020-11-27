@@ -211,7 +211,7 @@ AddFunction BloodDefaultCdActions
 {
     if CheckBoxOff(opt_deathknight_blood_offensive) BloodDefaultOffensiveActions()
 
-    if (IncomingDamage(1.5 magic=1) > 0) Spell(antimagic_shell)
+    if (IncomingMagicDamage(1.5) > 0) Spell(antimagic_shell)
     if (BuffStacks(bone_shield) >= 6) Spell(tombstone)
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
