@@ -26,6 +26,9 @@ Define(death_grip 49576)
     SpellInfo(death_grip cd=25)
 Define(death_strike_blood 49998)
     SpellInfo(death_strike_blood runicpower=45)
+Define(deaths_due 324128)
+    SpellInfo(deaths_due cd=30 runes=1 runicpower=-10)
+    SpellRequire(death_and_decay replaced_by set=deaths_due enabled=(SpellKnown(deaths_due)))
 Define(gorefiends_grasp 108199)
     SpellInfo(gorefiends_grasp cd=120)
     SpellRequire(gorefiends_grasp cd add=-30 enabled=(HasTalent(tightening_grasp_talent)))
@@ -54,9 +57,19 @@ Define(blood_shield_buff 77535)
     SpellRequire(death_and_decay runes set=0 enabled=(BuffPresent(crimson_scourge_buff)))
     SpellRequire(death_and_decay runicpower set=0 enabled=(BuffPresent(crimson_scourge_buff) and not HasTalent(relish_in_blood_talent)))
     SpellRequire(death_and_decay runicpower add=-10 enabled=(BuffPresent(crimson_scourge_buff) and HasTalent(relish_in_blood_talent)))
+    SpellAddBuff(deaths_due crimson_scourge_buff set=0)
+    SpellRequire(deaths_due runes set=0 enabled=(BuffPresent(crimson_scourge_buff)))
+    SpellRequire(deaths_due runicpower set=0 enabled=(BuffPresent(crimson_scourge_buff) and not HasTalent(relish_in_blood_talent)))
+    SpellRequire(deaths_due runicpower add=-10 enabled=(BuffPresent(crimson_scourge_buff) and HasTalent(relish_in_blood_talent)))
 Define(death_and_decay_buff 188290)
-    SpellInfo(death_and_decay_buff duration=10)
+    SpellInfo(death_and_decay_buff duration=10 tick=1)
     SpellAddBuff(death_and_decay death_and_decay_buff add=1)
+Define(deaths_due_buff 315442)
+    SpellInfo(deaths_due_buff duration=10 tick=1)
+    SpellAddBuff(deaths_due deaths_due_buff add=1)
+Define(deaths_due_debuff 324164)
+    SpellInfo(deaths_due_debuff duration=12)
+    SpellAddTargetDebuff(deaths_due deaths_due_debuff add=1)
 # hemostasis_buff
     SpellAddBuff(death_strike_blood hemostasis_buff set=0)
 
@@ -148,10 +161,16 @@ AddFunction BloodDefaultMainActions
     if (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) Spell(blood_boil)
     # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
     # (Night Fae) Death and Decay when the duration of the Death’s Due buff/debuff is about to expire, but with enough remaining time to Heart Strike.
+    if (BuffRemaining(deaths_due_buff) < 3 and target.DebuffRemaining(deaths_due_debuff) > 3) Spell(deaths_due)
     # (Night Fae) Heart Strike:
     #   while in Death and Decay when the duration of the Death’s Due buff/debuff is about to expire or
     #   (the duration of our Death and Decay ground effect is about to expire and
     #       the Death’s Due buff/debuff won’t outlast the Death and Decay by at least ~9 seconds).
+    if BuffPresent(deaths_due_buff)
+    {
+        if (target.DebuffRemaining(deaths_due_debuff) < 2) Spell(heart_strike)
+        if (BuffRemaining(deaths_due_buff) < 3 and (target.DebuffRemaining(deaths_due_debuff) - BuffRemaining(deaths_due_buff) < 9)) Spell(heart_strike)
+    }
     # Death Strike when Runic Power is above 105 (121 with Rune of Hysteria).
     if (not BloodPoolingForBoneStorm() and RunicPowerDeficit() < 20) Spell(death_strike_blood)
     # Marrowrend if below 8 stacks of Bone Shield.
@@ -159,7 +178,11 @@ AddFunction BloodDefaultMainActions
     # Heart Strike with, or when 1.5 second away from, having more than 3 Runes.
     if (TimeToRunes(3) < GCD()) Spell(heart_strike)
     # Death and Decay when Crimson Scourge procs with 3+ targets or Night Fae.
-    if (BuffPresent(crimson_scourge_buff) and Enemies() >= 3) Spell(death_and_decay)
+    if BuffPresent(crimson_scourge_buff) and Enemies() >= 3
+    {
+        Spell(deaths_due)
+        Spell(death_and_decay)
+    }
     # Blood Boil with 2 Blood Boil charges and less than 5 stacks of Hemostasis.
     if (Charges(blood_boil) >= 1.8 and BuffStacks(hemostasis_buff) < 5) Spell(blood_boil)
     # Heart Strike with 3 Runes.
