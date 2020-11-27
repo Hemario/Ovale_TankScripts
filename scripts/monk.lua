@@ -10,24 +10,24 @@ Include(ovale_monk_spells)
 
 Define(blackout_combo_buff 228563)
     SpellInfo(blackout_combo_buff duration=15)
-    SpellAddBuff(blackout_kick blackout_combo_buff=1)
-    SpellAddBuff(breath_of_fire blackout_combo_buff=0)
-    SpellAddBuff(celestial_brew blackout_combo_buff=0)
-    SpellAddBuff(keg_smash blackout_combo_buff=0)
-    SpellAddBuff(tiger_palm blackout_combo_buff=0)
+    SpellAddBuff(blackout_kick blackout_combo_buff add=1)
+    SpellAddBuff(breath_of_fire blackout_combo_buff set=0)
+    SpellAddBuff(celestial_brew blackout_combo_buff set=0)
+    SpellAddBuff(keg_smash blackout_combo_buff set=0)
+    SpellAddBuff(tiger_palm blackout_combo_buff set=0)
 Define(blackout_combo_talent 21)
 Define(expel_harm 322101)
 Define(fortifying_brew_brm 115203)
     SpellInfo(fortifying_brew_brm cd=360 duration=15 gcd=0 offgcd=1)
 Define(touch_of_death_brm 322109)
 Define(zen_meditation 115176)
-	SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1 duration=8)
+    SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1 duration=8)
 
-AddCheckBox(opt_interrupt L(interrupt) default specialization=brewmaster)
-AddCheckBox(opt_dispel L(dispel) default specialization=brewmaster)
-AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=brewmaster)
-AddCheckBox(opt_monk_bm_aoe L(AOE) default specialization=brewmaster)
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=brewmaster)
+AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(brewmaster)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(Specialization(brewmaster)))
+AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(brewmaster)))
+AddCheckBox(opt_monk_bm_aoe L(AOE) default enabled=(Specialization(brewmaster)))
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(brewmaster)))
 
 AddFunction BrewmasterHealMeShortCd
 {
@@ -84,7 +84,6 @@ AddFunction BrewmasterDefaultMainActions
     if (SpellCount(expel_harm)>4) Spell(expel_harm)
     if (BuffExpires(blackout_combo_buff)) Spell(blackout_kick)
     Spell(keg_smash)
-    AzeriteEssenceMain()
     if (SpellCount(expel_harm)>=3) Spell(expel_harm)
     if (not BuffPresent(rushing_jade_wind)) Spell(rushing_jade_wind)
     Spell(breath_of_fire)
@@ -111,8 +110,6 @@ AddFunction BrewmasterDefaultCdActions
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
     
-    AzeriteEssenceDefensiveCooldowns()
-    
     Spell(fortifying_brew_brm)
     Spell(dampen_harm)
     
@@ -130,7 +127,6 @@ AddFunction BrewmasterDefaultOffensiveActions
 {
     BrewmasterInterruptActions()
     BrewmasterDispelActions()
-    AzeriteEssenceOffensiveCooldowns()
     BrewmasterDefaultOffensiveCooldowns()
 }
 
@@ -165,28 +161,28 @@ AddFunction BrewmasterDefaultOffensiveCooldowns
     Spell(invoke_niuzao_the_black_ox)
 }
 
-AddIcon help=shortcd specialization=brewmaster
+AddIcon help=shortcd enabled=(Specialization(brewmaster))
 {
     BrewmasterDefaultShortCDActions()
 }
 
-AddIcon enemies=1 help=main specialization=brewmaster
+AddIcon enemies=1 help=main enabled=(Specialization(brewmaster))
 {
     BrewmasterDefaultMainActions()
 }
 
-AddIcon checkbox=opt_monk_bm_aoe help=aoe specialization=brewmaster
+AddIcon help=aoe enabled=(CheckBoxOn(opt_monk_bm_aoe) and Specialization(brewmaster))
 {
     BrewmasterDefaultAoEActions()
 }
 
-AddIcon help=cd specialization=brewmaster
+AddIcon help=cd enabled=(Specialization(brewmaster))
 {
     BrewmasterDefaultCdActions()
 }
 
-AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default specialization=brewmaster)
-AddIcon checkbox=opt_monk_bm_offensive size=small specialization=brewmaster
+AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default enabled=(Specialization(brewmaster)))
+AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive) and Specialization(brewmaster))
 {
     BrewmasterDefaultOffensiveActions()
 
