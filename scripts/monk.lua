@@ -2,7 +2,7 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_monk_brewmaster"
-    local desc = "[9.0.1] Ovale_TankScripts: Monk Brewmaster"
+    local desc = "[9.0.2] Ovale_TankScripts: Monk Brewmaster"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
@@ -16,10 +16,22 @@ Define(blackout_combo_buff 228563)
     SpellAddBuff(keg_smash blackout_combo_buff set=0)
     SpellAddBuff(tiger_palm blackout_combo_buff set=0)
 Define(blackout_combo_talent 21)
+Define(bonedust_brew 325216)
+    SpellInfo(bonedust_brew cd=120 duration=10)
+    SpellAddTargetDebuff(bonedust_brew bonedust_brew add=1)
 Define(expel_harm 322101)
+Define(faeline_stomp 327104)
+    SpellInfo(faeline_stomp cd=30 duration=30)
+    SpellAddBuff(faeline_stomp faeline_stomp add=1)
+Define(fallen_order 326860)
+    SpellInfo(fallen_order cd=180 duration=24)
+    SpellAddBuff(fallen_order fallen_order add=1)
 Define(fortifying_brew_brm 115203)
     SpellInfo(fortifying_brew_brm cd=360 duration=15 gcd=0 offgcd=1)
 Define(touch_of_death_brm 322109)
+Define(weapons_of_order 310454)
+    SpellInfo(weapons_of_order cd=120 duration=30)
+    SpellAddBuff(weapons_of_order weapons_of_order add=1)
 Define(zen_meditation 115176)
     SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1 duration=8)
 
@@ -27,6 +39,7 @@ AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(brewmaste
 AddCheckBox(opt_dispel L(dispel) default enabled=(Specialization(brewmaster)))
 AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(brewmaster)))
 AddCheckBox(opt_monk_bm_aoe L(AOE) default enabled=(Specialization(brewmaster)))
+AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default enabled=(Specialization(brewmaster)))
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(brewmaster)))
 
 AddFunction BrewmasterHealMeShortCd
@@ -37,6 +50,7 @@ AddFunction BrewmasterHealMeShortCd
     }
     if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction BrewmasterHealMeMain
@@ -79,11 +93,13 @@ AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
 
+    Spell(bonedust_brew)
     if (Enemies()>1 or not InCombat()) Spell(keg_smash)
     if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
     if (SpellCount(expel_harm)>4) Spell(expel_harm)
     if (BuffExpires(blackout_combo_buff)) Spell(blackout_kick)
     Spell(keg_smash)
+    Spell(faeline_stomp)
     if (SpellCount(expel_harm)>=3) Spell(expel_harm)
     if (not BuffPresent(rushing_jade_wind)) Spell(rushing_jade_wind)
     Spell(breath_of_fire)
@@ -152,6 +168,7 @@ AddFunction BrewmasterDispelActions
         if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if player.HasDebuffType(poison disease) Spell(detox)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        CovenantDispelActions()
     }
 }
 
@@ -159,6 +176,8 @@ AddFunction BrewmasterDefaultOffensiveCooldowns
 {
     if target.HealthPercent() <= 15 Spell(touch_of_death_brm)
     Spell(invoke_niuzao_the_black_ox)
+    Spell(fallen_order)
+    Spell(weapons_of_order)
 }
 
 AddIcon help=shortcd enabled=(Specialization(brewmaster))
@@ -181,7 +200,6 @@ AddIcon help=cd enabled=(Specialization(brewmaster))
     BrewmasterDefaultCdActions()
 }
 
-AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default enabled=(Specialization(brewmaster)))
 AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive) and Specialization(brewmaster))
 {
     BrewmasterDefaultOffensiveActions()
