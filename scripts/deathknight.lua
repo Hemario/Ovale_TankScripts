@@ -18,8 +18,8 @@ Define(voracious_talent 16)
 # Spells
 Define(antimagic_shell 48707)
     SpellInfo(antimagic_shell cd=60 offgcd=1 duration=5)
-    SpellRequire(antimagic_shell cd add=-20 enabled=(hastalent(antimagic_barrier_talent)))
-    SpellRequire(antimagic_shell duration add=2 enabled=(hastalent(antimagic_barrier_talent)))
+    SpellRequire(antimagic_shell cd add=-20 enabled=(HasTalent(antimagic_barrier_talent)))
+    SpellRequire(antimagic_shell duration add=2 enabled=(HasTalent(antimagic_barrier_talent)))
 Define(blood_tap 221699)
     SpellInfo(blood_tap cd=60 runes=-1)
 Define(death_grip 49576)
@@ -28,7 +28,7 @@ Define(death_strike_blood 49998)
     SpellInfo(death_strike_blood runicpower=45)
 Define(gorefiends_grasp 108199)
     SpellInfo(gorefiends_grasp cd=120)
-    SpellRequire(gorefiends_grasp cd add=-30 enabled=(hastalent(tightening_grasp_talent)))
+    SpellRequire(gorefiends_grasp cd add=-30 enabled=(HasTalent(tightening_grasp_talent)))
 Define(icebound_fortitude 48792)
     SpellInfo(icebound_fortitude cd=180 offgcd=1 duration=8)
 Define(mark_of_blood 206940)
@@ -51,9 +51,9 @@ Define(blood_shield_buff 77535)
     SpellAddBuff(tombstone bone_shield add=-5)
 # crimson_scourge_buff
     SpellAddBuff(death_and_decay crimson_scourge_buff set=0)
-    SpellRequire(death_and_decay runes set=0 enabled=(buffpresent(crimson_scourge_buff)))
-    SpellRequire(death_and_decay runicpower set=0 enabled=(buffpresent(crimson_scourge_buff) and not hastalent(relish_in_blood_talent)))
-    SpellRequire(death_and_decay runicpower add=-10 enabled=(buffpresent(crimson_scourge_buff) and hastalent(relish_in_blood_talent)))
+    SpellRequire(death_and_decay runes set=0 enabled=(BuffPresent(crimson_scourge_buff)))
+    SpellRequire(death_and_decay runicpower set=0 enabled=(BuffPresent(crimson_scourge_buff) and not HasTalent(relish_in_blood_talent)))
+    SpellRequire(death_and_decay runicpower add=-10 enabled=(BuffPresent(crimson_scourge_buff) and HasTalent(relish_in_blood_talent)))
 Define(death_and_decay_buff 188290)
     SpellInfo(death_and_decay_buff duration=10)
     SpellAddBuff(death_and_decay death_and_decay_buff add=1)
@@ -66,9 +66,9 @@ Define(item_steelskin_potion 152557)
 Define(item_superior_battle_potion_of_stamina 168499)
 Define(item_superior_steelskin_potion 168501)
 
-AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(blood)))
-AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(specialization(blood)))
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(specialization(blood)))
+AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(blood)))
+AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(blood)))
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(blood)))
 
 AddFunction BloodPoolingForBoneStorm
 {
@@ -230,31 +230,31 @@ AddFunction BloodDefaultOffensiveCooldowns
     Spell(dancing_rune_weapon)
 }
 
-AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(specialization(blood)))
+AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blood)))
 
-AddIcon help=shortcd enabled=(specialization(blood))
+AddIcon help=shortcd enabled=(Specialization(blood))
 {
     if not InCombat() BloodPrecombatShortCdActions()
     BloodDefaultShortCdActions()
 }
 
-AddIcon enemies=1 help=main enabled=(specialization(blood))
+AddIcon enemies=1 help=main enabled=(Specialization(blood))
 {
     BloodDefaultMainActions()
 }
 
-AddIcon help=aoe enabled=(checkboxon(opt_deathknight_blood_aoe) and specialization(blood))
+AddIcon help=aoe enabled=(CheckBoxOn(opt_deathknight_blood_aoe) and Specialization(blood))
 {
     BloodDefaultMainActions()
 }
 
-AddIcon help=cd enabled=(specialization(blood))
+AddIcon help=cd enabled=(Specialization(blood))
 {
     BloodDefaultCdActions()
 }
 
-AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(specialization(blood)))
-AddIcon help=smallcd size=small enabled=(checkboxon(opt_deathknight_blood_offensive) and specialization(blood))
+AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
+AddIcon help=smallcd size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive) and Specialization(blood))
 {
     BloodDefaultOffensiveActions()
 }
