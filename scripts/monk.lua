@@ -31,7 +31,7 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Speciali
 
 AddFunction BrewmasterHealMeShortCd
 {
-    if (HealthPercent() < 35) 
+    if (HealthPercent() < 35)
     {
         Spell(healing_elixir)
     }
@@ -66,7 +66,7 @@ AddFunction BrewmasterDefaultShortCDActions
         #black_ox_brew,if=(energy+(energy.regen*cooldown.keg_smash.remains))<40&buff.blackout_combo.down&cooldown.keg_smash.up
         if Energy() < 40 and BuffExpires(blackout_combo_buff) and not SpellCooldown(keg_smash) > 0 Spell(black_ox_brew)
     }
-    
+
     # heal me
     BrewmasterHealMeShortCd()
     # Purify on red stagger
@@ -78,7 +78,7 @@ AddFunction BrewmasterDefaultShortCDActions
 AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
-    
+
     if (Enemies()>1 or not InCombat()) Spell(keg_smash)
     if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
     if (SpellCount(expel_harm)>4) Spell(expel_harm)
@@ -90,7 +90,7 @@ AddFunction BrewmasterDefaultMainActions
     Spell(chi_burst)
     Spell(chi_wave)
     if (SpellCount(expel_harm)>=2) Spell(expel_harm)
-    if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm)) 
+    if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm))
     {
         if (Enemies()>= 3) Spell(spinning_crane_kick)
         if (not HasTalent(blackout_combo_talent)) Spell(tiger_palm)
@@ -103,23 +103,23 @@ AddFunction BrewmasterDefaultAoEActions
     BrewmasterDefaultMainActions()
 }
 
-AddFunction BrewmasterDefaultCdActions 
+AddFunction BrewmasterDefaultCdActions
 {
     if not CheckBoxOn(opt_monk_bm_offensive) { BrewmasterDefaultOffensiveActions() }
-    
+
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
-    
+
     Spell(fortifying_brew_brm)
     Spell(dampen_harm)
-    
-    if CheckBoxOn(opt_use_consumables) 
+
+    if CheckBoxOn(opt_use_consumables)
     {
         Item(item_battle_potion_of_agility usable=1)
         Item(item_steelskin_potion usable=1)
         Item(item_battle_potion_of_stamina usable=1)
     }
-    
+
     Spell(zen_meditation)
 }
 
@@ -135,7 +135,7 @@ AddFunction BrewmasterInterruptActions
     if CheckBoxOn(opt_interrupt) and not target.IsFriend() and target.Casting()
     {
         if target.InRange(spear_hand_strike) and target.IsInterruptible() Spell(spear_hand_strike)
-        if not target.Classification(worldboss) 
+        if not target.Classification(worldboss)
         {
             if target.Distance(less 5) Spell(leg_sweep)
             if target.Distance(less 5) Spell(war_stomp)
@@ -147,7 +147,7 @@ AddFunction BrewmasterInterruptActions
 
 AddFunction BrewmasterDispelActions
 {
-    if CheckBoxOn(opt_dispel) 
+    if CheckBoxOn(opt_dispel)
     {
         if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if player.HasDebuffType(poison disease) Spell(detox)
