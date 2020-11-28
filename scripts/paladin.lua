@@ -63,7 +63,7 @@ AddFunction ProtectionDefaultShortCDActions
     PaladinHealMe()
     ProtectionGetInMeleeRange()
     
-    if (IncomingDamage(5 physical=1)>0 and (BuffRemaining(shield_of_the_righteous) <= 2)) Spell(shield_of_the_righteous)
+    if (IncomingPhysicalDamage(5)>0 and (BuffRemaining(shield_of_the_righteous) <= 2)) Spell(shield_of_the_righteous)
     if (target.DebuffPresent(judgment_prot_debuff)) Spell(shield_of_the_righteous)
     if (HolyPower()>=5 or BuffPresent(holy_avenger) or (Talent(sanctified_wrath_talent) and HolyPower()>=5-BuffPresent(avenging_wrath))) Spell(shield_of_the_righteous)
 

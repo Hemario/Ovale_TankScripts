@@ -81,7 +81,7 @@ AddFunction GuardianGetInMeleeRange
 AddFunction GuardianDefaultShortCDActions
 {
     GuardianHealMeShortCd()
-    if (IncomingDamage(5 physical=1) and (BuffExpires(ironfur 1) or RageDeficit() <= 20))
+    if (IncomingPhysicalDamage(5) and (BuffExpires(ironfur 1) or RageDeficit() <= 20))
     {
         Spell(ironfur)
     }
@@ -128,7 +128,7 @@ AddFunction GuardianDefaultMainActions
     Spell(mangle)
     Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
-    if (RageDeficit() <= 20 or IncomingDamage(5 physical=1) == 0 or not UnitInParty()) Spell(maul)
+    if (RageDeficit() <= 20 or IncomingPhysicalDamage(5) == 0 or not UnitInParty()) Spell(maul)
     if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
 }

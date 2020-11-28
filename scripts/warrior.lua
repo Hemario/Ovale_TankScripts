@@ -83,7 +83,7 @@ AddFunction ProtectionGetInMeleeRange
 AddFunction ProtectionDefaultShortCDActions
 {
     ProtectionHealMe()
-    if IncomingDamage(5 physical=1)
+    if IncomingPhysicalDamage(5)
         and (not Talent(bolster_talent) or not BuffPresent(last_stand)) 
         and (BuffRemaining(shield_block_buff) <= 2)
     {
