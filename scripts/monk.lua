@@ -93,7 +93,6 @@ AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
 
-    Spell(bonedust_brew)
     if (Enemies()>1 or not InCombat()) Spell(keg_smash)
     if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
     if (SpellCount(expel_harm)>4) Spell(expel_harm)
@@ -175,9 +174,10 @@ AddFunction BrewmasterDispelActions
 AddFunction BrewmasterDefaultOffensiveCooldowns
 {
     if target.HealthPercent() <= 15 Spell(touch_of_death_brm)
-    Spell(invoke_niuzao_the_black_ox)
-    Spell(fallen_order)
+    Spell(bonedust_brew)
     Spell(weapons_of_order)
+    Spell(fallen_order)
+    Spell(invoke_niuzao_the_black_ox)
 }
 
 AddIcon help=shortcd enabled=(Specialization(brewmaster))
