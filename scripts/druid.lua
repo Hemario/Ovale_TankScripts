@@ -2,7 +2,7 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_druid_guardian"
-    local desc = "[9.0.1] Ovale_TankScripts: Druid Guardian"
+    local desc = "[9.0.2] Ovale_TankScripts: Druid Guardian"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
@@ -16,6 +16,12 @@ Define(galactic_guardian_buff 213708)
     SpellAddBuff(moonfire galactic_guardian_buff set=0)
 Define(moonfire_debuff 164812)
     SpellAddTargetDebuff(moonfire moonfire_debuff add=1)
+Define(kindred_protection 327037)
+    SpellInfo(kindred_protection duration=10 gcd=0 offgcd=1 tick=0.5)
+    SpellAddBuff(kindred_protection kindred_protection add=1)
+Define(lone_protection 338018)
+    SpellInfo(lone_protection duration=10 gcd=0 offgcd=1)
+    SpellAddBuff(lone_protection lone_protection add=1)
 Define(regrowth 8936)
 Define(renewal 108238)
 Define(remove_corruption 2782)
@@ -128,6 +134,7 @@ AddFunction GuardianDefaultMainActions
     Spell(mangle)
     Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
+    Spell(adaptive_swarm)
     if (RageDeficit() <= 20 or IncomingPhysicalDamage(5) == 0 or not UnitInParty()) Spell(maul)
     if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
@@ -169,6 +176,8 @@ AddFunction GuardianDefaultCdActions
     Item(Trinket1Slot usable=1 text=14)
     
     if HealthPercent() <= 50 Spell(renewal)
+    #Spell(kindred_protection)
+    #Spell(lone_protection)
     if Talent(incarnation_guardian_of_ursoc_talent) and not BuffPresent(incarnation_guardian_of_ursoc) Spell(incarnation_guardian_of_ursoc)
     Spell(barkskin)
     Spell(survival_instincts)
@@ -222,6 +231,8 @@ AddFunction GuardianDefaultOffensiveCooldowns
     {
         if not Talent(incarnation_guardian_of_ursoc_talent) Spell(berserk)
     }
+    Spell(ravenous_frenzy)
+    Spell(convoke_the_spirits)
 }
 
 AddIcon help=shortcd enabled=(specialization(guardian))
