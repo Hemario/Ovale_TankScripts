@@ -2,23 +2,36 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_warrior_protection"
-    local desc = "[9.0.1] Ovale_TankScripts: Warrior Protection"
+    local desc = "[9.0.2] Ovale_TankScripts: Warrior Protection"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_warrior_spells)
 
+Define(ancient_aftershock 325886)
+    SpellInfo(ancient_aftershock cd=90)
 Define(bolster_talent 21)
 Define(booming_voice_talent 8)
 Define(charge 100)
+Define(condemn 317349)
+    #max_rage doesn't work in current Ovale version
+    #SpellInfo(condemn rage=20 max_rage=40)
+    SpellInfo(condemn rage=20)
+    SpellRequire(condemn unusable set=1 enabled=(target.healthpercent()>20 and target.healthpercent()<=80))
+Define(conquerors_banner 324143)
+    SpellInfo(conquerors_banner cd=180)
 Define(demoralizing_shout 1160)
     SpellInfo(demoralizing_shout cd=45)
-    SpellInfo(demoralizing_shout rage=-40 talent=booming_voice_talent)
+    SpellRequire(demoralizing_shout rage add=-40 enabled=(hastalent(booming_voice_talent)))
 Define(devastate 20243)
-    SpellInfo(devastate unusable=1 talent=devastator_talent)
+    SpellRequire(devastate unusable set=1 enabled=(hastalent(devastator_talent)))
 Define(devastator_talent 3)
 Define(execute 163201)
-    SpellInfo(execute rage=20 max_rage=40 target_health_pct=20)
+    #max_rage doesn't work in current Ovale version
+    #SpellInfo(execute rage=20 max_rage=40)
+    SpellInfo(execute rage=20)
+    SpellRequire(execute unusable set=1 enabled=(target.healthpercent()>20))
+    SpellRequire(execute replaced_by set=condemn enabled=(iscovenant(2)))
 Define(ignore_pain 190456)
     SpellInfo(ignore_pain rage=40 cd=1 offgcd=1)
 Define(impending_victory 202168)
@@ -30,44 +43,49 @@ Define(last_stand 12975)
     SpellInfo(last_stand duration=15 cd=180)
 Define(rallying_cry 97462)
     SpellInfo(rallying_cry cd=180)
-    SpellAddBuff(rallying_cry rallying_cry_buff=1)
+    SpellAddBuff(rallying_cry rallying_cry_buff add=1)
 Define(rallying_cry_buff 97463)
     SpellInfo(rallying_cry duration=10)
 Define(ravager_prot 228920)
     SpellInfo(ravager_prot cd=45)
 Define(revenge 6572)
     SpellInfo(revenge rage=20)
-    SpellRequire(revenge rage_percent 0=buff,revenge_buff)
-	SpellAddBuff(revenge revenge_buff=0)
+    SpellRequire(revenge rage percent=0 enabled=(buffpresent(revenge_buff)))
+	SpellAddBuff(revenge revenge_buff set=0)
 Define(revenge_buff 5302)
 	SpellInfo(revenge_buff duration=6)
 Define(rumbling_earth_talent 5)
 Define(shield_block 2565)
-    SpellInfo(shield_block max_charges=2 charge_cd=15 rage=30)
-    SpellAddBuff(shield_block shield_block_buff=1)
+    SpellInfo(shield_block charge_cd=15 rage=30)
+    SpellAddBuff(shield_block shield_block_buff add=1)
 Define(shield_block_buff 132404)
     SpellInfo(shield_block_buff duration=6)
 Define(shield_slam 23922)
     SpellInfo(shield_slam rage=-15 cd=9)
 Define(shield_wall 871)
     SpellInfo(shield_wall cd=240)
+Define(spear_of_bastion 307865)
+    SpellInfo(spear_of_bastion cd=60)
 Define(spell_reflection 23920)
     SpellInfo(spell_reflection cd=25 duration=6)
 Define(thunder_clap 6343)
     SpellInfo(thunder_clap cd=6 rage=-5)
 Define(victory_rush 34428)
-    SpellInfo(victory_rush replaced_by=impending_victory talent=impending_victory_talent)
+    SpellRequire(victory_rush replaced_by set=impending_victory enabled=(hastalent(impending_victory_talent)))
 
-AddCheckBox(opt_interrupt L(interrupt) default specialization=protection)
-AddCheckBox(opt_dispel L(dispel) default specialization=protection)
-AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=protection)
-AddCheckBox(opt_warrior_protection_aoe L(AOE) default specialization=protection)
+AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(protection)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(specialization(protection)))
+AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(specialization(protection)))
+AddCheckBox(opt_warrior_protection_aoe L(AOE) default enabled=(specialization(protection)))
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(specialization(vengeance)))
+AddCheckBox(opt_warrior_protection_offensive L(seperate_offensive_icon) default enabled=(specialization(protection)))
 
 AddFunction ProtectionHealMe
 {
     if (HealthPercent() < 70) Spell(victory_rush)
     if (HealthPercent() < 85) Spell(impending_victory)
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction ProtectionGetInMeleeRange
@@ -97,7 +115,6 @@ AddFunction ProtectionDefaultShortCDActions
 
 AddFunction ProtectionDefaultMainActions
 {
-    AzeriteEssenceMain()
     if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(ravager_prot)
     Spell(dragon_roar)
@@ -111,7 +128,6 @@ AddFunction ProtectionDefaultMainActions
 
 AddFunction ProtectionDefaultAoEActions
 {
-    AzeriteEssenceMain()
     if (Talent(booming_voice_talent) and RageDeficit() >= 40) Spell(demoralizing_shout)
     Spell(ravager_prot)
     Spell(dragon_roar)
@@ -130,8 +146,6 @@ AddFunction ProtectionDefaultCdActions
     Item(Trinket0Slot usable=1 text=13)
     Item(Trinket1Slot usable=1 text=14)
     
-    AzeriteEssenceDefensiveCooldowns()
-    
     if not Talent(booming_voice_talent) Spell(demoralizing_shout)
     if not (Talent(bolster_talent) and (BuffPresent(shield_block_buff) or Spell(shield_block))) Spell(last_stand)
     Spell(shield_wall)
@@ -147,7 +161,6 @@ AddFunction ProtectionDefaultOffensiveActions
 {
     ProtectionInterruptActions()
     ProtectionDispelActions()
-    AzeriteEssenceOffensiveCooldowns()
     ProtectionDefaultOffensiveCooldowns()
 }
 
@@ -177,36 +190,39 @@ AddFunction ProtectionDispelActions
     {
         if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
         if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        CovenantDispelActions()
     }
 }
 
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
     if RageDeficit() >= 20 Spell(avatar)
+    Spell(spear_of_bastion)
+    Spell(conquerors_banner)
+    Spell(ancient_aftershock)
 }
 
-AddIcon help=shortcd specialization=protection
+AddIcon help=shortcd enabled=(specialization(protection))
 {
     ProtectionDefaultShortCDActions()
 }
 
-AddIcon enemies=1 help=main specialization=protection
+AddIcon enemies=1 help=main enabled=(specialization(protection))
 {
     ProtectionDefaultMainActions()
 }
 
-AddIcon checkbox=opt_warrior_protection_aoe help=aoe specialization=protection
+AddIcon help=aoe enabled=(checkboxon(opt_warrior_protection_aoe) and specialization(protection))
 {
     ProtectionDefaultAoEActions()
 }
 
-AddIcon help=cd specialization=protection
+AddIcon help=cd enabled=(specialization(protection))
 {
     ProtectionDefaultCdActions()
 }
 
-AddCheckBox(opt_warrior_protection_offensive L(seperate_offensive_icon) default specialization=protection)
-AddIcon checkbox=opt_warrior_protection_offensive size=small specialization=protection
+AddIcon size=small enabled=(checkboxon(opt_warrior_protection_offensive) and specialization(protection))
 {
     ProtectionDefaultOffensiveActions()
 }
