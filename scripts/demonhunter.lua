@@ -2,7 +2,7 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc.scripts
 do
     local name = "ovale_tankscripts_demonhunter_vengeance"
-    local desc = "[9.0.1] Ovale_TankScripts: DemonHunter Vengeance"
+    local desc = "[9.0.2] Ovale_TankScripts: DemonHunter Vengeance"
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
@@ -15,7 +15,7 @@ Define(fel_devastation 212084)
     SpellInfo(fel_devastation cd=60 fury=50)
 Define(fiery_brand_debuff 207771)
     SpellInfo(fiery_brand_debuff duration=8)
-    SpellAddTargetDebuff(fiery_brand fiery_brand_debuff=1)
+    SpellAddTargetDebuff(fiery_brand fiery_brand_debuff set=1)
 Define(immolation_aura 258920)
     SpellInfo(immolation_aura cd=15)
 Define(infernal_strike 189110)
@@ -23,15 +23,18 @@ Define(soul_barrier 263648)
     SpellInfo(soul_barrier cd=30)
 Define(void_reaver_talent 16)
 
-AddCheckBox(opt_interrupt L(interrupt) default specialization=vengeance)
-AddCheckBox(opt_dispel L(dispel) default specialization=vengeance)
-AddCheckBox(opt_melee_range L(not_in_melee_range) specialization=vengeance)
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default specialization=vengeance)
-AddCheckBox(opt_infernal_strike SpellName(infernal_strike) default specialization=vengeance)
+AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(vengeance)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(specialization(vengeance)))
+AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(specialization(vengeance)))
+AddCheckBox(opt_demonhunter_vengeance_aoe L(AOE) default enabled=(specialization(vengeance)))
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(specialization(vengeance)))
+AddCheckBox(opt_infernal_strike SpellName(infernal_strike) default enabled=(specialization(vengeance)))
+AddCheckBox(opt_demonhunter_vengeance_offensive L(seperate_offensive_icon) default enabled=(specialization(vengeance)))
 
 AddFunction VengeanceHealMeShortCd
 {
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction VengeanceHealMeMain
@@ -92,8 +95,6 @@ AddFunction VengeanceDefaultMainActions
     
     if (VengeanceInfernalStrike()) Spell(infernal_strike)
     
-    AzeriteEssenceMain()
-    
     if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
     if (BuffPresent(metamorphosis) and Talent(fracture_talent)) Spell(fracture)
     if (not VengeancePoolingForDemonic() and ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb))) Spell(soul_cleave)
@@ -115,8 +116,6 @@ AddFunction VengeanceDefaultCdActions
     Item(Trinket0Slot text=13 usable=1)
     Item(Trinket1Slot text=14 usable=1)
     
-    AzeriteEssenceDefensiveCooldowns()
-    
     Spell(metamorphosis)
     if CheckBoxOn(opt_use_consumables) 
     {
@@ -130,7 +129,6 @@ AddFunction VengeanceDefaultOffensiveActions
 {
     VengeanceInterruptActions()
     VengeanceDispelActions()
-    AzeriteEssenceOffensiveCooldowns()
     VengeanceDefaultOffensiveCooldowns()
 }
 
@@ -164,32 +162,33 @@ AddFunction VengeanceDispelActions
 AddFunction VengeanceDefaultOffensiveCooldowns
 {
     if Talent(charred_flesh_talent) Spell(fiery_brand)
+    if (SoulFragments() <= 2) Spell(elysian_decree)
+    Spell(sinful_brand)
+    Spell(the_hunt)
+    Spell(fodder_to_the_flame)
 }
 
-AddCheckBox(opt_demonhunter_vengeance_aoe L(AOE) default specialization=vengeance)
-
-AddIcon help=shortcd specialization=vengeance
+AddIcon help=shortcd enabled=(specialization(vengeance))
 {
     VengeanceDefaultShortCDActions()
 }
 
-AddIcon enemies=1 help=main specialization=vengeance
+AddIcon enemies=1 help=main enabled=(specialization(vengeance))
 {
     VengeanceDefaultMainActions()
 }
 
-AddIcon checkbox=opt_demonhunter_vengeance_aoe help=aoe specialization=vengeance
+AddIcon help=aoe enabled=(checkboxon(opt_demonhunter_vengeance_aoe) and specialization(vengeance))
 {
     VengeanceDefaultMainActions()
 }
 
-AddIcon help=cd specialization=vengeance
+AddIcon help=cd enabled=(specialization(vengeance))
 {
     VengeanceDefaultCdActions()
 }
 
-AddCheckBox(opt_demonhunter_vengeance_offensive L(seperate_offensive_icon) default specialization=vengeance)
-AddIcon checkbox=opt_demonhunter_vengeance_offensive size=small specialization=vengeance
+AddIcon size=small enabled=(checkboxon(opt_demonhunter_vengeance_offensive) and specialization(vengeance))
 {
     VengeanceDefaultOffensiveActions()
 }
