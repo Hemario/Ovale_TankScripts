@@ -1,3 +1,17 @@
+902.30
+------
+ALL:
+* Fix syntax errors introduced in latest Ovale version
+* Introduce covenant abilities (needs testing still)
+
+Remarks:
+* Small icon with offensive cooldowns (the fifth icon) is currently big due to a bug in Ovale
+* Druid Kyrian ability Kindred Spirit not yet implemented
+* Paladin Night Fae ability not implemented - get a weakaura instead
+* Please provide feedback on Ovale Discord (My name is Hemario) or though tickets on Github
+
+Thanks @ultijlam for updating DK and Monk scripts
+
 902.29
 ------
 DRUID:
