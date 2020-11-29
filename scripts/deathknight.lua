@@ -39,6 +39,8 @@ Define(mark_of_blood 206940)
     SpellAddTargetDebuff(mark_of_blood mark_of_blood add=1)
 Define(rune_tap 194679)
     SpellInfo(rune_tap cd=25 offgcd=1 runes=1 runicpower=-10 duration=4)
+Define(shackle_the_unworthy 312202)
+    SpellInfo(shackle_the_unworthy cd=60 duration=14 tick=2)
 Define(swarming_mist 311648)
     SpellInfo(swarming_mist cd=60 runes=1 runicpower=-10 duration=8)
     SpellAddBuff(swarming_mist swarming_mist add=1)
@@ -124,6 +126,14 @@ AddFunction BloodDefaultShortCdActions
     }
 
     if CheckBoxOn(opt_melee_range) and not target.InRange(death_strike_blood) Texture(misc_arrowlup help=L(not_in_melee_range))
+
+    # (Venthyr) Swarming Mist with less than 67 RP (61 RP with Bryndaor’s Might equipped).
+    if (RunicPowerDeficit() > 59) Spell(swarming_mist)
+    unless (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) and Spell(blood_boil)
+    {
+        # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
+        Spell(shackle_the_unworthy)
+    }
 }
 
 AddFunction BloodHealMeShortCd
@@ -155,11 +165,8 @@ AddFunction BloodDefaultMainActions
     if (InCombat() and BuffRemaining(bone_shield) < GCD() + 2) Spell(marrowrend)
     # [*] Blooddrinker when closing with the boss on the opener.
     if (not Incombat() and not BuffPresent(dancing_rune_weapon_buff)) Spell(blooddrinker)
-    # (Venthyr) Swarming Mist with less than 67 RP (61 RP with Bryndaor’s Might equipped).
-    if (RunicPowerDeficit() > 59) Spell(swarming_mist)
     # Blood Boil if a target does not have Blood Plague.
     if (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) Spell(blood_boil)
-    # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
     # (Night Fae) Death and Decay when the duration of the Death’s Due buff/debuff is about to expire, but with enough remaining time to Heart Strike.
     if (BuffRemaining(deaths_due_buff) < 3 and target.DebuffRemaining(deaths_due_debuff) > 3) Spell(deaths_due)
     # (Night Fae) Heart Strike:
@@ -205,6 +212,11 @@ AddFunction BloodDefaultMainActions
     if (target.DebuffExpires(mark_of_blood) and target.IsTargetingPlayer()) Spell(mark_of_blood)
     if not BuffPresent(dancing_rune_weapon_buff) Spell(blooddrinker)
     Spell(consumption)
+}
+
+AddFunction BloodDefaultAoEActions
+{
+    BloodDefaultMainActions()
 }
 
 AddFunction BloodDefaultCdActions
@@ -268,7 +280,7 @@ AddIcon enemies=1 help=main enabled=(Specialization(blood))
 
 AddIcon help=aoe enabled=(CheckBoxOn(opt_deathknight_blood_aoe) and Specialization(blood))
 {
-    BloodDefaultMainActions()
+    BloodDefaultAoEActions()
 }
 
 AddIcon help=cd enabled=(Specialization(blood))
