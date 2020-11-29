@@ -86,7 +86,10 @@ Define(item_superior_battle_potion_of_stamina 168499)
 Define(item_superior_steelskin_potion 168501)
 
 AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(blood)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(Specialization(blood)))
 AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(blood)))
+AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blood)))
+AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(blood)))
 
 AddFunction BloodPoolingForBoneStorm
@@ -145,6 +148,7 @@ AddFunction BloodDefaultShortCdActions
 AddFunction BloodHealMeShortCd
 {
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction BloodHealMeMain
@@ -248,6 +252,7 @@ AddFunction BloodDefaultCdActions
 AddFunction BloodDefaultOffensiveActions
 {
     BloodInterruptActions()
+    BloodDispelActions()
     BloodDefaultOffensiveCooldowns()
 }
 
@@ -266,12 +271,20 @@ AddFunction BloodInterruptActions
     }
 }
 
+AddFunction BloodDispelActions
+{
+    if CheckBoxOn(opt_dispel)
+    {
+        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
+        if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        CovenantDispelActions()
+    }
+}
+
 AddFunction BloodDefaultOffensiveCooldowns
 {
     Spell(dancing_rune_weapon)
 }
-
-AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blood)))
 
 AddIcon help=shortcd enabled=(Specialization(blood))
 {
@@ -294,7 +307,6 @@ AddIcon help=cd enabled=(Specialization(blood))
     BloodDefaultCdActions()
 }
 
-AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
 AddIcon help=smallcd size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive) and Specialization(blood))
 {
     BloodDefaultOffensiveActions()
