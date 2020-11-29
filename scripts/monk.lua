@@ -29,6 +29,7 @@ Define(fallen_order 326860)
 Define(fortifying_brew_brm 115203)
     SpellInfo(fortifying_brew_brm cd=360 duration=15 gcd=0 offgcd=1)
 Define(touch_of_death_brm 322109)
+    SpellRequire(touch_of_death_brm unusable set=1 enabled=(not (target.Health() < Health() or (Level() >= 44 and target.HealthPercent() <= 15))))
 Define(weapons_of_order 310454)
     SpellInfo(weapons_of_order cd=120 duration=30)
     SpellAddBuff(weapons_of_order weapons_of_order add=1)
@@ -171,7 +172,7 @@ AddFunction BrewmasterDispelActions
 
 AddFunction BrewmasterDefaultOffensiveCooldowns
 {
-    if target.HealthPercent() <= 15 Spell(touch_of_death_brm)
+    Spell(touch_of_death_brm)
     Spell(bonedust_brew)
     Spell(weapons_of_order)
     Spell(fallen_order)
