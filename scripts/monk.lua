@@ -4,6 +4,10 @@ do
     local name = "ovale_tankscripts_monk_brewmaster"
     local desc = "[9.0.2] Ovale_TankScripts: Monk Brewmaster"
     local code = [[
+# Adapted from Wowhead's "Brewmaster Monk Rotation Guide - Shadowlands 9.0.2"
+#   by Llarold-Area52
+# https://www.wowhead.com/brewmaster-monk-rotation-guide
+
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_monk_spells)
@@ -17,6 +21,9 @@ Include(ovale_monk_spells)
 Define(bonedust_brew 325216)
     SpellInfo(bonedust_brew cd=120 duration=10)
     SpellAddTargetDebuff(bonedust_brew bonedust_brew add=1)
+Define(exploding_keg 325153)
+    SpellInfo(exploding_keg cd=60 duration=3)
+    SpellAddTargetDebuff(exploding_keg exploding_keg add=1)
 Define(faeline_stomp 327104)
     SpellInfo(faeline_stomp cd=30 duration=30)
     SpellAddBuff(faeline_stomp faeline_stomp add=1)
@@ -42,8 +49,8 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Speciali
 
 AddFunction BrewmasterHealMeShortCd
 {
-    if (HealthPercent() < 35) Spell(healing_elixir)
-    if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
+    # Use Healing Elixir proactively to prevent dropping below 50% health.
+    if (HealthPercent() < 100 - 25 * (3 - SpellCharges(healing_elixir count=0))) Spell(healing_elixir)
     if (HealthPercent() < 35) UseHealthPotions()
     CovenantShortCDHealActions()
 }
@@ -61,24 +68,29 @@ AddFunction BrewmasterRangeCheck
     if CheckBoxOn(opt_melee_range) and not target.InRange(tiger_palm) Texture(misc_arrowlup help=L(not_in_melee_range))
 }
 
+AddFunction BrewmasterHasEnergyForKegSmash
+{
+    if (SpellCooldown(keg_smash) > GCDRemaining())  (Energy() + EnergyRegenRate() * SpellCooldown(keg_smash) >= PowerCost(keg_smash))
+    if (SpellCooldown(keg_smash) <= GCDRemaining()) (Energy() + EnergyRegenRate() * GCDRemaining() >= PowerCost(keg_smash))
+}
+
+AddFunction BrewmasterEnergyForKegSmashPlusFiller
+{
+    if (SpellCooldown(keg_smash) > GCDRemaining())  (Energy() + EnergyRegenRate() * (GCD() + SpellCooldown(keg_smash)))
+    if (SpellCooldown(keg_smash) <= GCDRemaining()) (Energy() + EnergyRegenRate() * (GCD() + GCDRemaining()))
+}
+
 AddFunction BrewmasterDefaultShortCDActions
 {
+    # Use Black Ox Brew when Celestial Brew is on cooldown and Purifying Brew has no charges.
+    if (SpellCooldown(celestial_brew) > GCD() and SpellCharges(purifying_brew count=0) < 0.75) Spell(black_ox_brew)
+    # Never let Celestial Brew or Purifying Brew sit on cooldown while tanking.
+    if (SpellCharges(purifying_brew count=0) > 1.8) Spell(purifying_brew)
+    # Use up Purifying Brew charges if Black Ox Brew is coming off cooldown.
+    if (HasTalent(black_ox_brew_talent) and SpellCooldown(black_ox_brew) < GCD()) Spell(purifying_brew)
+    if BuffExpires(blackout_combo_buff) Spell(celestial_brew)
     # heal me
     BrewmasterHealMeShortCd()
-    
-    # keep purifying brew on cooldown
-    if (SpellCharges(purifying_brew count=0)>1.8) Spell(purifying_brew)
-    # use celestial_brew on cooldown
-    if BuffExpires(blackout_combo_buff) Spell(celestial_brew)
-    # use black_ox_brew when at 0 charges and low energy (or in an emergency)
-    if (Spell(black_ox_brew) and SpellCharges(purifying_brew count=0) <= 0.5)
-    {
-        #black_ox_brew,if=incoming_damage_1500ms&stagger.heavy&cooldown.brews.charges_fractional<=0.75
-        if IncomingDamage(1.5) > 0 and DebuffPresent(heavy_stagger_debuff) Spell(black_ox_brew)
-        #black_ox_brew,if=(energy+(energy.regen*cooldown.keg_smash.remains))<40&buff.blackout_combo.down&cooldown.keg_smash.up
-        if Energy() < 40 and BuffExpires(blackout_combo_buff) and not SpellCooldown(keg_smash) > 0 Spell(black_ox_brew)
-    }
-
     # Purify on red stagger
     if (StaggerPercent() > 70) Spell(purifying_brew)
     # range check
@@ -89,24 +101,34 @@ AddFunction BrewmasterDefaultMainActions
 {
     BrewmasterHealMeMain()
 
-    if (Enemies()>1 or not InCombat()) Spell(keg_smash)
-    if (BuffPresent(blackout_combo_buff)) Spell(tiger_palm)
-    if (SpellCount(expel_harm)>4) Spell(expel_harm)
-    if (BuffExpires(blackout_combo_buff)) Spell(blackout_kick)
-    Spell(keg_smash)
-    Spell(faeline_stomp)
-    if (SpellCount(expel_harm)>=3) Spell(expel_harm)
-    if (not BuffPresent(rushing_jade_wind)) Spell(rushing_jade_wind)
-    Spell(breath_of_fire)
-    Spell(chi_burst)
-    Spell(chi_wave)
-    if (SpellCount(expel_harm)>=2) Spell(expel_harm)
-    if (SpellCooldown(keg_smash) > GCD() and (Energy()+EnergyRegenRate()*(SpellCooldown(keg_smash)+GCDRemaining()+GCD())) > PowerCost(keg_smash)+PowerCost(tiger_palm))
+    # Opener
+    if not InCombat()
     {
-        if (Enemies()>= 3) Spell(spinning_crane_kick)
-        if (not HasTalent(blackout_combo_talent)) Spell(tiger_palm)
+        Spell(rushing_jade_wind)
+        Spell(keg_smash)
     }
-    Spell(rushing_jade_wind)
+    # Blackout Kick right before Keg Smash to grant more Brew charges with Blackout Combo talent.
+    if (HasTalent(blackout_combo_talent) and SpellCooldown(keg_smash) > GCD() and SpellCooldown(keg_smash) <= GCD() + GCDRemaining()) Spell(blackout_kick)
+    Spell(keg_smash)
+    # Push back the next spell if Keg Smash will be ready within the current GCD().
+    unless SpellCooldown(keg_smash) <= GCDRemaining()
+    {
+        if (Enemies() >= 3) Spell(breath_of_fire)
+        if (not HasTalent(blackout_combo_talent)) Spell(blackout_kick)
+        Spell(faeline_stomp)
+        Spell(breath_of_fire)
+        Spell(rushing_jade_wind)
+        Spell(chi_wave)
+        Spell(chi_burst)
+        if SpellCooldown(keg_smash) > GCD()
+        {
+            # Use Spinning Crane Kick and Tiger Palm as fillers for multi-target if it won't push back Keg Smash.
+            if (Enemies() >= 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(spinning_crane_kick)) Spell(spinning_crane_kick)
+            if (Enemies() >= 2 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
+        }
+        # Tiger Palm is a terrible offensive skill, so only use it as a filler to prevent capping energy.
+        if TimeToEnergy(100) < GCD() Spell(tiger_palm)
+    }
 }
 
 AddFunction BrewmasterDefaultAoEActions
@@ -170,10 +192,12 @@ AddFunction BrewmasterDispelActions
 AddFunction BrewmasterDefaultOffensiveCooldowns
 {
     Spell(touch_of_death)
+    if (target.TimeToDie() > 25) Spell(invoke_niuzao_the_black_ox)
     Spell(bonedust_brew)
     Spell(weapons_of_order)
     Spell(fallen_order)
     Spell(invoke_niuzao_the_black_ox)
+    Spell(exploding_keg)
 }
 
 AddIcon help=shortcd enabled=(Specialization(brewmaster))
@@ -199,7 +223,6 @@ AddIcon help=cd enabled=(Specialization(brewmaster))
 AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive) and Specialization(brewmaster))
 {
     BrewmasterDefaultOffensiveActions()
-
 }
 ]]
     OvaleScripts:RegisterScript("MONK", "brewmaster", name, desc, code, "script")
