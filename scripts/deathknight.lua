@@ -16,6 +16,10 @@ Define(tightening_grasp_talent 14)
 Define(voracious_talent 16)
 
 # Spells
+Define(abomination_limb 315443)
+    SpellInfo(abomination_limb cd=120 duration=12 tick=1)
+    SpellAddBuff(abomination_limb abomination_limb add=1)
+    SpellAddBuff(abomination_limb bone_shield add=3)
 Define(antimagic_shell 48707)
     SpellInfo(antimagic_shell cd=60 offgcd=1 duration=5)
     SpellRequire(antimagic_shell cd add=-20 enabled=(HasTalent(antimagic_barrier_talent)))
@@ -133,6 +137,8 @@ AddFunction BloodDefaultShortCdActions
     {
         # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
         Spell(shackle_the_unworthy)
+        # [*] (Necrolord) Use Abomination Limb on cooldown for free damage.
+        Spell(abomination_limb)
     }
 }
 
