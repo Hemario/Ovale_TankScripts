@@ -16,6 +16,10 @@ Define(tightening_grasp_talent 14)
 Define(voracious_talent 16)
 
 # Spells
+Define(abomination_limb 315443)
+    SpellInfo(abomination_limb cd=120 duration=12 tick=1)
+    SpellAddBuff(abomination_limb abomination_limb add=1)
+    SpellAddBuff(abomination_limb bone_shield add=3)
 Define(antimagic_shell 48707)
     SpellInfo(antimagic_shell cd=60 offgcd=1 duration=5)
     SpellRequire(antimagic_shell cd add=-20 enabled=(HasTalent(antimagic_barrier_talent)))
@@ -39,6 +43,8 @@ Define(mark_of_blood 206940)
     SpellAddTargetDebuff(mark_of_blood mark_of_blood add=1)
 Define(rune_tap 194679)
     SpellInfo(rune_tap cd=25 offgcd=1 runes=1 runicpower=-10 duration=4)
+Define(shackle_the_unworthy 312202)
+    SpellInfo(shackle_the_unworthy cd=60 duration=14 tick=2)
 Define(swarming_mist 311648)
     SpellInfo(swarming_mist cd=60 runes=1 runicpower=-10 duration=8)
     SpellAddBuff(swarming_mist swarming_mist add=1)
@@ -80,7 +86,10 @@ Define(item_superior_battle_potion_of_stamina 168499)
 Define(item_superior_steelskin_potion 168501)
 
 AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(blood)))
+AddCheckBox(opt_dispel L(dispel) default enabled=(Specialization(blood)))
 AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(blood)))
+AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blood)))
+AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(blood)))
 
 AddFunction BloodPoolingForBoneStorm
@@ -124,11 +133,22 @@ AddFunction BloodDefaultShortCdActions
     }
 
     if CheckBoxOn(opt_melee_range) and not target.InRange(death_strike_blood) Texture(misc_arrowlup help=L(not_in_melee_range))
+
+    # (Venthyr) Swarming Mist with less than 67 RP (61 RP with Bryndaor’s Might equipped).
+    if (RunicPowerDeficit() > 59) Spell(swarming_mist)
+    unless (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) and Spell(blood_boil)
+    {
+        # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
+        Spell(shackle_the_unworthy)
+        # [*] (Necrolord) Use Abomination Limb on cooldown for free damage.
+        Spell(abomination_limb)
+    }
 }
 
 AddFunction BloodHealMeShortCd
 {
     if (HealthPercent() < 35) UseHealthPotions()
+    CovenantShortCDHealActions()
 }
 
 AddFunction BloodHealMeMain
@@ -155,11 +175,8 @@ AddFunction BloodDefaultMainActions
     if (InCombat() and BuffRemaining(bone_shield) < GCD() + 2) Spell(marrowrend)
     # [*] Blooddrinker when closing with the boss on the opener.
     if (not Incombat() and not BuffPresent(dancing_rune_weapon_buff)) Spell(blooddrinker)
-    # (Venthyr) Swarming Mist with less than 67 RP (61 RP with Bryndaor’s Might equipped).
-    if (RunicPowerDeficit() > 59) Spell(swarming_mist)
     # Blood Boil if a target does not have Blood Plague.
     if (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) Spell(blood_boil)
-    # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
     # (Night Fae) Death and Decay when the duration of the Death’s Due buff/debuff is about to expire, but with enough remaining time to Heart Strike.
     if (BuffRemaining(deaths_due_buff) < 3 and target.DebuffRemaining(deaths_due_debuff) > 3) Spell(deaths_due)
     # (Night Fae) Heart Strike:
@@ -207,6 +224,11 @@ AddFunction BloodDefaultMainActions
     Spell(consumption)
 }
 
+AddFunction BloodDefaultAoEActions
+{
+    BloodDefaultMainActions()
+}
+
 AddFunction BloodDefaultCdActions
 {
     if CheckBoxOff(opt_deathknight_blood_offensive) BloodDefaultOffensiveActions()
@@ -230,6 +252,7 @@ AddFunction BloodDefaultCdActions
 AddFunction BloodDefaultOffensiveActions
 {
     BloodInterruptActions()
+    BloodDispelActions()
     BloodDefaultOffensiveCooldowns()
 }
 
@@ -248,12 +271,20 @@ AddFunction BloodInterruptActions
     }
 }
 
+AddFunction BloodDispelActions
+{
+    if CheckBoxOn(opt_dispel)
+    {
+        if Spell(arcane_torrent) and target.HasDebuffType(magic) Spell(arcane_torrent)
+        if Spell(fireblood) and player.HasDebuffType(poison disease curse magic) Spell(fireblood)
+        CovenantDispelActions()
+    }
+}
+
 AddFunction BloodDefaultOffensiveCooldowns
 {
     Spell(dancing_rune_weapon)
 }
-
-AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blood)))
 
 AddIcon help=shortcd enabled=(Specialization(blood))
 {
@@ -268,7 +299,7 @@ AddIcon enemies=1 help=main enabled=(Specialization(blood))
 
 AddIcon help=aoe enabled=(CheckBoxOn(opt_deathknight_blood_aoe) and Specialization(blood))
 {
-    BloodDefaultMainActions()
+    BloodDefaultAoEActions()
 }
 
 AddIcon help=cd enabled=(Specialization(blood))
@@ -276,7 +307,6 @@ AddIcon help=cd enabled=(Specialization(blood))
     BloodDefaultCdActions()
 }
 
-AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
 AddIcon help=smallcd size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive) and Specialization(blood))
 {
     BloodDefaultOffensiveActions()
