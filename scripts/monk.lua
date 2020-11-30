@@ -44,10 +44,7 @@ AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Speciali
 
 AddFunction BrewmasterHealMeShortCd
 {
-    if (HealthPercent() < 35)
-    {
-        Spell(healing_elixir)
-    }
+    if (HealthPercent() < 35) Spell(healing_elixir)
     if (HealthPercent() <= 100 - (15 * 2.6)) Spell(healing_elixir)
     if (HealthPercent() < 35) UseHealthPotions()
     CovenantShortCDHealActions()
@@ -68,6 +65,9 @@ AddFunction BrewmasterRangeCheck
 
 AddFunction BrewmasterDefaultShortCDActions
 {
+    # heal me
+    BrewmasterHealMeShortCd()
+    
     # keep purifying brew on cooldown
     if (SpellCharges(purifying_brew count=0)>1.8) Spell(purifying_brew)
     # use celestial_brew on cooldown
@@ -81,8 +81,6 @@ AddFunction BrewmasterDefaultShortCDActions
         if Energy() < 40 and BuffExpires(blackout_combo_buff) and not SpellCooldown(keg_smash) > 0 Spell(black_ox_brew)
     }
 
-    # heal me
-    BrewmasterHealMeShortCd()
     # Purify on red stagger
     if (StaggerPercent() > 70) Spell(purifying_brew)
     # range check
