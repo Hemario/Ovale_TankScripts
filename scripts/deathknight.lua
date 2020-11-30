@@ -50,7 +50,7 @@ Define(rune_tap 194679)
 Define(shackle_the_unworthy 312202)
     SpellInfo(shackle_the_unworthy cd=60 duration=14 tick=2)
 Define(swarming_mist 311648)
-    SpellInfo(swarming_mist cd=60 runes=1 runicpower=-10 duration=8)
+    SpellInfo(swarming_mist cd=60 runes=1 runicpower=-10 duration=8 tick=1)
     SpellAddBuff(swarming_mist swarming_mist add=1)
 
 # Buffs & debuffs
