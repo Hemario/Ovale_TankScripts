@@ -4,7 +4,9 @@ do
     local name = "ovale_tankscripts_deathknight_blood"
     local desc = "[9.0.2] Ovale_TankScripts: Death Knight Blood"
     local code = [[
-# Adapted from Kyrasis's "Advanced Blood Death Knight Guide for M+"
+# Adapted from "[9.0] Advanced Blood Death Knight Guide for M+"
+#   by Kyrasis-Stormreaver.
+# https://docs.google.com/document/d/1FJlB1T8ijaQLjY_cihyoyhLoi6lYRnT-N-ipVFCLidE
 
 Include(ovale_tankscripts_common)
 Include(ovale_deathknight_spells)
