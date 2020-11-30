@@ -22,7 +22,7 @@ end
 -- Define our own IncomingMagicDamage() and IncomingPhysicalDamage() conditions
 -- until IncomingDamage() is fixed in Ovale.
 
-local __Condition = LibStub:GetLibrary("ovale/engine/Condition")
+local __Condition = LibStub:GetLibrary("ovale/engine/condition")
 local Compare = __Condition.Compare
 
 local OvaleCondition = ovale.ioc and ovale.ioc.condition
