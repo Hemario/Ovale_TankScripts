@@ -18,36 +18,3 @@ OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
         return baseGetDefaultScriptName(self, className, specialization)
     end
 end
-
--- Define our own IncomingMagicDamage() and IncomingPhysicalDamage() conditions
--- until IncomingDamage() is fixed in Ovale.
-
-local __Condition = LibStub:GetLibrary("ovale/engine/condition")
-local Compare = __Condition.Compare
-
-local OvaleCondition = ovale.ioc and ovale.ioc.condition
-local OvaleConditions = ovale.ioc and ovale.ioc.conditions
-local OvaleDamageTaken = ovale.ioc and ovale.ioc.damageTaken
-
-local function IncomingMagicDamage(positionalParams, namedParams, atTime)
-    local interval, comparator, limit = positionalParams[1], positionalParams[2], positionalParams[3]
-    local value = 0
-    if interval > 0 then
-        local _, totalMagic = OvaleDamageTaken:GetRecentDamage(interval)
-        value = totalMagic
-        return Compare(value, comparator, limit)
-    end
-end
-
-local function IncomingPhysicalDamage(positionalParams, namedParams, atTime)
-    local interval, comparator, limit = positionalParams[1], positionalParams[2], positionalParams[3]
-    local value = 0
-    if interval > 0 then
-        local total, totalMagic = OvaleDamageTaken:GetRecentDamage(interval)
-        value = total - totalMagic
-        return Compare(value, comparator, limit)
-    end
-end
-
-OvaleCondition:RegisterCondition("incomingmagicdamage", false, IncomingMagicDamage)
-OvaleCondition:RegisterCondition("incomingphysicaldamage", false, IncomingPhysicalDamage)
