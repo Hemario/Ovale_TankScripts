@@ -135,16 +135,6 @@ AddFunction BloodDefaultShortCdActions
     }
 
     if CheckBoxOn(opt_melee_range) and not target.InRange(death_strike_blood) Texture(misc_arrowlup help=L(not_in_melee_range))
-
-    # (Venthyr) Swarming Mist with less than 67 RP (61 RP with Bryndaor’s Might equipped).
-    if (RunicPowerDeficit() > 59) Spell(swarming_mist)
-    unless (DebuffCountOnAny(blood_plague_debuff) < Enemies(tagged=1) or target.DebuffRefreshable(blood_plague_debuff)) and Spell(blood_boil)
-    {
-        # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
-        Spell(shackle_the_unworthy)
-        # [*] (Necrolord) Use Abomination Limb on cooldown for free damage.
-        Spell(abomination_limb)
-    }
 }
 
 AddFunction BloodHealMeShortCd
@@ -287,6 +277,15 @@ AddFunction BloodDispelActions
 
 AddFunction BloodDefaultOffensiveCooldowns
 {
+    # Opener.
+    if (not InCombat()) Spell(dancing_rune_weapon)
+
+    # (Venthyr) Swarming Mist with less than 67 RP (61 RP with Bryndaor’s Might equipped).
+    if (RunicPowerDeficit() > 59) Spell(swarming_mist)
+    # (Kyrian) Shackle the Unworthy (with Combat Meditation enabled).
+    Spell(shackle_the_unworthy)
+    # [*] (Necrolord) Use Abomination Limb on cooldown for free damage.
+    Spell(abomination_limb)
     Spell(dancing_rune_weapon)
 }
 
