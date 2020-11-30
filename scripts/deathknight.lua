@@ -241,6 +241,7 @@ AddFunction BloodDefaultCdActions
     Item(Trinket1Slot usable=1 text=14)
 
     Spell(vampiric_blood)
+    Spell(dancing_rune_weapon)
     Spell(icebound_fortitude)
     if CheckBoxOn(opt_use_consumables)
     {
@@ -249,6 +250,7 @@ AddFunction BloodDefaultCdActions
         Item(item_superior_battle_potion_of_stamina usable=1)
         Item(item_battle_potion_of_stamina usable=1)
     }
+    Spell(rune_tap)
 }
 
 AddFunction BloodDefaultOffensiveActions
