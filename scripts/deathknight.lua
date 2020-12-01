@@ -96,8 +96,15 @@ AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blo
 AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
 AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(blood)))
 
-AddFunction BloodPoolingForBoneStorm
+AddFunction BloodPooledForBonestorm
 {
+    # Bonestorm only with 3+ targets and Runic Power is above 90 for full healing ticks.
+    Talent(bonestorm_talent) and not SpellCooldown(bonestorm) > 0 and Enemies() >= 3 and RunicPower() > 90
+}
+
+AddFunction BloodPoolingForBonestorm
+{
+    # Begin pooling for Bonestorm when it is down to 3 seconds left on the cooldown.
     Talent(bonestorm_talent) and SpellCooldown(bonestorm) < 3 and Enemies() >= 3 and not RunicPower() > 90
 }
 
@@ -151,13 +158,13 @@ AddFunction BloodHealMeMain
     {
         if Enemies() >= 3
         {
-            # [*] Bonestorm if you are below 60% health with 3+ targets and Runic Power is above 90 for full healing ticks.
-            if (RunicPower() > 90) Spell(bonestorm)
+            # [*] Bonestorm if you are below 60% health.
+            if BloodPooledForBonestorm() Spell(bonestorm)
             # [*] Consumption with 3+ targets.
             Spell(consumption)
         }
         # Death Strike if you are below 60% Health.
-        if (not BloodPoolingForBoneStorm() and BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike_blood)
+        if (not BloodPoolingForBonestorm() and BloodDeathStrikeHealing() <= HealthMissing()) Spell(death_strike_blood)
     }
 }
 
@@ -182,8 +189,10 @@ AddFunction BloodDefaultMainActions
         if (target.DebuffRemaining(deaths_due_debuff) < 2) Spell(heart_strike)
         if (BuffRemaining(deaths_due_buff) < 3 and (target.DebuffRemaining(deaths_due_debuff) - BuffRemaining(deaths_due_buff) < 9)) Spell(heart_strike)
     }
+    # [*] Use Bonestorm if we have pooled enough Runic Power.
+    if BloodPooledForBonestorm() Spell(bonestorm)
     # Death Strike when Runic Power is above 105 (121 with Rune of Hysteria).
-    if (not BloodPoolingForBoneStorm() and RunicPowerDeficit() < 20) Spell(death_strike_blood)
+    if (not BloodPoolingForBonestorm() and RunicPowerDeficit() < 20) Spell(death_strike_blood)
     # Marrowrend if below 8 stacks of Bone Shield.
     if (BuffStacks(bone_shield) < 8 - 3 * BuffPresent(dancing_rune_weapon_buff)) Spell(marrowrend)
     # Heart Strike with, or when 1.5 second away from, having more than 3 Runes.
