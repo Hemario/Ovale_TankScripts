@@ -10,6 +10,8 @@ Include(ovale_druid_spells)
 
 Define(bristling_fur 155835)
     SpellInfo(bristling_fur cd=40)
+    SpellRequire(bristling_fur unusable set=1 enabled=(not hastalent(bristling_fur_talent)))
+Define(bristling_fur_talent 3)
 Define(earthwarden_talent 16)
 Define(earthwarden_buff 203975)
 Define(galactic_guardian_buff 213708)
