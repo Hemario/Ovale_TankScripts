@@ -297,6 +297,8 @@ AddFunction BloodDefaultOffensiveCooldowns
     Spell(shackle_the_unworthy)
     # [*] (Necrolord) Use Abomination Limb on cooldown for free damage.
     Spell(abomination_limb)
+    # [*] Use Consumption for damage.
+    Spell(consumption)
     Spell(dancing_rune_weapon)
 }
 
