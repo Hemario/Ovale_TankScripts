@@ -213,7 +213,7 @@ AddFunction BrewmasterDefaultMainActions
             if (Enemies() >= 2 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
         }
         # Tiger Palm is a terrible offensive skill, so only use it as a filler to prevent capping energy.
-        if TimeToEnergy(100) < GCD() Spell(tiger_palm)
+        if (EnergyDeficit() <= 15) Spell(tiger_palm)
     }
 }
 
