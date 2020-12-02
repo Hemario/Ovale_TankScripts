@@ -124,12 +124,12 @@ Define(weapons_of_order 310454)
     SpellInfo(weapons_of_order cd=120)
     SpellRequire(weapons_of_order unusable set=1 enabled=(not IsCovenant(kyrian)))
 
-AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(brewmaster)))
-AddCheckBox(opt_dispel L(dispel) default enabled=(Specialization(brewmaster)))
-AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(brewmaster)))
-AddCheckBox(opt_monk_bm_aoe L(AOE) default enabled=(Specialization(brewmaster)))
-AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default enabled=(Specialization(brewmaster)))
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(brewmaster)))
+AddCheckBox(opt_interrupt L(interrupt) default)
+AddCheckBox(opt_dispel L(dispel) default)
+AddCheckBox(opt_melee_range L(not_in_melee_range))
+AddCheckBox(opt_monk_bm_aoe L(AOE) default)
+AddCheckBox(opt_monk_bm_offensive L(seperate_offensive_icon) default)
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default)
 
 AddFunction BrewmasterHealMeShortCd
 {
@@ -284,27 +284,27 @@ AddFunction BrewmasterDefaultOffensiveCooldowns
     Spell(exploding_keg)
 }
 
-AddIcon help=shortcd enabled=(Specialization(brewmaster))
+AddIcon help=shortcd
 {
     BrewmasterDefaultShortCDActions()
 }
 
-AddIcon enemies=1 help=main enabled=(Specialization(brewmaster))
+AddIcon enemies=1 help=main
 {
     BrewmasterDefaultMainActions()
 }
 
-AddIcon help=aoe enabled=(CheckBoxOn(opt_monk_bm_aoe) and Specialization(brewmaster))
+AddIcon help=aoe enabled=(CheckBoxOn(opt_monk_bm_aoe))
 {
     BrewmasterDefaultAoEActions()
 }
 
-AddIcon help=cd enabled=(Specialization(brewmaster))
+AddIcon help=cd
 {
     BrewmasterDefaultCdActions()
 }
 
-AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive) and Specialization(brewmaster))
+AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive))
 {
     BrewmasterDefaultOffensiveActions()
 }
