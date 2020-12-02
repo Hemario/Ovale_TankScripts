@@ -135,12 +135,12 @@ Define(item_steelskin_potion 152557)
 Define(item_superior_battle_potion_of_stamina 168499)
 Define(item_superior_steelskin_potion 168501)
 
-AddCheckBox(opt_interrupt L(interrupt) default enabled=(Specialization(blood)))
-AddCheckBox(opt_dispel L(dispel) default enabled=(Specialization(blood)))
-AddCheckBox(opt_melee_range L(not_in_melee_range) enabled=(Specialization(blood)))
-AddCheckBox(opt_deathknight_blood_aoe L(AOE) default enabled=(Specialization(blood)))
-AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default enabled=(Specialization(blood)))
-AddCheckBox(opt_use_consumables L(opt_use_consumables) default enabled=(Specialization(blood)))
+AddCheckBox(opt_interrupt L(interrupt) default)
+AddCheckBox(opt_dispel L(dispel) default)
+AddCheckBox(opt_melee_range L(not_in_melee_range))
+AddCheckBox(opt_deathknight_blood_aoe L(AOE) default)
+AddCheckBox(opt_deathknight_blood_offensive L(seperate_offensive_icon) default)
+AddCheckBox(opt_use_consumables L(opt_use_consumables) default)
 
 AddFunction BloodPooledForBonestorm
 {
@@ -348,28 +348,28 @@ AddFunction BloodDefaultOffensiveCooldowns
     Spell(dancing_rune_weapon)
 }
 
-AddIcon help=shortcd enabled=(Specialization(blood))
+AddIcon help=shortcd
 {
     if not InCombat() BloodPrecombatShortCdActions()
     BloodDefaultShortCdActions()
 }
 
-AddIcon enemies=1 help=main enabled=(Specialization(blood))
+AddIcon enemies=1 help=main
 {
     BloodDefaultMainActions()
 }
 
-AddIcon help=aoe enabled=(CheckBoxOn(opt_deathknight_blood_aoe) and Specialization(blood))
+AddIcon help=aoe enabled=(CheckBoxOn(opt_deathknight_blood_aoe))
 {
     BloodDefaultAoEActions()
 }
 
-AddIcon help=cd enabled=(Specialization(blood))
+AddIcon help=cd
 {
     BloodDefaultCdActions()
 }
 
-AddIcon help=smallcd size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive) and Specialization(blood))
+AddIcon help=smallcd size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive))
 {
     BloodDefaultOffensiveActions()
 }
