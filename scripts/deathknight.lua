@@ -11,11 +11,17 @@ do
 Include(ovale_common)
 Include(ovale_tankscripts_common)
 
-# Class Spells
+# Talents
+Define(antimagic_barrier_talent 22014)
+Define(blood_tap_talent 22135)
+Define(relish_in_blood_talent 22134)
+Define(tightening_grasp_talent 19226)
+Define(voracious_talent 19230)
+
+# Class Abilities
 Define(antimagic_shell 48707)
     SpellInfo(antimagic_shell cd=60 offgcd=1)
     SpellRequire(antimagic_shell cd add=-20 enabled=(HasTalent(antimagic_barrier_talent)))
-Define(antimagic_barrier_talent 22014)
 Define(asphyxiate 221562)
     SpellInfo(asphyxiate cd=45)
 Define(blooddrinker 206931)
@@ -30,7 +36,6 @@ Define(blood_plague_debuff 55078)
 Define(blood_tap 221699)
     SpellInfo(blood_tap cd=60 runes=-1)
     SpellRequire(blood_tap unusable set=1 enabled=(not HasTalent(blood_tap_talent)))
-Define(blood_tap_talent 22135)
 Define(bone_shield 195181)
     SpellInfo(bone_shield duration=30 max_stacks=10)
     SpellAddBuff(marrowrend bone_shield add=3)
@@ -93,17 +98,14 @@ Define(marrowrend 195182)
 Define(mind_freeze 47528)
     SpellInfo(mind_freeze cd=15 gcd=0 offgcd=1 interrupt=1)
 Define(ossuary 219786)
-Define(relish_in_blood_talent 22134)
 Define(rune_tap 194679)
     SpellInfo(rune_tap cd=25 offgcd=1 runes=1 runicpower=-10 duration=4)
-Define(tightening_grasp_talent 19226)
 Define(tombstone 219809)
     SpellInfo(tombstone cd=60)
     SpellRequire(tombstone unusable set=1 enabled=(not HasTalent(tombstone_talent)))
 Define(tombstone_talent 23454)
 Define(vampiric_blood 55233)
     SpellInfo(vampiric_blood cd=90 gcd=0 offgcd=1)
-Define(voracious_talent 19230)
 
 # Covenant Abilities
 Define(abomination_limb 315443)
@@ -121,7 +123,7 @@ Define(swarming_mist 311648)
     SpellInfo(swarming_mist cd=60 runes=1 runicpower=-10)
     SpellRequire(swarming_mist unusable set=1 enabled=(IsCovenant(venthyr)))
 
-# Racials
+# Racial Abilities
 Define(arcane_torrent 50613)
     SpellInfo(arcane_torrent cd=120 runicpower=-20)
 Define(fireblood 265221)
