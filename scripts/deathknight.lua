@@ -10,10 +10,11 @@ Include(ovale_tankscripts_common)
 Include(ovale_deathknight_spells)
 
 # Talents
-Define(antimagic_barrier_talent 11)
-Define(relish_in_blood_talent 8)
-Define(tightening_grasp_talent 14)
-Define(voracious_talent 16)
+Define(antimagic_barrier_talent 22014)
+Define(blood_tap_talent 22135)
+Define(relish_in_blood_talent 22134)
+Define(tightening_grasp_talent 19226)
+Define(voracious_talent 19230)
 
 # Spells
 Define(abomination_limb 315443)
@@ -27,7 +28,6 @@ Define(antimagic_shell 48707)
 Define(blood_tap 221699)
     SpellInfo(blood_tap cd=60 runes=-1)
     SpellRequire(blood_tap unusable set=1 enabled=(not hastalent(blood_tap_talent)))
-Define(blood_tap_talent 9)
 Define(death_grip 49576)
     SpellInfo(death_grip cd=25)
 Define(death_strike_blood 49998)

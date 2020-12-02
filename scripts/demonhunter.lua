@@ -8,7 +8,12 @@ Include(ovale_common)
 Include(ovale_tankscripts_common)
 Include(ovale_demonhunter_spells)
 
-Define(demonic_talent 17)
+Define(abyssal_strike_talent 22502)
+Define(charred_flesh_talent 22541)
+Define(quickened_sigils_talent 22510)
+Define(void_reaver_talent 22512)
+
+Define(demonic_talent_vengeance 22513)
 Define(demon_spikes_buff 203819)
     SpellInfo(demon_spikes duration=6)
 Define(fel_devastation 212084)
@@ -21,7 +26,6 @@ Define(immolation_aura 258920)
 Define(infernal_strike 189110)
 Define(soul_barrier 263648)
     SpellInfo(soul_barrier cd=30)
-Define(void_reaver_talent 16)
 
 AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(vengeance)))
 AddCheckBox(opt_dispel L(dispel) default enabled=(specialization(vengeance)))
@@ -49,12 +53,12 @@ AddFunction VengeanceHealMeMain
 
 AddFunction VengeancePoolingForDemonic
 {
-    Talent(demonic_talent) and SpellCooldown(fel_devastation)<5 and Fury()<50
+    Talent(demonic_talent_vengeance) and SpellCooldown(fel_devastation)<5 and Fury()<50
 }
 
 AddFunction VengeanceInfernalStrike
 {
-    CheckBoxOn(opt_infernal_strike) and (not Talent(flame_crash_talent) or VengeanceSigilOfFlame()) and (SpellFullRecharge(infernal_strike) <= 3)
+    CheckBoxOn(opt_infernal_strike) and (not Talent(abyssal_strike_talent) or VengeanceSigilOfFlame()) and (SpellFullRecharge(infernal_strike) <= 3)
 }
 
 AddFunction VengeanceSigilOfFlame
@@ -81,7 +85,7 @@ AddFunction VengeanceDefaultShortCDActions
         if (IncomingPhysicalDamage(5) > 0 and BuffRemaining(demon_spikes_buff)<2) Spell(demon_spikes)
         if (not BuffPresent(demon_spikes_buff) or IncomingPhysicalDamage(5) <= 0)
         {
-            if (Talent(demonic_talent)) Spell(fel_devastation)
+            if (Talent(demonic_talent_vengeance)) Spell(fel_devastation)
             Spell(soul_barrier)
             Spell(fiery_brand)
         }
@@ -101,7 +105,7 @@ AddFunction VengeanceDefaultMainActions
     if (FuryDeficit() >= 10) Spell(immolation_aura)
     if (FuryDeficit() >= 30) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
-    if (not Talent(demonic_talent)) Spell(fel_devastation)
+    if (not Talent(demonic_talent_vengeance)) Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
     if (not Talent(fracture_talent) and FuryDeficit() >= 10) Spell(shear)
     if (Enemies() >= 2) Spell(throw_glaive)
