@@ -1,3 +1,19 @@
+902.33
+------
+ALL:
+* Fix talent definitions, Ovale is now using id instead of row/column
+
+DRUID:
+* Added support for Kyrian covenant ability
+* Define missing Bristling Fur talent (it was proposing without it being selected)
+
+DEATH KNIGHT:
+* Added covenant abilities
+* Define missing blood tap talent (it was proposing without it being selected)
+
+MONK: 
+* Proposing healing actions before AM
+
 902.32
 ------
 Don't release without testing. Should properly work now
