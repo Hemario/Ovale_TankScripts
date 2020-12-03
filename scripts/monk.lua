@@ -193,16 +193,20 @@ AddFunction BrewmasterDefaultMainActions
         Spell(rushing_jade_wind)
         Spell(keg_smash)
     }
-    # Blackout Kick right before Keg Smash to grant more Brew charges with Blackout Combo talent.
-    if (HasTalent(blackout_combo_talent) and SpellCooldown(keg_smash) > GCD() and SpellCooldown(keg_smash) <= GCD() + GCDRemaining()) Spell(blackout_kick)
+    # Use the Blackout Combo buff for damage if it won't push back Keg Smash.
+    if BuffPresent(blackout_combo_buff)
+    {
+        if (Enemies() >= 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash)) Spell(breath_of_fire)
+        if (Enemies() < 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
+    }
     Spell(keg_smash)
-    # Push back the next spell if Keg Smash will be ready within the current GCD().
+    # Push back the next spell if Keg Smash will be ready within the current GCD.
     unless SpellCooldown(keg_smash) <= GCDRemaining()
     {
         if (Enemies() >= 3) Spell(breath_of_fire)
         Spell(blackout_kick)
         Spell(faeline_stomp)
-        if (BuffExpires(blackout_combo_buff)) Spell(breath_of_fire)
+        Spell(breath_of_fire)
         Spell(rushing_jade_wind)
         Spell(chi_wave)
         Spell(chi_burst)
@@ -210,7 +214,7 @@ AddFunction BrewmasterDefaultMainActions
         {
             # Use Spinning Crane Kick and Tiger Palm as fillers for multi-target if it won't push back Keg Smash.
             if (Enemies() >= 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(spinning_crane_kick)) Spell(spinning_crane_kick)
-            if (Enemies() >= 2 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm) and BuffExpires(blackout_combo_buff) ) Spell(tiger_palm)
+            if (Enemies() >= 2 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
         }
         # Tiger Palm is a terrible offensive skill, so only use it as a filler to prevent capping energy.
         if (EnergyDeficit() <= 15) Spell(tiger_palm)
