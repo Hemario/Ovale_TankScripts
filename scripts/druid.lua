@@ -114,7 +114,10 @@ AddFunction GuardianDefaultShortCDActions
 
 AddFunction GuardianCanCatweave
 {
-    CheckBoxOn(opt_druid_guardian_catweave) and Talent(feral_affinity_talent_guardian) and not (UnitInParty() and target.IsTargetingPlayer())
+    CheckBoxOn(opt_druid_guardian_catweave) 
+        and Talent(feral_affinity_talent_guardian) 
+        and not (UnitInParty() and target.IsTargetingPlayer())
+        and not (BuffPresent(incarnation_guardian_of_ursoc) or BuffPresent(berserk))
 }
 
 AddFunction GuardianCatweaveActions
