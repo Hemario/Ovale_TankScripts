@@ -12,7 +12,8 @@ Include(ovale_common)
 Include(ovale_tankscripts_common)
 
 # Talents
-Define(blackout_combo_talent 19992)
+Define(blackout_combo_talent 22108)
+Define(black_ox_brew_talent 19992)
 Define(chi_burst_talent 20185)
 Define(chi_wave_talent 19820)
 Define(dampen_harm_talent 20175)
@@ -25,7 +26,6 @@ Define(tiger_tail_sweep_talent 19993)
 Define(black_ox_brew 115399)
     SpellInfo(black_ox_brew cd=120 gcd=0 offgcd=1 energy=-200)
     SpellRequire(black_ox_brew unusable set=1 enabled=(not HasTalent(black_ox_brew_talent)))
-Define(black_ox_brew_talent 19992)
 Define(blackout_combo_buff 228563)
     SpellInfo(blackout_combo_buff duration=15)
     SpellAddBuff(blackout_kick blackout_combo_buff add=1 enabled=(HasTalent(blackout_combo_talent)))
@@ -200,9 +200,9 @@ AddFunction BrewmasterDefaultMainActions
     unless SpellCooldown(keg_smash) <= GCDRemaining()
     {
         if (Enemies() >= 3) Spell(breath_of_fire)
-        if (not HasTalent(blackout_combo_talent)) Spell(blackout_kick)
+        Spell(blackout_kick)
         Spell(faeline_stomp)
-        Spell(breath_of_fire)
+        if (BuffExpires(blackout_combo_buff)) Spell(breath_of_fire)
         Spell(rushing_jade_wind)
         Spell(chi_wave)
         Spell(chi_burst)
@@ -210,7 +210,7 @@ AddFunction BrewmasterDefaultMainActions
         {
             # Use Spinning Crane Kick and Tiger Palm as fillers for multi-target if it won't push back Keg Smash.
             if (Enemies() >= 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(spinning_crane_kick)) Spell(spinning_crane_kick)
-            if (Enemies() >= 2 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
+            if (Enemies() >= 2 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm) and BuffExpires(blackout_combo_buff) ) Spell(tiger_palm)
         }
         # Tiger Palm is a terrible offensive skill, so only use it as a filler to prevent capping energy.
         if (EnergyDeficit() <= 15) Spell(tiger_palm)
