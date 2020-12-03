@@ -29,6 +29,8 @@ Define(empower_bond_heal 326647)
 Define(empower_bond_tank 326462)
     SpellInfo(empower_bond_tank duration=10)
     SpellAddBuff(empower_bond_tank empower_bond_tank add=1)
+Define(heart_of_the_wild_guardian 319454)
+    SpellRequire(heart_of_the_wild_guardian unusable set=1 enabled=(not hastalent(heart_of_the_wild_talent)))
 Define(lone_protection 338018)
     SpellInfo(lone_protection duration=10 gcd=0 offgcd=1)
     SpellAddBuff(lone_protection lone_protection add=1)
@@ -236,7 +238,7 @@ AddFunction GuardianDefaultOffensiveCooldowns
 {
     if Stance(druid_cat_form)
     {
-        if GuardianCanCatweave() Spell(heart_of_the_wild)
+        if GuardianCanCatweave() Spell(heart_of_the_wild_guardian)
     }
     if Stance(druid_bear_form)
     {
