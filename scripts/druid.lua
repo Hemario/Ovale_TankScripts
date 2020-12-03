@@ -12,6 +12,9 @@ Define(bristling_fur_talent 22420)
 Define(earthwarden_talent 22423)
 Define(renewal_talent 18570)
 
+Define(adaptive_swarm 325727)
+    SpellInfo(adaptive_swarm cd=25)
+    SpellAddTargetDebuff(adaptive_swarm adaptive_swarm_damage add=3)
 Define(bristling_fur 155835)
     SpellInfo(bristling_fur cd=40)
     SpellRequire(bristling_fur unusable set=1 enabled=(not hastalent(bristling_fur_talent)))
@@ -128,6 +131,7 @@ AddFunction GuardianCatweaveActions
     # Generate CPs with fillers.
     if Enemies() > 1 Spell(swipe_cat)
     Spell(shred)
+    if (target.DebuffStacks(adaptive_swarm_damage)<3 and target.DebuffRefreshable(adaptive_swarm_damage) and target.TimeToDie() > GCD()) Spell(adaptive_swarm)
 }
 
 #
@@ -147,7 +151,7 @@ AddFunction GuardianDefaultMainActions
     Spell(mangle)
     Spell(thrash_bear)
     if not BuffExpires(galactic_guardian_buff) Spell(moonfire)
-    Spell(adaptive_swarm)
+    if (target.DebuffStacks(adaptive_swarm_damage)<3 and target.DebuffRefreshable(adaptive_swarm_damage) and target.TimeToDie() > GCD()) Spell(adaptive_swarm)
     if (RageDeficit() <= 20 or IncomingPhysicalDamage(5) == 0 or not UnitInParty()) Spell(maul)
     if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
@@ -176,6 +180,7 @@ AddFunction GuardianDefaultAoEActions
     Spell(thrash_bear)
     if (Enemies() <= 4) Spell(mangle)
     if (DebuffCountOnAny(moonfire_debuff) < 3 and not BuffExpires(galactic_guardian_buff)) Spell(moonfire)
+    if (target.DebuffStacks(adaptive_swarm_damage)<3 and target.DebuffRefreshable(adaptive_swarm_damage) and target.TimeToDie() > GCD()) Spell(adaptive_swarm)
     if (Enemies() <= 3 and (RageDeficit() <= 20 or IncomingDamage(5) == 0 or not UnitInParty())) Spell(maul)
     if GuardianCanCatweave() and TimeToEnergy(100) < GCD() Spell(cat_form)
     Spell(swipe_bear)
