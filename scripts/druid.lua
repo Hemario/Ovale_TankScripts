@@ -138,12 +138,35 @@ AddFunction GuardianCatweaveActions
 }
 
 #
+# Opener
+#
+
+AddFunction GuardianDefaultPreCombatActions
+{
+    GuardianHealMeMain()
+    if (GuardianCanCatweave()) 
+    {
+        Spell(prowl)
+        if not Stance(druid_cat_form) Spell(cat_form)
+        if not target.Classification(worldboss) Spell(rake)
+        Spell(shred)
+    }
+    if not Stance(druid_bear_form)
+    {
+        Spell(bear_form)
+    }
+    Spell(adaptive_swarm)
+    Spell(moonfire)
+}
+
+#
 # Single-Target
 #
 
 AddFunction GuardianDefaultMainActions
 {
     GuardianHealMeMain()
+
     if GuardianCanCatweave() and Stance(druid_cat_form) GuardianCatweaveActions()
     if not Stance(druid_bear_form) Spell(bear_form)
     
@@ -167,6 +190,7 @@ AddFunction GuardianDefaultMainActions
 AddFunction GuardianDefaultAoEActions
 {
     GuardianHealMeMain()
+    
     if GuardianCanCatweave() and Stance(druid_cat_form) GuardianCatweaveActions()
     if not Stance(druid_bear_form) Spell(bear_form)
     
@@ -264,11 +288,13 @@ AddIcon help=shortcd enabled=(specialization(guardian))
 
 AddIcon enemies=1 help=main enabled=(specialization(guardian))
 {
+    if (not InCombat()) GuardianDefaultPreCombatActions()
     GuardianDefaultMainActions()
 }
 
 AddIcon help=aoe enabled=(checkboxon(opt_druid_guardian_aoe) and specialization(guardian))
 {
+    if (not InCombat()) GuardianDefaultPreCombatActions()
     GuardianDefaultAoEActions()
 }
 
