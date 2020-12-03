@@ -1,3 +1,18 @@
+902.34
+------
+DRUID:
+* Add logic for Adaptive Swarm (Necrolord ability)
+* Renewal only shows when talented
+* Now properly proposes heart of the wild
+* Don't catweave when berserk is up
+* Add precombat actions (prowl, cat form, rake, shred, bear form, adaptive swap, moonfire)
+
+MONK:
+* Update rotation according to https://www.wowhead.com/brewmaster-monk-rotation-guide
+
+DK:
+* Move covenant abilities to offensive cd
+
 902.33
 ------
 ALL:
