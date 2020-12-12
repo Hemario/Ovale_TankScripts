@@ -15,9 +15,8 @@ Bugs with the tank scripts should be reported through the [ticket manager][5].
 Issues regarding [Ovale][1] can be reported through [Ovale's ticket manager][6].
 
 ## Links
-GitHub: https://github.com/Hemario/Ovale_TankScripts
-
-CurseForge: https://www.curseforge.com/wow/addons/ovale_tankscripts
+* GitHub: https://github.com/Hemario/Ovale_TankScripts
+* CurseForge: https://www.curseforge.com/wow/addons/ovale_tankscripts
 
 [1]: https://github.com/Sidoine/Ovale
 [2]: https://www.icy-veins.com/wow/class-guides
