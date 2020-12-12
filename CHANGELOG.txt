@@ -1,3 +1,18 @@
+902.35
+------
+DH:
+* Don't propose Soul Barrier when not specced into the talent.
+
+DK:
+* Suggest Rune Tap less aggressively
+
+MONK: 
+* Prioritize Tiger Palm (ST and cleave) and Breath of Fire (>=3 enemies) with Blackout Combo buff. Blackout Combo is currently not recommended for challenging content so we use the buff just for the damage it provides.
+* Touch of Death should now show when below our current HP
+
+Paladin:
+* Add Blinding Light to interrupt again
+
 902.34
 ------
 DRUID:
