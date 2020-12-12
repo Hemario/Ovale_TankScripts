@@ -16,6 +16,7 @@ Issues regarding [Ovale][1] can be reported through [Ovale's ticket manager][6].
 
 ## Links
 GitHub: https://github.com/Hemario/Ovale_TankScripts
+
 CurseForge: https://www.curseforge.com/wow/addons/ovale_tankscripts
 
 [1]: https://github.com/Sidoine/Ovale
