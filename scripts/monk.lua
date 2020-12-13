@@ -20,6 +20,7 @@ Define(dampen_harm_talent 20175)
 Define(exploding_keg_talent 22103)
 Define(healing_elixir_talent 23363)
 Define(rushing_jade_wind_talent 20184)
+Define(spitfire_talent 22097)
 Define(tiger_tail_sweep_talent 19993)
 
 # Class Abilities
@@ -196,8 +197,8 @@ AddFunction BrewmasterDefaultMainActions
     # Use the Blackout Combo buff for damage if it won't push back Keg Smash.
     if BuffPresent(blackout_combo_buff)
     {
-        if (Enemies() >= 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash)) Spell(breath_of_fire)
-        if (Enemies() < 3 and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
+        if (Enemies() >= 3 and not HasTalent(spitfire_talent) and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash)) Spell(breath_of_fire)
+        if (BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
     }
     Spell(keg_smash)
     # Push back the next spell if Keg Smash will be ready within the current GCD.
