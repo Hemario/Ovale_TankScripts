@@ -153,10 +153,11 @@ AddFunction ProtectionDispelActions
 AddFunction ProtectionDefaultOffensiveCooldowns
 {
     if (not player.BuffPresent(avenging_wrath)) Spell(avenging_wrath)
-    if (HolyPowerDeficit()>=Enemies() or HolyPower()<=0) Spell(divine_toll)
     Spell(seraphim)
-    Spell(holy_avenger)
     Spell(moment_of_glory)
+    Spell(holy_avenger)
+    
+    if (HolyPowerDeficit()>=Enemies() or HolyPower()<=0) Spell(divine_toll)
     Spell(ashen_hallow)
 }
 
