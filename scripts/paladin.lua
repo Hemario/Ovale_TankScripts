@@ -10,6 +10,7 @@ Include(ovale_paladin_spells)
 
 Define(blessed_hammer_talent 23469) 
 Define(final_stand_talent 22645)
+Define(moment_of_glory_talent 23468)
 Define(sanctified_wrath_talent_protection 23457)
 Define(unbreakable_spirit_talent 22433)
 
@@ -40,6 +41,8 @@ Define(judgment_prot_debuff 197277)
 Define(hammer_of_the_righteous 53595)
     SpellInfo(hammer_of_the_righteous cd=6)
     SpellRequire(hammer_of_the_righteous replaced_by set=blessed_hammer enabled=(hastalent(blessed_hammer_talent)))
+Define(moment_of_glory 327193)
+    SpellRequire(moment_of_glory unusable set=1 enabled=(not HasTalent(moment_of_glory_talent)))
 Define(shining_light_buff 327510)
     SpellInfo(shining_light_buff duration=30)
     SpellRequire(word_of_glory holypower percent=0 enabled=(buffpresent(shining_light_buff)))
@@ -153,6 +156,7 @@ AddFunction ProtectionDefaultOffensiveCooldowns
     if (HolyPowerDeficit()>=Enemies() or HolyPower()<=0) Spell(divine_toll)
     Spell(seraphim)
     Spell(holy_avenger)
+    Spell(moment_of_glory)
     Spell(ashen_hallow)
 }
 
