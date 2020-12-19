@@ -1,5 +1,5 @@
 ## Interface: 90002
-## Version: 902.35
+## Version: 902.36
 ## Title: Ovale Tank Scripts
 ## Notes: Custom Ovale scripts based on Icy-Veins guide
 ## Author: Hemario

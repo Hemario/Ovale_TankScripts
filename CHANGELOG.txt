@@ -1,3 +1,12 @@
+902.36
+------
+MONK:
+* Don't use Blackout Combo buff on Breath of Fire when talented into Spitfire talent
+
+PALADIN:
+* Add moment of clarity talent
+* Correctly check shield of the righteous buff when proposing SOTR
+
 902.35
 ------
 DH:
