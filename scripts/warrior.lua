@@ -71,8 +71,12 @@ Define(spell_reflection 23920)
     SpellInfo(spell_reflection cd=25 duration=6)
 Define(thunder_clap 6343)
     SpellInfo(thunder_clap cd=6 rage=-5)
+Define(victorious 32216)
+    SpellInfo(victorious duration=20)
+    SpellAddBuff(victory_rush victorious set=0)
 Define(victory_rush 34428)
     SpellRequire(victory_rush replaced_by set=impending_victory enabled=(hastalent(impending_victory_talent_protection)))
+    SpellRequire(victory_rush unusable set=1 enabled=(not BuffPresent(victorious)))
 
 AddCheckBox(opt_interrupt L(interrupt) default enabled=(specialization(protection)))
 AddCheckBox(opt_dispel L(dispel) default enabled=(specialization(protection)))
@@ -83,8 +87,11 @@ AddCheckBox(opt_warrior_protection_offensive L(seperate_offensive_icon) default 
 
 AddFunction ProtectionHealMe
 {
-    if (HealthPercent() < 70) Spell(victory_rush)
-    if (HealthPercent() < 85) Spell(impending_victory)
+    if (HealthPercent() < 70) 
+    {
+        Spell(victory_rush)
+        Spell(impending_victory)
+    }
     if (HealthPercent() < 35) UseHealthPotions()
     CovenantShortCDHealActions()
 }
