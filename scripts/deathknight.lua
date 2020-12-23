@@ -264,11 +264,8 @@ AddFunction BloodDefaultMainActions
     # Heart Strike with, or when 1.5 second away from, having more than 3 Runes.
     if (TimeToRunes(3) < GCD()) Spell(heart_strike)
     # Death and Decay when Crimson Scourge procs with 3+ targets or Night Fae.
-    if BuffPresent(crimson_scourge_buff) and Enemies() >= 3
-    {
-        Spell(deaths_due)
-        Spell(death_and_decay)
-    }
+    Spell(deaths_due)
+    if (BuffPresent(crimson_scourge_buff) and Enemies() >= 3) Spell(death_and_decay)
     # Blood Boil with 2 Blood Boil charges and less than 5 stacks of Hemostasis.
     if (Charges(blood_boil) >= 1.8 and BuffStacks(hemostasis_buff) < 5) Spell(blood_boil)
     # Heart Strike with 3 Runes.
