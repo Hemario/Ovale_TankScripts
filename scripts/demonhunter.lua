@@ -82,7 +82,7 @@ AddFunction VengeanceDefaultShortCDActions
 {
     VengeanceHealMeShortCd()
 
-    if (IncomingDamage(5)>0 and target.DebuffExpires(fiery_brand_debuff) and BuffExpires(metamorphosis) and BuffExpires(soul_barrier)) 
+    if (IncomingDamage(5)>0 and target.DebuffExpires(fiery_brand_debuff) and BuffExpires(metamorphosis_vengeance) and BuffExpires(soul_barrier)) 
     {
         if (IncomingPhysicalDamage(5) > 0 and BuffRemaining(demon_spikes_buff)<2) Spell(demon_spikes)
         if (not BuffPresent(demon_spikes_buff) or IncomingPhysicalDamage(5) <= 0)
@@ -101,9 +101,9 @@ AddFunction VengeanceDefaultMainActions
     
     if (VengeanceInfernalStrike()) Spell(infernal_strike)
     
-    if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
-    if (BuffPresent(metamorphosis) and Talent(fracture_talent)) Spell(fracture)
-    if (not VengeancePoolingForDemonic() and ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb))) Spell(soul_cleave)
+    if (SoulFragments() >= 5-Talent(fracture_talent)-BuffPresent(metamorphosis_vengeance) or target.DebuffExpires(frailty_debuff)) Spell(spirit_bomb)
+    if (BuffPresent(metamorphosis_vengeance) and Talent(fracture_talent)) Spell(fracture)
+    if (not VengeancePoolingForDemonic() and ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis_vengeance)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb))) Spell(soul_cleave)
     if (FuryDeficit() >= 10) Spell(immolation_aura)
     if (FuryDeficit() >= 30) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
@@ -122,7 +122,7 @@ AddFunction VengeanceDefaultCdActions
     Item(Trinket0Slot text=13 usable=1)
     Item(Trinket1Slot text=14 usable=1)
     
-    Spell(metamorphosis)
+    Spell(metamorphosis_vengeance)
     if CheckBoxOn(opt_use_consumables) 
     {
         Item(item_battle_potion_of_agility usable=1)
