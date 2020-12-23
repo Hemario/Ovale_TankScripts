@@ -101,8 +101,12 @@ Define(marrowrend 195182)
 Define(mind_freeze 47528)
     SpellInfo(mind_freeze cd=15 gcd=0 offgcd=1 interrupt=1)
 Define(ossuary 219786)
+Define(raise_dead 46585)
+    SpellInfo(raise_dead cd=120 duration=60 gcd=0 offgcd=1)
 Define(rune_tap 194679)
     SpellInfo(rune_tap cd=25 offgcd=1 runes=1 runicpower=-10 duration=4)
+Define(sacrificial_pact 327574)
+    SpellInfo(sacrificial_pact runicpower=20 cd=120)
 Define(tombstone 219809)
     SpellInfo(tombstone cd=60)
     SpellRequire(tombstone unusable set=1 enabled=(not HasTalent(tombstone_talent)))
@@ -306,6 +310,12 @@ AddFunction BloodDefaultCdActions
 
     Spell(vampiric_blood)
     Spell(dancing_rune_weapon)
+    if BuffExpires(dancing_rune_weapon_buff)
+    {
+        Spell(raise_dead)
+        # Sacrifice ghoul with at least 5 enemies or 15 seconds left.
+        if (Enemies() >= 5 or (SpellCooldown(raise_dead) > 60 and SpellCooldown(raise_dead) < 75)) Spell(sacrificial_pact)
+    }
     Spell(icebound_fortitude)
     if CheckBoxOn(opt_use_consumables)
     {
