@@ -1,3 +1,15 @@
+902.37
+------
+DEATH KNIGHT:
+* Add support for Raise Dead and Sacrificial Pact
+* Always propose Death's Due (Night Fae ability)
+
+DEMON HUNTER:
+* Corrected id for metamorphosis buff
+
+WARRIOR:
+* Victory rush is only possible when Victorious (after killing a mob)
+
 902.36
 ------
 MONK:
