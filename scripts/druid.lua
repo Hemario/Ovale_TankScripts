@@ -249,9 +249,9 @@ AddFunction GuardianInterruptActions
         if not target.Classification(worldboss)
         {
             Spell(mighty_bash)
-            if target.distance(less 10) spell(incapacitating_roar)
-            if target.Distance(less 8) Spell(war_stomp)
-            if target.Distance(less 15) Spell(typhoon)
+            if (target.distance() < 10) spell(incapacitating_roar)
+            if (target.Distance() < 8) Spell(war_stomp)
+            if (target.Distance() < 15) Spell(typhoon)
         }
     }
 }

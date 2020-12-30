@@ -101,7 +101,7 @@ AddFunction ProtectionGetInMeleeRange
     if CheckBoxOn(opt_melee_range) and not InFlightToTarget(charge) and not InFlightToTarget(intervene) and not InFlightToTarget(heroic_leap) and not target.InRange(pummel)
     {
         if target.InRange(charge) Spell(charge)
-        if target.Distance(atLeast 8) and target.Distance(atMost 40) Spell(heroic_leap)
+        if (target.Distance() >= 8 and target.Distance() <= 40) Spell(heroic_leap)
         Texture(misc_arrowlup help=L(not_in_melee_range))
     }
 }
@@ -184,9 +184,9 @@ AddFunction ProtectionInterruptActions
         if not target.Classification(worldboss) 
         {
             if target.InRange(storm_bolt) Spell(storm_bolt)
-            if target.Distance(less 10) Spell(shockwave)
+            if (target.Distance() < 10) Spell(shockwave)
             if target.InRange(quaking_palm) Spell(quaking_palm)
-            if target.Distance(less 5) Spell(war_stomp)
+            if (target.Distance() < 5) Spell(war_stomp)
             if target.InRange(intimidating_shout) Spell(intimidating_shout)
         }
     }
