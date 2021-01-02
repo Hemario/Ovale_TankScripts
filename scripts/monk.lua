@@ -261,8 +261,8 @@ AddFunction BrewmasterInterruptActions
         if target.InRange(spear_hand_strike) and target.IsInterruptible() Spell(spear_hand_strike)
         if not target.Classification(worldboss)
         {
-            if target.Distance(less 5) Spell(leg_sweep)
-            if target.Distance(less 5) Spell(war_stomp)
+            if (target.Distance() < 5) Spell(leg_sweep)
+            if (target.Distance() < 5) Spell(war_stomp)
             if target.InRange(quaking_palm) Spell(quaking_palm)
             if target.InRange(paralysis) Spell(paralysis)
         }
