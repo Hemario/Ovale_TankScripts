@@ -133,8 +133,8 @@ AddFunction ProtectionInterruptActions
         if not target.Classification(worldboss)
         {
             if target.InRange(hammer_of_justice) Spell(hammer_of_justice)
-            if target.Distance(less 10) Spell(blinding_light)
-            if target.Distance(less 8) Spell(war_stomp)
+            if (target.Distance() < 10) Spell(blinding_light)
+            if (target.Distance() < 8) Spell(war_stomp)
         }
     }
 }
