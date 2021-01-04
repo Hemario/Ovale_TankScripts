@@ -1,3 +1,11 @@
+902.38
+------
+ALL:
+* Fix syntax for range checks on several abilities (CC and movement)
+
+PALADIN:
+* Add Blessing of Protection and Blessing of Spellwarding as defensive cooldowns
+
 902.37
 ------
 DEATH KNIGHT:
