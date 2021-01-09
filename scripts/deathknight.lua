@@ -397,7 +397,7 @@ AddIcon help=cd
     BloodDefaultCdActions()
 }
 
-AddIcon help=smallcd size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive))
+AddIcon size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive))
 {
     BloodDefaultOffensiveActions()
 }

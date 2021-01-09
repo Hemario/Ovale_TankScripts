@@ -190,7 +190,7 @@ AddIcon help=cd enabled=(specialization(protection))
     ProtectionDefaultCdActions()
 }
 
-AddIcon help=smallcd size=small enabled=(checkboxon(opt_paladin_protection_offensive) and specialization(protection))
+AddIcon size=small enabled=(checkboxon(opt_paladin_protection_offensive) and specialization(protection))
 {
     ProtectionDefaultOffensiveActions()
 }
