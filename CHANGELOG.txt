@@ -1,3 +1,13 @@
+902.39
+------
+DK:
+* Fix a nil reference error with smallcd help message
+* Track raise dead as a totem now
+
+PALADIN:
+* Fix a nil reference error with smallcd help message
+* Propose Moment of Glory only when Avenger's Shield is on cooldown
+
 902.38
 ------
 ALL:
