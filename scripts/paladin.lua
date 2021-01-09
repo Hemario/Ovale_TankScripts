@@ -162,7 +162,7 @@ AddFunction ProtectionDefaultOffensiveCooldowns
 {
     if (not player.BuffPresent(avenging_wrath)) Spell(avenging_wrath)
     Spell(seraphim)
-    Spell(moment_of_glory)
+    if (SpellCooldown(avengers_shield) > GCD()) Spell(moment_of_glory)
     Spell(holy_avenger)
     
     if (HolyPowerDeficit()>=Enemies() or HolyPower()<=0) Spell(divine_toll)
