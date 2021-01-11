@@ -8,8 +8,6 @@ Include(ovale_common)
 
 Define(grim_codex 178811)
     ItemRequire(grim_codex unusable set=1 enabled=(target.isfriend()))
-Define(humming_black_dragonscale 174044)
-    ItemRequire(humming_black_dragonscale unusable set=1)
 
 Define(item_abyssal_healing_potion 169451)
 Define(item_coastal_healing_potion 152494)
