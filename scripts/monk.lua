@@ -138,16 +138,14 @@ AddFunction BrewmasterHealMeShortCd
 {
     # Use Healing Elixir proactively to prevent dropping below 50% health.
     if (HealthPercent() < 100 - 25 * (3 - SpellCharges(healing_elixir count=0))) Spell(healing_elixir)
+    if (HealthPercent() < 50) Spell(expel_harm)
     if (HealthPercent() < 35) UseHealthPotions()
     CovenantShortCDHealActions()
 }
 
 AddFunction BrewmasterHealMeMain
 {
-    if (HealthPercent() < 50)
-    {
-        Spell(expel_harm)
-    }
+    
 }
 
 AddFunction BrewmasterRangeCheck
