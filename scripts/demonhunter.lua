@@ -199,5 +199,5 @@ AddIcon size=small enabled=(checkboxon(opt_demonhunter_vengeance_offensive) and 
     VengeanceDefaultOffensiveActions()
 }
     ]]
-    OvaleScripts:RegisterScript("DEMONHUNTER", "vengeance", name, desc, code, "script")
+    OvaleScripts:registerScript("DEMONHUNTER", "vengeance", name, desc, code, "script")
 end

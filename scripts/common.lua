@@ -47,5 +47,5 @@ AddFunction CovenantDispelActions
 }
 
 ]]
-    OvaleScripts:RegisterScript(nil, nil, name, desc, code, "include")
+    OvaleScripts:registerScript(nil, nil, name, desc, code, "include")
 end

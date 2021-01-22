@@ -403,5 +403,5 @@ AddIcon size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive))
     BloodDefaultOffensiveActions()
 }
 ]]
-    OvaleScripts:RegisterScript("DEATHKNIGHT", "blood", name, desc, code, "script")
+    OvaleScripts:registerScript("DEATHKNIGHT", "blood", name, desc, code, "script")
 end

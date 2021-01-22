@@ -308,5 +308,5 @@ AddIcon size=small enabled=(checkboxon(opt_druid_guardian_offensive) and special
     GuardianDefaultOffensiveActions()
 }
 ]]
-    OvaleScripts:RegisterScript("DRUID", "guardian", name, desc, code, "script")
+    OvaleScripts:registerScript("DRUID", "guardian", name, desc, code, "script")
 end

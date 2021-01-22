@@ -195,5 +195,5 @@ AddIcon size=small enabled=(checkboxon(opt_paladin_protection_offensive) and spe
     ProtectionDefaultOffensiveActions()
 }
     ]]
-    OvaleScripts:RegisterScript("PALADIN", "protection", name, desc, code, "script")
+    OvaleScripts:registerScript("PALADIN", "protection", name, desc, code, "script")
 end

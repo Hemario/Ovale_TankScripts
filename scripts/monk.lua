@@ -314,5 +314,5 @@ AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive))
     BrewmasterDefaultOffensiveActions()
 }
 ]]
-    OvaleScripts:RegisterScript("MONK", "brewmaster", name, desc, code, "script")
+    OvaleScripts:registerScript("MONK", "brewmaster", name, desc, code, "script")
 end

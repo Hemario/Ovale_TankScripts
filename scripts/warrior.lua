@@ -235,5 +235,5 @@ AddIcon size=small enabled=(checkboxon(opt_warrior_protection_offensive) and spe
     ProtectionDefaultOffensiveActions()
 }
 ]]
-    OvaleScripts:RegisterScript("WARRIOR", "protection", name, desc, code, "script")
+    OvaleScripts:registerScript("WARRIOR", "protection", name, desc, code, "script")
 end
