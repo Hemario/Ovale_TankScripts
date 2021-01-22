@@ -2,8 +2,8 @@ local ovale = LibStub:GetLibrary("ovale")
 local OvaleScripts = ovale.ioc and ovale.ioc.scripts
 
 -- Overwrite default script selection for tank classes.
-local baseGetDefaultScriptName = OvaleScripts.GetDefaultScriptName
-OvaleScripts.GetDefaultScriptName = function(self, className, specialization)
+local baseGetDefaultScriptName = OvaleScripts.getDefaultScriptName
+OvaleScripts.getDefaultScriptName = function(self, className, specialization)
     --print("Ovale_TankScripts GetDefaultScriptName")
     if false
         or (className == "DEATHKNIGHT" and specialization == "blood") 
