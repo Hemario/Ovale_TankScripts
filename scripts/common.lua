@@ -1,8 +1,8 @@
-local ovale = LibStub:GetLibrary("ovale")
-local OvaleScripts = ovale.ioc.scripts
-do
+local _, Private = ...
+
+if Private.initialized then
     local name = "ovale_tankscripts_common"
-    local desc = "[9.0.2] Ovale_TankScripts: Common"
+    local desc = string.format("[9.0.2] %s: Common", Private.name)
     local code = [[
 Include(ovale_common)
 
@@ -34,5 +34,5 @@ AddFunction CovenantDispelActions
 }
 
 ]]
-    OvaleScripts:registerScript(nil, nil, name, desc, code, "include")
+    Private.scripts:registerScript(nil, nil, name, desc, code, "include")
 end

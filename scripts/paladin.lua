@@ -1,8 +1,8 @@
-local ovale = LibStub:GetLibrary("ovale")
-local OvaleScripts = ovale.ioc.scripts
-do
+local _, Private = ...
+
+if Private.initialized then
     local name = "ovale_tankscripts_paladin_protection"
-    local desc = "[9.0.2] Ovale_TankScripts: Paladin Protection"
+    local desc = string.format("[9.0.2] %s: Paladin Protection", Private.name)
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
@@ -195,5 +195,5 @@ AddIcon size=small enabled=(checkboxon(opt_paladin_protection_offensive) and spe
     ProtectionDefaultOffensiveActions()
 }
     ]]
-    OvaleScripts:registerScript("PALADIN", "protection", name, desc, code, "script")
+    Private.scripts:registerScript("PALADIN", "protection", name, desc, code, "script")
 end

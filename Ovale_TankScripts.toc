@@ -6,5 +6,5 @@
 ## RequiredDeps: Ovale
 
 libs\libs.xml
-scripts\files.xml
 Ovale_TankScripts.lua
+scripts\files.xml

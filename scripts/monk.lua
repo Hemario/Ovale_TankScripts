@@ -1,8 +1,8 @@
-local ovale = LibStub:GetLibrary("ovale")
-local OvaleScripts = ovale.ioc.scripts
-do
+local _, Private = ...
+
+if Private.initialized then
     local name = "ovale_tankscripts_monk_brewmaster"
-    local desc = "[9.0.2] Ovale_TankScripts: Monk Brewmaster"
+    local desc = string.format("[9.0.2] %s: Monk Brewmaster", Private.name)
     local code = [[
 # Adapted from Wowhead's "Brewmaster Monk Rotation Guide - Shadowlands 9.0.2"
 #   by Llarold-Area52
@@ -314,5 +314,5 @@ AddIcon size=small enabled=(CheckBoxOn(opt_monk_bm_offensive))
     BrewmasterDefaultOffensiveActions()
 }
 ]]
-    OvaleScripts:registerScript("MONK", "brewmaster", name, desc, code, "script")
+    Private.scripts:registerScript("MONK", "brewmaster", name, desc, code, "script")
 end
