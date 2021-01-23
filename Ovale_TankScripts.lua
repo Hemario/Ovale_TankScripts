@@ -8,15 +8,21 @@ if scripts then
     Private.name = ADDON_NAME
     Private.scripts = scripts
     Private.initialized = true
-
+    
     local baseGetDefaultScriptName = scripts.getDefaultScriptName
-    do
-        -- Ovale<=9.0.43
-        if not baseGetDefaultScriptName then
-	        baseGetDefaultScriptName = scripts.GetDefaultScriptName
-        end
+    local replaceOvaleGetDefaultScriptName = function(reference)
+        scripts.getDefaultScriptName = reference
     end
-
+    
+    do
+        -- Backwards compatibility for Ovale <= 90043
+        if not baseGetDefaultScriptName then 
+            baseGetDefaultScriptName = scripts.GetDefaultScriptName 
+            replaceOvaleGetDefaultScriptName = function(ref) scripts.GetDefaultScriptName = ref end
+        end
+        if not scripts.registerScript then scripts.registerScript = scripts.RegisterScript end
+    end
+    
     local getDefaultScriptName = function(self, className, specialization)
         if false
             or (className == "DEATHKNIGHT" and specialization == "blood") 
@@ -31,18 +37,5 @@ if scripts then
             return baseGetDefaultScriptName(self, className, specialization)
         end
     end
-
-    -- Overwrite default script selection function.
-    if scripts.getDefaultScriptName then
-        scripts.getDefaultScriptName = getDefaultScriptName
-    end
-    do
-        -- Ovale<=9.0.43
-        if scripts.GetDefaultScriptName then
-            scripts.GetDefaultScriptName = getDefaultScriptName
-        end
-        if not scripts.registerScript then
-            scripts.registerScript = scripts.RegisterScript
-        end
-    end
+    replaceOvaleGetDefaultScriptName(getDefaultScriptName)
 end
