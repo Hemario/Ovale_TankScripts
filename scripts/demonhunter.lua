@@ -1,8 +1,8 @@
-local ovale = LibStub:GetLibrary("ovale")
-local OvaleScripts = ovale.ioc.scripts
-do
+local _, Private = ...
+
+if Private.initialized then
     local name = "ovale_tankscripts_demonhunter_vengeance"
-    local desc = "[9.0.2] Ovale_TankScripts: DemonHunter Vengeance"
+    local desc = string.format("[9.0.2] %s: DemonHunter Vengeance", Private.name)
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
@@ -199,5 +199,5 @@ AddIcon size=small enabled=(checkboxon(opt_demonhunter_vengeance_offensive) and 
     VengeanceDefaultOffensiveActions()
 }
     ]]
-    OvaleScripts:registerScript("DEMONHUNTER", "vengeance", name, desc, code, "script")
+    Private.scripts:registerScript("DEMONHUNTER", "vengeance", name, desc, code, "script")
 end

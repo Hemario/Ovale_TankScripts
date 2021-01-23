@@ -1,8 +1,8 @@
-local ovale = LibStub:GetLibrary("ovale")
-local OvaleScripts = ovale.ioc.scripts
-do
+local _, Private = ...
+
+if Private.initialized then
     local name = "ovale_tankscripts_deathknight_blood"
-    local desc = "[9.0.2] Ovale_TankScripts: Death Knight Blood"
+    local desc = string.format("[9.0.2] %s: Death Knight Blood", Private.name)
     local code = [[
 # Adapted from "[9.0] Advanced Blood Death Knight Guide for M+"
 #   by Kyrasis-Stormreaver.
@@ -403,5 +403,5 @@ AddIcon size=small enabled=(CheckBoxOn(opt_deathknight_blood_offensive))
     BloodDefaultOffensiveActions()
 }
 ]]
-    OvaleScripts:registerScript("DEATHKNIGHT", "blood", name, desc, code, "script")
+    Private.scripts:registerScript("DEATHKNIGHT", "blood", name, desc, code, "script")
 end
