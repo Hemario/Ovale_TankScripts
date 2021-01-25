@@ -168,7 +168,7 @@ AddFunction VengeanceDispelActions
 AddFunction VengeanceDefaultOffensiveCooldowns
 {
     if Talent(charred_flesh_talent) Spell(fiery_brand)
-    if (SoulFragments() <= 2) Spell(elysian_decree)
+    Spell(elysian_decree)
     Spell(sinful_brand)
     Spell(the_hunt)
     Spell(fodder_to_the_flame)
