@@ -122,7 +122,7 @@ AddFunction VengeanceDefaultCdActions
     Item(Trinket0Slot text=13 usable=1)
     Item(Trinket1Slot text=14 usable=1)
     
-    Spell(metamorphosis_vengeance)
+    if not BuffPresent(metamorphosis_vengeance) Spell(metamorphosis_vengeance)
     if CheckBoxOn(opt_use_consumables) 
     {
         Item(item_battle_potion_of_agility usable=1)
