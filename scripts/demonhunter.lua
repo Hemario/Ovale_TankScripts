@@ -87,9 +87,9 @@ AddFunction VengeanceDefaultShortCDActions
         if (IncomingPhysicalDamage(5) > 0 and BuffRemaining(demon_spikes_buff)<2) Spell(demon_spikes)
         if (not BuffPresent(demon_spikes_buff) or IncomingPhysicalDamage(5) <= 0)
         {
+            Spell(fiery_brand)
             if (Talent(demonic_talent_vengeance)) Spell(fel_devastation)
             Spell(soul_barrier)
-            Spell(fiery_brand)
         }
     }
     VengeanceRangeCheck()
