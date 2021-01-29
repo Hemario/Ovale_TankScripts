@@ -105,7 +105,7 @@ AddFunction VengeanceDefaultMainActions
     if (BuffPresent(metamorphosis_vengeance) and Talent(fracture_talent)) Spell(fracture)
     if (not VengeancePoolingForDemonic() and ((not Talent(spirit_bomb_talent) and SoulFragments() >= 4-BuffPresent(metamorphosis_vengeance)) or SoulFragments() == 0 or PreviousGCDSpell(spirit_bomb))) Spell(soul_cleave)
     if (FuryDeficit() >= 10) Spell(immolation_aura)
-    if (FuryDeficit() >= 30) Spell(felblade)
+    if (FuryDeficit() >= 40) Spell(felblade)
     if (SoulFragments() <= 3) Spell(fracture)
     if (not Talent(demonic_talent_vengeance)) Spell(fel_devastation)
     if (VengeanceSigilOfFlame()) Spell(sigil_of_flame)
