@@ -167,7 +167,6 @@ AddFunction VengeanceDispelActions
 
 AddFunction VengeanceDefaultOffensiveCooldowns
 {
-    if Talent(charred_flesh_talent) Spell(fiery_brand)
     Spell(elysian_decree)
     Spell(sinful_brand)
     Spell(the_hunt)
