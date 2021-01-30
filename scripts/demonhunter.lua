@@ -172,6 +172,7 @@ AddFunction VengeanceDefaultOffensiveCooldowns
     Spell(sinful_brand)
     Spell(the_hunt)
     Spell(fodder_to_the_flame)
+    Spell(bulk_extraction)
 }
 
 AddIcon help=shortcd enabled=(specialization(vengeance))
