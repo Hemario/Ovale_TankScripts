@@ -126,6 +126,9 @@ Define(fallen_order 326860)
 Define(weapons_of_order 310454)
     SpellInfo(weapons_of_order cd=120)
     SpellRequire(weapons_of_order unusable set=1 enabled=(not IsCovenant(kyrian)))
+    
+#Legendary effects
+Define(stormstouts_last_keg_runeforge 7077)
 
 AddCheckBox(opt_interrupt L(interrupt) default)
 AddCheckBox(opt_dispel L(dispel) default)
@@ -200,7 +203,8 @@ AddFunction BrewmasterDefaultMainActions
     }
     Spell(keg_smash)
     # Push back the next spell if Keg Smash will be ready within the current GCD.
-    unless SpellCooldown(keg_smash) <= GCDRemaining()
+    # unless we are running Stormstout's last keg
+    unless (SpellCooldown(keg_smash) < GCDRemaining() and not EquippedRuneforge(stormstouts_last_keg_runeforge))
     {
         if (Enemies() >= 3) Spell(breath_of_fire)
         Spell(blackout_kick)
