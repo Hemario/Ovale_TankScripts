@@ -145,7 +145,7 @@ AddFunction VengeanceInterruptActions
         if target.InRange(disrupt) and target.IsInterruptible() Spell(disrupt)
         if not target.Classification(worldboss) and not SigilCharging(silence misery chains)
         {
-            if (target.RemainingCastTime() >= (2 - Talent(quickened_sigils_talent)))
+            if (target.RemainingCastTime() >= (2 - Talent(quickened_sigils_talent) + GCDRemaining()))
             {
                 Spell(sigil_of_silence)
                 Spell(sigil_of_misery)
