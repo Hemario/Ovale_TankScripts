@@ -1,3 +1,21 @@
+902.41
+------
+DK:
+* can't raise dead when already have a pet active (though raise dead)
+* use raise dead and sacrificial pact offensively
+* only use sacrificial pact defenively as last resort
+
+DH:
+* don't propose metamorphosis when already active
+* use elysian decree more freely (we don't care for soul fragments)
+* use fiery brand before fel devastation
+* charred flesh no longer turns fiery brand into a DPS cooldown
+* add bulk extraction as a DPS cooldown
+* felblade restores 40 fury instead of 30
+
+MONK:
+* only wait for keg smash when not wearing stormshout's last keg legendary
+
 902.40
 ------
 * Prepare Ovale_TankScripts for some Ovale naming convention changes that will break TankScripts
