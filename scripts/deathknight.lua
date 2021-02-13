@@ -322,6 +322,8 @@ AddFunction BloodDefaultCdActions
     }
     # Only suggest Rune Tap if Heart Strike won't grant enough Runic Power for a Death Strike heal.
     if (not BuffPresent(rune_tap) and RunicPower() < RunicPowerCost(death_strike) - BloodHeartStrikeRunicPower()) Spell(rune_tap)
+    # Sacrificial pact is kinda terrible defensively, only use it at last resort
+    if (player.HealthPercent() < 25) Spell(sacrificial_pact)
 }
 
 AddFunction BloodDefaultOffensiveActions
