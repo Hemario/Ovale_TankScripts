@@ -312,12 +312,6 @@ AddFunction BloodDefaultCdActions
 
     Spell(vampiric_blood)
     Spell(dancing_rune_weapon)
-    if BuffExpires(dancing_rune_weapon_buff)
-    {
-        Spell(raise_dead)
-        # Sacrifice ghoul with at least 5 enemies or 15 seconds left.
-        if (Enemies() >= 5 or TotemRemaining(raise_dead) < 15) Spell(sacrificial_pact)
-    }
     Spell(icebound_fortitude)
     if CheckBoxOn(opt_use_consumables)
     {
@@ -375,6 +369,9 @@ AddFunction BloodDefaultOffensiveCooldowns
     Spell(abomination_limb)
     # [*] Use Consumption for damage.
     Spell(consumption)
+    # [*] Use Ghoul for damage
+    Spell(raise_dead)
+    if (BuffExpires(dancing_rune_weapon_buff) and (Enemies() >= 5 or TotemRemaining(raise_dead) < 10)) Spell(sacrificial_pact)
     Spell(dancing_rune_weapon)
 }
 
