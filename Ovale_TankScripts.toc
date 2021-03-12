@@ -1,5 +1,5 @@
-## Version: 902.41
 ## Interface: 90005
+## Version: 905.42
 ## Title: Ovale Tank Scripts
 ## Notes: Custom Ovale scripts based on Icy-Veins guide
 ## Author: Hemario
