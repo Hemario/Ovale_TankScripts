@@ -2,7 +2,7 @@ local _, Private = ...
 
 if Private.initialized then
     local name = "ovale_tankscripts_deathknight_blood"
-    local desc = string.format("[9.0.2] %s: Death Knight Blood", Private.name)
+    local desc = string.format("[9.0.5] %s: Death Knight Blood", Private.name)
     local code = [[
 # Adapted from "[9.0] Advanced Blood Death Knight Guide for M+"
 #   by Kyrasis-Stormreaver.

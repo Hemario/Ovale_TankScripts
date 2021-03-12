@@ -2,7 +2,7 @@ local _, Private = ...
 
 if Private.initialized then
     local name = "ovale_tankscripts_monk_brewmaster"
-    local desc = string.format("[9.0.2] %s: Monk Brewmaster", Private.name)
+    local desc = string.format("[9.0.5] %s: Monk Brewmaster", Private.name)
     local code = [[
 # Adapted from Wowhead's "Brewmaster Monk Rotation Guide - Shadowlands 9.0.2"
 #   by Llarold-Area52

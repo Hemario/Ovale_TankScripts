@@ -2,7 +2,7 @@ local _, Private = ...
 
 if Private.initialized then
     local name = "ovale_tankscripts_demonhunter_vengeance"
-    local desc = string.format("[9.0.2] %s: DemonHunter Vengeance", Private.name)
+    local desc = string.format("[9.0.5] %s: DemonHunter Vengeance", Private.name)
     local code = [[
 Include(ovale_common)
 Include(ovale_tankscripts_common)
