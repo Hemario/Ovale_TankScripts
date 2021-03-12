@@ -288,7 +288,7 @@ AddFunction BrewmasterDefaultOffensiveCooldowns
     Spell(touch_of_death)
     if (target.TimeToDie() > 25) Spell(invoke_niuzao_the_black_ox)
     Spell(bonedust_brew)
-    Spell(weapons_of_order)
+    if (SpellCooldown(keg_smash) > 0) Spell(weapons_of_order)
     Spell(fallen_order)
     Spell(invoke_niuzao_the_black_ox)
     Spell(exploding_keg)
