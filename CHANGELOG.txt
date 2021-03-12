@@ -1,3 +1,15 @@
+905.42
+------
+toc update
+
+DRUID:
+* prioritize covenant cooldowns
+
+MONK:
+* prioritize faeline stomp higher for AOE
+* only propose weapons of order when keg smash is on cooldown
+* be sure to use BoK on cooldown when wearing stormstouts last keg (it is ok to delay KS when not capping charges)
+
 902.41
 ------
 DK:
