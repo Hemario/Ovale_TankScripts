@@ -206,6 +206,7 @@ AddFunction BrewmasterDefaultMainActions
     # unless we are running Stormstout's last keg
     unless (SpellCooldown(keg_smash) < GCDRemaining() and not EquippedRuneforge(stormstouts_last_keg_runeforge))
     {
+        if (Enemies() >= 3) Spell(faeline_stomp)
         if (Enemies() >= 3) Spell(breath_of_fire)
         Spell(blackout_kick)
         Spell(faeline_stomp)
