@@ -195,12 +195,15 @@ AddFunction BrewmasterDefaultMainActions
         Spell(rushing_jade_wind)
         Spell(keg_smash)
     }
-    # Use the Blackout Combo buff for damage if it won't push back Keg Smash.
+    # Use the Blackout Combo buff for damage. Blackout Combo is terrible defensively, so we're using it just for damage anyway.
     if BuffPresent(blackout_combo_buff)
     {
         if (Enemies() >= 3 and not HasTalent(spitfire_talent) and BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash)) Spell(breath_of_fire)
         if (BrewmasterEnergyForKegSmashPlusFiller() >= PowerCost(keg_smash) + PowerCost(tiger_palm)) Spell(tiger_palm)
     }
+    # Use BoK on cooldown if we have stormstouts_last_keg_runeforge
+    if (EquippedRuneforge(stormstouts_last_keg_runeforge) and SpellFullRecharge(keg_smash) > GCD() and Enemies() <= 2) Spell(blackout_kick)
+    # Use KS on cooldown
     Spell(keg_smash)
     # Push back the next spell if Keg Smash will be ready within the current GCD.
     # unless we are running Stormstout's last keg
