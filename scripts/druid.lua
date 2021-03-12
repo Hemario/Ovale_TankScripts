@@ -268,6 +268,9 @@ AddFunction GuardianDispelActions
 
 AddFunction GuardianDefaultOffensiveCooldowns
 {
+    Spell(convoke_the_spirits)
+    Spell(empower_bond_dps)
+    Spell(ravenous_frenzy)
     if Stance(druid_cat_form)
     {
         if GuardianCanCatweave() Spell(heart_of_the_wild_guardian)
@@ -276,9 +279,6 @@ AddFunction GuardianDefaultOffensiveCooldowns
     {
         if not Talent(incarnation_guardian_of_ursoc_talent) Spell(berserk)
     }
-    Spell(empower_bond_dps)
-    Spell(ravenous_frenzy)
-    Spell(convoke_the_spirits)
 }
 
 AddIcon help=shortcd enabled=(specialization(guardian))
